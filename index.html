@@ -646,8 +646,13 @@ curl -X GET 'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20
 
 <section id="webhook">
   <h2> Webhook Payment using phone number</h2>
+  <h3>The Result May </h3>
   <p>
     This endpoint initiates a direct payment request to the user's mobile money wallet (typically via USSD push or prompt). The user will receive a payment prompt on their phone to approve the transaction.
+  </p>
+
+  <p>
+    Remember you can monitor the payment status via your <strong>callback_url</strong> (webhook) or by polling the <strong>Get Order Status</strong> endpoint using the provided <code>transaction_id</code>.
   </p>
 
   <p>
@@ -919,8 +924,8 @@ curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/login' \
         </thead>
         <tbody>
           <tr><td>Email</td><td>anoldmwinuka@gmail.com</td><td>24-48 hours</td></tr>
-          <tr><td>WhatsApp</td><td>Business hours (8AM–5PM EAT)</td><td>—</td></tr>
-          <tr><td>Documentation</td><td><a href="https://palmpesa-docs.netlify.app">palmpesa-docs.netlify.app</a></td><td>24/7</td></tr>
+          <tr><td>WhatsApp</td><td>(255)0693662424</td><td>Business hours (8AM–5PM EAT)</td></tr>
+          <tr><td>Documentation</td><td><a href="https://documentation.palmpesa.co.tz">palmpesa-docs.netlify.app</a></td><td>24/7</td></tr>
         </tbody>
       </table>
 
