@@ -398,7 +398,7 @@ Accept: application/json
             <td>string</td>
             <td>Yes</td>
             <td>The full name of the buyer</td>
-            <td>"Elon Musk"</td>
+            <td>"Sephania Nathan"</td>
         </tr>
         <tr>
             <td>buyer_phone</td>
@@ -473,8 +473,8 @@ Accept: application/json
     "user_id": 25,
     "vendor": "TILL61103867",
     "order_id": "TEST-ORDER-100",
-    "buyer_email": "musk@tesla.com",
-    "buyer_name": "Elon Musk",
+    "buyer_email": "Sephania@eaglestar.com",
+    "buyer_name": "Sephania Nathan",
     "buyer_phone": "255744000000",
     "amount": 500,
     "currency": "TZS",
@@ -519,8 +519,8 @@ Accept: application/json
         "user_id": 25,
         "vendor": "TILL61103867",
         "order_id": "TEST-ORDER-100",
-        "buyer_email": "musk@tesla.com",
-        "buyer_name": "Elon Musk",
+        "buyer_email": "Sephania@eaglestar.com",
+        "buyer_name": "Sephania Nathan",
         "buyer_phone": "255744000000",
         "amount": 500,
         "currency": "TZS",
@@ -549,8 +549,8 @@ Accept: application/json
     </thead>
     <tbody>
       <tr><td>user_id</td><td>string</td><td>Yes</td><td>Your PalmPesa User ID</td><td>"2"</td></tr>
-      <tr><td>name</td><td>string</td><td>Yes</td><td>Full name of the buyer</td><td>"Elon Musk"</td></tr>
-      <tr><td>email</td><td>string</td><td>Yes</td><td>Buyer's email</td><td>"musk@tesla.com"</td></tr>
+      <tr><td>name</td><td>string</td><td>Yes</td><td>Full name of the buyer</td><td>"Sephania Nathan"</td></tr>
+      <tr><td>email</td><td>string</td><td>Yes</td><td>Buyer's email</td><td>"Sephania@eaglestar.com"</td></tr>
       <tr><td>phone</td><td>string</td><td>Yes</td><td>Phone number (with country code)</td><td>"255744000000"</td></tr>
       <tr><td>amount</td><td>integer</td><td>Yes</td><td>Amount in TZS</td><td>500</td></tr>
       <tr><td>transaction_id</td><td>string</td><td>Yes</td><td>Unique transaction ID</td><td>"TXN1234567891"</td></tr>
@@ -792,6 +792,20 @@ curl -X GET 'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20
   }'</pre>
   </div>
 
+  <div ><h3>Response</h3>
+  <div class="code-block">
+    <div class="code-label">JSON</div>
+<pre>
+  {
+  "order_id": "PALMPESA17683440586334",
+  "payment_status": "PENDING"
+}
+
+</pre>
+  </div>
+  
+  </div>
+
   
 
 </section>
@@ -882,13 +896,13 @@ curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/register' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{
-    "name": "Elon Musk",
+    "name": "Sephania Nathan",
     "phoneNumber": "0744000000",
     "location": "Dar es Salaam",
     "gender": "male",
     "role": "Normal",
     "nida_number": "123456789012341",
-    "email": "musk@tesla.com",
+    "email": "Sephania@eaglestar.com",
     "password": "password",
     "password_confirmation": "password"
   }'
@@ -902,7 +916,7 @@ curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/login' \
   -H 'Content-Type: application/json' \
   -H 'Accept: application/json' \
   -d '{
-    "email": "musk@tesla.com",
+    "email": "Sephania@eaglestar.com",
     "password": "password"
   }'
   </div>
