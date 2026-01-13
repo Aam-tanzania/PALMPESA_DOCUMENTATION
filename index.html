@@ -240,6 +240,7 @@
       
       <h4 style="padding: 1.5rem 1rem 0.5rem; color: var(--gray-600);">Core Payments</h4>
       <a href="#pay-link" class="nav-link"><i class="fas fa-link"></i> Pay by Link</a>
+      <a href="#webhook" class="nav-link"><i class="fas fa-link"></i> Webhook Payment</a>
       <a href="#pay-mobile" class="nav-link"><i class="fas fa-mobile-alt"></i> Pay via Mobile/USSD</a>
       <a href="#order-status" class="nav-link"><i class="fas fa-info-circle"></i> Get Order Status</a>
 
@@ -625,118 +626,8 @@ curl -X GET 'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20
   </div>
 </section>
 
-<!-- Palm Card Operations -->
-<section id="palm-card">
-  <h2>Palm Card Operations</h2>
 
-  <h3>Create Palm Card</h3>
-  <p><span class="method method-post">POST</span> <span class="endpoint">/api/cards</span></p>
-  <div class="code-block">
-    <div class="code-label">cURL – Create Card</div>
-curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/cards' \
-  -H 'Authorization: Bearer YOUR_API_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{"pin": "1234"}'
-  </div>
-
-  <h3>Deposit Money to Palm Card</h3>
-  <p><span class="method method-post">POST</span> <span class="endpoint">/api/card/add-money</span></p>
-  <div class="code-block">
-    <div class="code-label">cURL – Add Money</div>
-curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/card/add-money' \
-  -H 'Authorization: Bearer YOUR_API_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{
-    "phone": "0744000000",
-    "amount": "500"
-  }'
-  </div>
-
-  <h3>Toggle Card Status (Enable/Disable)</h3>
-  <p><span class="method method-post">POST</span> <span class="endpoint">/api/cards/{card_id}/toggle-status</span></p>
-  <div class="code-block">
-    <div class="code-label">cURL – Toggle Status</div>
-curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/cards/10/toggle-status' \
-  -H 'Authorization: Bearer YOUR_API_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json'
-  </div>
-</section>
-
-<!-- Send Money -->
-<section id="send-money">
-  <h2>Send Money (Card → Card)</h2>
-  <p><span class="method method-post">POST</span> <span class="endpoint">/api/send-to-card</span></p>
-
-  <h3>Request Body Parameters</h3>
-  <table>
-    <thead>
-      <tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>card_number</td><td>string</td><td>Yes</td><td>Recipient Palm Card number</td><td>"3410020000"</td></tr>
-      <tr><td>amount</td><td>integer</td><td>Yes</td><td>Amount to send</td><td>500</td></tr>
-      <tr><td>pin</td><td>string</td><td>Yes</td><td>Sender's 4-digit PIN</td><td>"1234"</td></tr>
-    </tbody>
-  </table>
-
-  <h3>cURL Example</h3>
-  <div class="code-block">
-    <div class="code-label">cURL</div>
-curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/send-to-card' \
-  -H 'Authorization: Bearer YOUR_API_TOKEN' \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{
-    "card_number": "3410020000",
-    "amount": 500,
-    "pin": "1234"
-  }'
-  </div>
-</section>
-
-<!-- Register & Login -->
-<section id="register-login">
-  <h2>User Registration & Login</h2>
-
-  <h3>Register New User</h3>
-  <p><span class="method method-post">POST</span> <span class="endpoint">/api/register</span></p>
-  <div class="code-block">
-    <div class="code-label">cURL – Register</div>
-curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/register' \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{
-    "name": "Elon Musk",
-    "phoneNumber": "0744000000",
-    "location": "Dar es Salaam",
-    "gender": "male",
-    "role": "Normal",
-    "nida_number": "123456789012341",
-    "email": "musk@tesla.com",
-    "password": "password",
-    "password_confirmation": "password"
-  }'
-  </div>
-
-  <h3>User Login</h3>
-  <p><span class="method method-post">POST</span> <span class="endpoint">/api/login</span></p>
-  <div class="code-block">
-    <div class="code-label">cURL – Login</div>
-curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/login' \
-  -H 'Content-Type: application/json' \
-  -H 'Accept: application/json' \
-  -d '{
-    "email": "musk@tesla.com",
-    "password": "password"
-  }'
-  </div>
-</section>
-
-<!-- Initiate Payment - /api/palmpesa/initiate -->
-<section id="initiate-payment">
+<section id="webhook">
   <h2> Webhook Payment using phone number</h2>
   <p>
     This endpoint initiates a direct payment request to the user's mobile money wallet (typically via USSD push or prompt). The user will receive a payment prompt on their phone to approve the transaction.
@@ -894,6 +785,121 @@ curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/login' \
   </div>
 
 </section>
+
+
+
+<!-- Palm Card Operations -->
+<section id="palm-card">
+  <h2>Palm Card Operations</h2>
+
+  <h3>Create Palm Card</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/cards</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Create Card</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/cards' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{"pin": "1234"}'
+  </div>
+
+  <h3>Deposit Money to Palm Card</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/card/add-money</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Add Money</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/card/add-money' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "phone": "0744000000",
+    "amount": "500"
+  }'
+  </div>
+
+  <h3>Toggle Card Status (Enable/Disable)</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/cards/{card_id}/toggle-status</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Toggle Status</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/cards/10/toggle-status' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+  </div>
+</section>
+
+<!-- Send Money -->
+<section id="send-money">
+  <h2>Send Money (Card → Card)</h2>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/send-to-card</span></p>
+
+  <h3>Request Body Parameters</h3>
+  <table>
+    <thead>
+      <tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>card_number</td><td>string</td><td>Yes</td><td>Recipient Palm Card number</td><td>"3410020000"</td></tr>
+      <tr><td>amount</td><td>integer</td><td>Yes</td><td>Amount to send</td><td>500</td></tr>
+      <tr><td>pin</td><td>string</td><td>Yes</td><td>Sender's 4-digit PIN</td><td>"1234"</td></tr>
+    </tbody>
+  </table>
+
+  <h3>cURL Example</h3>
+  <div class="code-block">
+    <div class="code-label">cURL</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/send-to-card' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "card_number": "3410020000",
+    "amount": 500,
+    "pin": "1234"
+  }'
+  </div>
+</section>
+
+<!-- Register & Login -->
+<section id="register-login">
+  <h2>User Registration & Login</h2>
+
+  <h3>Register New User</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/register</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Register</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/register' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "name": "Elon Musk",
+    "phoneNumber": "0744000000",
+    "location": "Dar es Salaam",
+    "gender": "male",
+    "role": "Normal",
+    "nida_number": "123456789012341",
+    "email": "musk@tesla.com",
+    "password": "password",
+    "password_confirmation": "password"
+  }'
+  </div>
+
+  <h3>User Login</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/login</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Login</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/login' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "email": "musk@tesla.com",
+    "password": "password"
+  }'
+  </div>
+</section>
+
+<!-- Initiate Payment - /api/palmpesa/initiate -->
+
 
 <!-- Support & Resources -->
 <section id="support">
