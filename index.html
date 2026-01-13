@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PalmPesa cURL API Documentation</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --primary-dark: #1e3a8a;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-600: #4b5563;
+      --gray-800: #1f2937;
+      --success: #10b981;
+      --danger: #ef4444;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--gray-50);
+      color: var(--gray-800);
+      line-height: 1.6;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: white;
+      border-right: 1px solid var(--gray-200);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-header {
+      padding: 0 1.5rem 1.5rem;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .sidebar-header h1 {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .sidebar-header p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      margin-top: 0.25rem;
+    }
+
+    .nav-list {
+      margin-top: 1.5rem;
+      padding: 0 1rem;
+    }
+
+    .nav-item {
+      margin: 0.25rem 0;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      color: var(--gray-600);
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      background: var(--gray-100);
+      color: var(--primary-dark);
+    }
+
+    .nav-link i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Main Content */
+    .main {
+      padding: 2.5rem 3rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1, h2, h3, h4 {
+      color: var(--gray-800);
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+
+    h1 { font-size: 2.25rem; margin-bottom: 1.5rem; }
+    h2 { font-size: 1.75rem; border-bottom: 1px solid var(--gray-200); padding-bottom: 0.5rem; margin-top: 2.5rem; }
+    h3 { font-size: 1.4rem; margin-top: 2rem; }
+
+    p, li {
+      color: #374151;
+      margin-bottom: 1rem;
+    }
+
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .note, .important {
+      background: #eff6ff;
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      border-radius: 4px;
+    }
+
+    .important {
+      border-left-color: var(--danger);
+      background: #fef2f2;
+    }
+
+    .code-block {
+      background: #0f172a;
+      color: #e2e8f0;
+      padding: 1.25rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      font-family: 'Consolas', 'Monaco', monospace;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .code-label {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      background: rgba(255,255,255,0.1);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 0.85rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    th {
+      background: var(--gray-100);
+      font-weight: 600;
+      color: var(--gray-800);
+    }
+
+    .method {
+      font-weight: bold;
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+    }
+
+    .method-post { background: #dcfce7; color: #166534; }
+    .method-get  { background: #dbeafe; color: #1e40af; }
+
+    .endpoint {
+      font-family: monospace;
+      background: var(--gray-100);
+      padding: 0.4rem 0.7rem;
+      border-radius: 6px;
+      word-break: break-all;
+    }
+
+    .footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--gray-200);
+      text-align: center;
+      color: var(--gray-600);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 992px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--gray-200);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <!-- Sidebar Navigation -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h1>PalmPesa</h1>
+      <p>cURL API Documentation</p>
+    </div>
+    <nav class="nav-list">
+      <a href="#welcome" class="nav-link active"><i class="fas fa-home"></i> Welcome</a>
+      <a href="#getting-started" class="nav-link"><i class="fas fa-key"></i> Getting Started</a>
+      <a href="#authentication" class="nav-link"><i class="fas fa-shield-alt"></i> Authentication</a>
+      <a href="#base-url" class="nav-link"><i class="fas fa-server"></i> Base URL</a>
+      
+      <h4 style="padding: 1.5rem 1rem 0.5rem; color: var(--gray-600);">Core Payments</h4>
+      <a href="#pay-link" class="nav-link"><i class="fas fa-link"></i> Pay by Link</a>
+      <a href="#pay-mobile" class="nav-link"><i class="fas fa-mobile-alt"></i> Pay via Mobile/USSD</a>
+      <a href="#order-status" class="nav-link"><i class="fas fa-info-circle"></i> Get Order Status</a>
+
+      <h4 style="padding: 1.5rem 1rem 0.5rem; color: var(--gray-600);">Additional Endpoints</h4>
+      <a href="#transactions" class="nav-link"><i class="fas fa-list"></i> Get Transactions</a>
+      <a href="#palm-card" class="nav-link"><i class="fas fa-credit-card"></i> Palm Card Operations</a>
+      <a href="#send-money" class="nav-link"><i class="fas fa-paper-plane"></i> Send Money</a>
+      <a href="#register-login" class="nav-link"><i class="fas fa-user-plus"></i> Register & Login</a>
+
+      <h4 style="padding: 1.5rem 1rem 0.5rem; color: var(--gray-600);">Support</h4>
+      <a href="#support" class="nav-link"><i class="fas fa-headset"></i> Support & Resources</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <section id="welcome">
+      <h1>Welcome to PalmPesa cURL Documentation</h1>
+      <p>This documentation provides all the information you need to integrate with the <strong>PalmPesa API</strong> using cURL.</p>
+      <p><strong>Originally constructed by Eagle Star Technology.</strong></p>
+
+      <div class="note">
+        <strong>Official Reference:</strong> For a comprehensive and live reference of all endpoints, visit the 
+        <a href="https://apidog.com/" target="_blank">PalmPesa API Reference on Apidog</a>.
+      </div>
+    </section>
+
+    <section id="getting-started">
+      <h2>Getting Started: Your Essential Credentials</h2>
+      <p>Before using the API, obtain:</p>
+      <ul>
+        <li><strong>User ID</strong> — unique identifier for your developer account</li>
+        <li><strong>API Token</strong> — used in Authorization header</li>
+      </ul>
+      <p>Register at <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank">https://palmpesa.drmlelwa.co.tz/</a> and submit the form to receive your credentials.</p>
+
+      <div class="important">
+        <strong>Important:</strong> Always use the production credentials and URLs provided after registration. The examples here are illustrative.
+      </div>
+    </section>
+
+    <section id="authentication">
+      <h2>Authentication</h2>
+      <p>PalmPesa uses <strong>Bearer Token</strong> authentication.</p>
+      <div class="code-block">
+        <div class="code-label">Header</div>
+Authorization: Bearer YOUR_API_TOKEN
+Content-Type: application/json
+Accept: application/json
+      </div>
+    </section>
+
+    <section id="base-url">
+      <h2>Base URL</h2>
+      <p class="endpoint">https://palmpesa.drmlelwa.co.tz</p>
+      <p>Append endpoint paths (e.g. <code>/api/process-payment</code>) to this base URL.</p>
+    </section>
+
+    <!-- Pay by Link -->
+        <!-- Initiate Pay by LINK -->
+    <section id="pay-link">
+    <h2>1. Initiate Pay by LINK</h2>
+    <p>This endpoint allows you to initiate a payment transaction and generate a sharable payment link. The actual payment method presented to the user via the link might vary (mobile money, card, etc.).</p>
+
+    <p>
+        <span class="method method-post">POST</span>
+        <span class="endpoint">https://palmpesa.drmlelwa.co.tz/api/process-payment</span>
+    </p>
+
+    <h3>Headers</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Required</th>
+            <th>Example Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>Authorization</td>
+            <td>Yes</td>
+            <td>Bearer YOUR_API_TOKEN</td>
+        </tr>
+        <tr>
+            <td>Content-Type</td>
+            <td>Yes</td>
+            <td>application/json</td>
+        </tr>
+        <tr>
+            <td>Accept</td>
+            <td>Yes</td>
+            <td>application/json</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Request Body Parameters</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Parameter</th>
+            <th>Type</th>
+            <th>Required</th>
+            <th>Description</th>
+            <th>Example Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>user_id</td>
+            <td>integer</td>
+            <td>Yes</td>
+            <td>Your PalmPesa User ID</td>
+            <td>25</td>
+        </tr>
+        <tr>
+            <td>vendor</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Vendor identifier. <strong>Important:</strong> Use "TILL61103867" unless instructed otherwise.</td>
+            <td>"TILL61103867"</td>
+        </tr>
+        <tr>
+            <td>order_id</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>A unique ID for your order (should be unique per transaction)</td>
+            <td>"TEST-ORDER-200"</td>
+        </tr>
+        <tr>
+            <td>buyer_email</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>The email address of the buyer</td>
+            <td>"youremail@gmail.com"</td>
+        </tr>
+        <tr>
+            <td>buyer_name</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>The full name of the buyer</td>
+            <td>"Elon Musk"</td>
+        </tr>
+        <tr>
+            <td>buyer_phone</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>The phone number of the buyer (with country code, no + sign)</td>
+            <td>"255744000000"</td>
+        </tr>
+        <tr>
+            <td>amount</td>
+            <td>integer</td>
+            <td>Yes</td>
+            <td>The transaction amount in the smallest currency unit</td>
+            <td>500</td>
+        </tr>
+        <tr>
+            <td>currency</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Currency code</td>
+            <td>"TZS"</td>
+        </tr>
+        <tr>
+            <td>redirect_url</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>URL to redirect after successful payment</td>
+            <td>"https://yourdomain.com/success"</td>
+        </tr>
+        <tr>
+            <td>cancel_url</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>URL to redirect if payment is cancelled</td>
+            <td>"https://yourdomain.com/cancel"</td>
+        </tr>
+        <tr>
+            <td>webhook</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Your webhook URL for receiving payment status updates</td>
+            <td>"https://yourdomain.com/webhook"</td>
+        </tr>
+        <tr>
+            <td>buyer_remarks</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Any remarks from the buyer</td>
+            <td>"Test order"</td>
+        </tr>
+        <tr>
+            <td>merchant_remarks</td>
+            <td>string</td>
+            <td>Yes</td>
+            <td>Description of items/service (e.g. "Web", "Maandazi", "Simu")</td>
+            <td>"Web"</td>
+        </tr>
+        <tr>
+            <td>no_of_items</td>
+            <td>integer</td>
+            <td>Yes</td>
+            <td>The number of items in the order</td>
+            <td>2</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>Example Request Body</h3>
+    <div class="code-block">
+        <div class="code-label">JSON</div>
+    <pre>{
+    "user_id": 25,
+    "vendor": "TILL61103867",
+    "order_id": "TEST-ORDER-100",
+    "buyer_email": "musk@tesla.com",
+    "buyer_name": "Elon Musk",
+    "buyer_phone": "255744000000",
+    "amount": 500,
+    "currency": "TZS",
+    "redirect_url": "https://yourdomain.com/success",
+    "cancel_url": "https://yourdomain.com/cancel",
+    "webhook": "https://yourdomain.com/webhook",
+    "buyer_remarks": "Online Delivery",
+    "merchant_remarks": "Starlink Kit",
+    "no_of_items": 1
+    }</pre>
+    </div>
+
+    <h3>Response Information</h3>
+    <div class="note">
+        <strong>Important:</strong> This endpoint returns a sharable payment link in the response. It does <strong>not</strong> provide immediate final status.  
+        Use your <strong>webhook</strong> URL or the <strong>Get Order Status</strong> endpoint to track whether the payment was completed, failed, or cancelled.
+    </div>
+
+    <h3>Example Response</h3>
+    <div class="code-block">
+        <div class="code-label">JSON</div>
+    <pre>{
+    "error": "sharable payment link",
+    "raw": {
+        "payment_gateway_url": "https://tz.selcom.online/paymentgw/checkout/VVNKSzVQWFpmRDBacVFZaTRKTHlFSFlPV2pKeGxuZWNqWVA4bHB3b3VzY0RxNmpYR1E1ZWVvSnl0eXg3cFFnbTJZMko0a2dBYXJzSA=="
+    }
+    }</pre>
+    </div>
+
+    <h3>cURL Example</h3>
+    <div class="code-block">
+        <div class="code-label">cURL</div>
+    <pre>curl -X POST \
+    'https://palmpesa.drmlelwa.co.tz/api/process-payment' \
+    -H 'Authorization: Bearer YOUR_API_TOKEN' \
+    -H 'Content-Type: application/json' \
+    -H 'Accept: application/json' \
+    -d '{
+        "user_id": 25,
+        "vendor": "TILL61103867",
+        "order_id": "TEST-ORDER-100",
+        "buyer_email": "musk@tesla.com",
+        "buyer_name": "Elon Musk",
+        "buyer_phone": "255744000000",
+        "amount": 500,
+        "currency": "TZS",
+        "redirect_url": "https://yourdomain.com/success",
+        "cancel_url": "https://yourdomain.com/cancel",
+        "webhook": "https://yourdomain.com/webhook",
+        "buyer_remarks": "Online Delivery",
+        "merchant_remarks": "Starlink Kit",
+        "no_of_items": 1
+    }'</pre>
+    </div>
+
+    </section>
+
+    <!-- Add other sections similarly: Pay via Mobile, Order Status, Transactions, Palm Card, Send Money, Register/Login, Support -->
+
+    <!-- Pay Directly via Mobile Money/USSD -->
+<section id="pay-mobile">
+  <h2>2. Pay Directly via Mobile Money/USSD</h2>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/pay-via-mobile</span></p>
+
+  <h3>Request Body Parameters</h3>
+  <table>
+    <thead>
+      <tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>user_id</td><td>string</td><td>Yes</td><td>Your PalmPesa User ID</td><td>"2"</td></tr>
+      <tr><td>name</td><td>string</td><td>Yes</td><td>Full name of the buyer</td><td>"Elon Musk"</td></tr>
+      <tr><td>email</td><td>string</td><td>Yes</td><td>Buyer's email</td><td>"musk@tesla.com"</td></tr>
+      <tr><td>phone</td><td>string</td><td>Yes</td><td>Phone number (with country code)</td><td>"255744000000"</td></tr>
+      <tr><td>amount</td><td>integer</td><td>Yes</td><td>Amount in TZS</td><td>500</td></tr>
+      <tr><td>transaction_id</td><td>string</td><td>Yes</td><td>Unique transaction ID</td><td>"TXN1234567891"</td></tr>
+      <tr><td>address</td><td>string</td><td>Yes</td><td>Buyer's address</td><td>"Dar es Salaam"</td></tr>
+      <tr><td>postcode</td><td>string</td><td>Yes</td><td>Postcode</td><td>"53127"</td></tr>
+      <tr><td>buyer_uuid</td><td>integer</td><td>Yes</td><td>Unique buyer identifier in your system</td><td>988776</td></tr>
+    </tbody>
+  </table>
+
+  <h3>cURL Example</h3>
+  <div class="code-block">
+    <div class="code-label">cURL</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "user_id": "2",
+    "name": "Alune Kyusa",
+    "email": "Alune@example.com",
+    "phone": "255744000000",
+    "amount": 500,
+    "transaction_id": "TXN1234567891",
+    "address": "Mbeya",
+    "postcode": "53127",
+    "buyer_uuid": 988776
+  }'
+  </div>
+
+  <div class="note">
+    Response typically includes <code>order_id</code> or <code>reference</code> — use these with the Order Status endpoint to track payment.
+  </div>
+</section>
+
+<!-- Get Order Status -->
+<section id="order-status">
+  <h2>3. Get Order Status</h2>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/order-status</span></p>
+
+  <h3>Request Body Parameters</h3>
+  <table>
+    <thead>
+      <tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>order_id</td><td>string</td><td>Yes</td><td>The order ID to check</td><td>"PALMPESA17458309277044"</td></tr>
+    </tbody>
+  </table>
+
+  <h3>cURL Example</h3>
+  <div class="code-block">
+    <div class="code-label">cURL</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/order-status' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "order_id": PALMPESA17458309277044"
+  }'
+  </div>
+
+  <div class="note">
+    Look for <code>payment_status</code> in the response data array (e.g. "COMPLETED", "PENDING", "FAILED").
+  </div>
+</section>
+
+<!-- Get Transaction List -->
+<section id="transactions">
+  <h2>Get Transaction List</h2>
+  <p><span class="method method-get">GET</span> <span class="endpoint">/api/transactions?page=1&per_page=20</span></p>
+
+  <h3>Query Parameters (optional)</h3>
+  <table>
+    <thead>
+      <tr><th>Parameter</th><th>Type</th><th>Description</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>page</td><td>integer</td><td>Page number</td></tr>
+      <tr><td>per_page</td><td>integer</td><td>Items per page</td></tr>
+    </tbody>
+  </table>
+
+  <h3>cURL Example</h3>
+  <div class="code-block">
+    <div class="code-label">cURL</div>
+curl -X GET 'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+  </div>
+</section>
+
+<!-- Palm Card Operations -->
+<section id="palm-card">
+  <h2>Palm Card Operations</h2>
+
+  <h3>Create Palm Card</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/cards</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Create Card</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/cards' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{"pin": "1234"}'
+  </div>
+
+  <h3>Deposit Money to Palm Card</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/card/add-money</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Add Money</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/card/add-money' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "phone": "0744000000",
+    "amount": "500"
+  }'
+  </div>
+
+  <h3>Toggle Card Status (Enable/Disable)</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/cards/{card_id}/toggle-status</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Toggle Status</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/cards/10/toggle-status' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json'
+  </div>
+</section>
+
+<!-- Send Money -->
+<section id="send-money">
+  <h2>Send Money (Card → Card)</h2>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/send-to-card</span></p>
+
+  <h3>Request Body Parameters</h3>
+  <table>
+    <thead>
+      <tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>card_number</td><td>string</td><td>Yes</td><td>Recipient Palm Card number</td><td>"3410020000"</td></tr>
+      <tr><td>amount</td><td>integer</td><td>Yes</td><td>Amount to send</td><td>500</td></tr>
+      <tr><td>pin</td><td>string</td><td>Yes</td><td>Sender's 4-digit PIN</td><td>"1234"</td></tr>
+    </tbody>
+  </table>
+
+  <h3>cURL Example</h3>
+  <div class="code-block">
+    <div class="code-label">cURL</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/send-to-card' \
+  -H 'Authorization: Bearer YOUR_API_TOKEN' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "card_number": "3410020000",
+    "amount": 500,
+    "pin": "1234"
+  }'
+  </div>
+</section>
+
+<!-- Register & Login -->
+<section id="register-login">
+  <h2>User Registration & Login</h2>
+
+  <h3>Register New User</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/register</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Register</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/register' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "name": "Elon Musk",
+    "phoneNumber": "0744000000",
+    "location": "Dar es Salaam",
+    "gender": "male",
+    "role": "Normal",
+    "nida_number": "123456789012341",
+    "email": "musk@tesla.com",
+    "password": "password",
+    "password_confirmation": "password"
+  }'
+  </div>
+
+  <h3>User Login</h3>
+  <p><span class="method method-post">POST</span> <span class="endpoint">/api/login</span></p>
+  <div class="code-block">
+    <div class="code-label">cURL – Login</div>
+curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/login' \
+  -H 'Content-Type: application/json' \
+  -H 'Accept: application/json' \
+  -d '{
+    "email": "musk@tesla.com",
+    "password": "password"
+  }'
+  </div>
+</section>
+
+<!-- Initiate Payment - /api/palmpesa/initiate -->
+<section id="initiate-payment">
+  <h2> Webhook Payment using phone number</h2>
+  <p>
+    This endpoint initiates a direct payment request to the user's mobile money wallet (typically via USSD push or prompt). The user will receive a payment prompt on their phone to approve the transaction.
+  </p>
+
+  <p>
+    <span class="method method-post">POST</span>
+    <span class="endpoint">https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate</span>
+  </p>
+
+  <h3>Headers</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Required</th>
+        <th>Example Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Authorization</td>
+        <td>Yes</td>
+        <td>Bearer YOUR_API_TOKEN</td>
+      </tr>
+      <tr>
+        <td>Content-Type</td>
+        <td>Yes</td>
+        <td>application/json</td>
+      </tr>
+      <tr>
+        <td>Accept</td>
+        <td>Yes (recommended)</td>
+        <td>application/json</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Request Body Parameters</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>Parameter</th>
+        <th>Type</th>
+        <th>Required</th>
+        <th>Description</th>
+        <th>Example Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>name</td>
+        <td>string</td>
+        <td>Yes</td>
+        <td>Full name of the payer / buyer</td>
+        <td>"Anord Webhook"</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>string</td>
+        <td>Yes</td>
+        <td>Email address of the payer</td>
+        <td>"john@example.com"</td>
+      </tr>
+      <tr>
+        <td>phone</td>
+        <td>string</td>
+        <td>Yes</td>
+        <td>Phone number to receive the payment prompt (Tanzania format with country code, no +)</td>
+        <td>"0693662424"</td>
+      </tr>
+      <tr>
+        <td>amount</td>
+        <td>integer / number</td>
+        <td>Yes</td>
+        <td>Amount to charge in TZS</td>
+        <td>200</td>
+      </tr>
+      <tr>
+        <td>transaction_id</td>
+        <td>string</td>
+        <td>Yes</td>
+        <td>Your unique transaction / order identifier</td>
+        <td>"2775"</td>
+      </tr>
+      <tr>
+        <td>address</td>
+        <td>string</td>
+        <td>Yes</td>
+        <td>Address or location of the payer</td>
+        <td>"Dar es Salaam"</td>
+      </tr>
+      <tr>
+        <td>postcode</td>
+        <td>string</td>
+        <td>Yes</td>
+        <td>Postcode / postal code</td>
+        <td>"11111"</td>
+      </tr>
+      <tr>
+        <td>callback_url</td>
+        <td>string</td>
+        <td>Yes</td>
+        <td>Your server webhook / callback URL to receive payment status updates (must be publicly accessible)</td>
+        <td>"http://anord.site/your-test-url"</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Example Request Body</h3>
+  <div class="code-block">
+    <div class="code-label">JSON</div>
+<pre>{
+  "name": "Anord Webhook",
+  "email": "john@example.com",
+  "phone": "0693662424",
+  "amount": 200,
+  "transaction_id": "2775",
+  "address": "Dar es Salaam",
+  "postcode": "11111",
+  "callback_url": "http://anord.site/your-test-url"
+}</pre>
+  </div>
+
+  <h3>cURL Example</h3>
+  <div class="code-block">
+    <div class="code-label">cURL</div>
+<pre>curl --location --request POST 'https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate' \
+  --header 'Authorization: Bearer YOUR_API_TOKEN' \
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "name": "Anord Webhook",
+    "email": "john@example.com",
+    "phone": "0693662424",
+    "amount": 200,
+    "transaction_id": "2775",
+    "address": "Dar es Salaam",
+    "postcode": "11111",
+    "callback_url": "http://anord.site/your-test-url"
+  }'</pre>
+  </div>
+
+  <div class="note">
+    <strong>Important Notes:</strong>
+    <ul style="margin: 0.5rem 0 0 1.5rem;">
+      <li>Use Tanzanian phone format (e.g., starts with 06 or 07, no + sign)</li>
+      <li>The <code>callback_url</code> must return HTTP 200 OK quickly and be publicly reachable (test with tools like webhook.site)</li>
+      <li>After initiation, rely on your callback_url (webhook) or poll the <strong>Get Order Status</strong> endpoint using the transaction_id (or returned order_id/reference) to confirm final status (COMPLETED, FAILED, PENDING, etc.)</li>
+      <li>Test with small amounts first (e.g., 200–1000 TZS)</li>
+    </ul>
+  </div>
+
+  <div class="important">
+    <strong>Always refer to the official PalmPesa API Reference on Apidog</strong> for the latest response format, error codes, and any additional optional fields.
+  </div>
+
+</section>
+
+<!-- Support & Resources -->
+<section id="support">
+
+ 
+
+    <section id="support" style="margin-top: 4rem;">
+      <h2>Support & Resources</h2>
+      <table>
+        <thead>
+          <tr><th>Channel</th><th>Contact</th><th>Response Time</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Email</td><td>anoldmwinuka@gmail.com</td><td>24-48 hours</td></tr>
+          <tr><td>WhatsApp</td><td>Business hours (8AM–5PM EAT)</td><td>—</td></tr>
+          <tr><td>Documentation</td><td><a href="https://palmpesa-docs.netlify.app">palmpesa-docs.netlify.app</a></td><td>24/7</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Integration Tip</h3>
+      <div class="note">
+        <ul>
+          <li>Test with small amounts (500–1000 TZS) first</li>
+          <li>Implement both webhooks + status polling</li>
+          <li>Use unique order IDs</li>
+          <li>Log requests/responses</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="footer">
+      © 2026 PalmPesa API Documentation (cURL Edition) — by Eagle Star Technology<br>
+      All rights reserved.
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>
