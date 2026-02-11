@@ -507,6 +507,29 @@ Accept: application/json
     }</pre>
     </div>
 
+
+      <div ><h3>This is a Callback Response</h3>
+  <div class="code-block">
+    <div class="code-label">JSON</div>
+<pre>
+{"reference":"0927530628",
+"resultcode":"000",
+"data":[{
+  "order_id":"SELCOM17454039012135",
+  "creation_date":"2025-04-23 13:26:54",
+  "amount":"500",
+  "payment_status":"COMPLETED",
+  "transid":"805613901007",
+  "channel":"AIRTELMONEY",
+  "reference":"0927530628",
+  "msisdn":"255693662424"
+}]}
+
+</pre>
+  </div>
+  
+  </div>
+
     <h3>cURL Example</h3>
     <div class="code-block">
         <div class="code-label">cURL</div>
@@ -560,6 +583,29 @@ Accept: application/json
     </tbody>
   </table>
 
+
+    <div ><h3>This is a Response</h3>
+  <div class="code-block">
+    <div class="code-label">JSON</div>
+<pre>
+{"message":
+"Payment request sent to user\u2019s phone",
+"order_id":"SELCOM17458294939723",
+"response":{
+  "reference":"S19997158895",
+  "transid":"TXN1745829493",
+  "resultcode":"000",
+  "result":"SUCCESS",
+  "message":"Wallet push successful",
+  "data":[]
+}
+}
+
+</pre>
+  </div>
+  
+  </div>
+
   <h3>cURL Example</h3>
   <div class="code-block">
     <div class="code-label">cURL</div>
@@ -579,6 +625,8 @@ curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile' \
     "buyer_uuid": 988776
   }'
   </div>
+
+
 
   <div class="note">
     Response typically includes <code>order_id</code> or <code>reference</code> — use these with the Order Status endpoint to track payment.
@@ -610,6 +658,29 @@ curl -X POST 'https://palmpesa.drmlelwa.co.tz/api/order-status' \
   -d '{
     "order_id": PALMPESA17458309277044"
   }'
+  </div>
+
+       <div ><h3>This is a Response</h3>
+  <div class="code-block">
+    <div class="code-label">JSON</div>
+<pre>
+{"reference":"0927530628",
+"resultcode":"000",
+"result":"SUCCESS","message":"Order fetch successful",
+"data":[{
+  "order_id":"SELCOM17454039012135",
+  "creation_date":"2025-04-23 13:26:54",
+  "amount":"500",
+  "payment_status":"COMPLETED",
+  "transid":"805613901007",
+  "channel":"AIRTELMONEY",
+  "reference":"0927530628",
+  "msisdn":"255693662424"
+}]}
+
+</pre>
+  </div>
+  
   </div>
 
   <div class="note">
@@ -792,7 +863,19 @@ curl -X GET 'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20
   }'</pre>
   </div>
 
-  <div ><h3>Response</h3>
+  <div ><h3>Response when Payment initiated</h3>
+    <p>Store this order id for the safety of transaction tracking (Make sure you also store tihs order)</p>
+  <div class="code-block">
+    <div class="code-label">JSON</div>
+<pre>
+{"message":"Payment initiated. Processing will continue asynchronously.",
+"order_id":"PALMPESA17682869972044"}
+</pre>
+  </div>
+  
+  </div>
+
+  <div ><h3>This is a Callback Response</h3>
   <div class="code-block">
     <div class="code-label">JSON</div>
 <pre>
