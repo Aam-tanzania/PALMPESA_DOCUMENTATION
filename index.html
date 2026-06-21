@@ -1,460 +1,1512 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PalmPesa API Docs — Developer Reference</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-  <style>
-    :root {
-      --brand:        #00d4a0;
-      --brand-dim:    #00b389;
-      --brand-glow:   rgba(0,212,160,.18);
-      --sidebar-bg:   #0b0f1a;
-      --sidebar-w:    290px;
-      --topbar-h:     60px;
-      --surface:      #ffffff;
-      --surface-alt:  #f8fafc;
-      --text-primary: #0f172a;
-      --text-secondary:#475569;
-      --text-muted:   #94a3b8;
-      --border:       #e2e8f0;
-      --code-bg:      #0d1117;
-      --code-fg:      #cdd9e5;
-      --green-bg:     #f0fdf4;
-      --green-fg:     #166534;
-      --green-border: #bbf7d0;
-      --blue-bg:      #eff6ff;
-      --blue-fg:      #1d4ed8;
-      --blue-border:  #bfdbfe;
-      --amber-bg:     #fffbeb;
-      --amber-fg:     #92400e;
-      --amber-border: #fde68a;
-      --red-bg:       #fff1f2;
-      --red-fg:       #9f1239;
-      --red-border:   #fecdd3;
-      --radius-md:    10px;
-      --radius-lg:    16px;
-      --shadow-sm:    0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-      --shadow-md:    0 4px 16px rgba(0,0,0,.08);
-      --font:         "Inter", system-ui, sans-serif;
-      --mono:         "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
-    }
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior:smooth; }
-    body { font-family:var(--font); background:var(--surface-alt); color:var(--text-primary); line-height:1.65; font-size:15px; -webkit-font-smoothing:antialiased; }
-    a { color:var(--brand-dim); text-decoration:none; }
-    a:hover { text-decoration:underline; }
-    code { font-family:var(--mono); font-size:.875em; background:#f1f5f9; color:#be185d; padding:.15em .45em; border-radius:4px; border:1px solid #e2e8f0; }
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PalmPesa API Docs — Developer Reference</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --brand: #00d4a0;
+        --brand-dim: #00b389;
+        --brand-glow: rgba(0, 212, 160, 0.18);
+        --sidebar-bg: #0b0f1a;
+        --sidebar-w: 290px;
+        --topbar-h: 60px;
+        --surface: #ffffff;
+        --surface-alt: #f8fafc;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --text-muted: #94a3b8;
+        --border: #e2e8f0;
+        --code-bg: #0d1117;
+        --code-fg: #cdd9e5;
+        --green-bg: #f0fdf4;
+        --green-fg: #166534;
+        --green-border: #bbf7d0;
+        --blue-bg: #eff6ff;
+        --blue-fg: #1d4ed8;
+        --blue-border: #bfdbfe;
+        --amber-bg: #fffbeb;
+        --amber-fg: #92400e;
+        --amber-border: #fde68a;
+        --red-bg: #fff1f2;
+        --red-fg: #9f1239;
+        --red-border: #fecdd3;
+        --radius-md: 10px;
+        --radius-lg: 16px;
+        --shadow-sm:
+          0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+        --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+        --font: "Inter", system-ui, sans-serif;
+        --mono: "JetBrains Mono", "Cascadia Code", "Consolas", monospace;
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: var(--font);
+        background: var(--surface-alt);
+        color: var(--text-primary);
+        line-height: 1.65;
+        font-size: 15px;
+        -webkit-font-smoothing: antialiased;
+      }
+      a {
+        color: var(--brand-dim);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      code {
+        font-family: var(--mono);
+        font-size: 0.875em;
+        background: #f1f5f9;
+        color: #be185d;
+        padding: 0.15em 0.45em;
+        border-radius: 4px;
+        border: 1px solid #e2e8f0;
+      }
 
-    /* Shell */
-    .shell { display:grid; grid-template-columns:var(--sidebar-w) 1fr; grid-template-rows:var(--topbar-h) 1fr; grid-template-areas:"topbar topbar" "sidebar main"; min-height:100vh; }
+      /* Shell */
+      .shell {
+        display: grid;
+        grid-template-columns: var(--sidebar-w) 1fr;
+        grid-template-rows: var(--topbar-h) 1fr;
+        grid-template-areas: "topbar topbar" "sidebar main";
+        min-height: 100vh;
+      }
 
-    /* Topbar */
-    .topbar { grid-area:topbar; background:var(--sidebar-bg); border-bottom:1px solid rgba(255,255,255,.06); display:flex; align-items:center; padding:0 1.5rem; gap:1.5rem; position:sticky; top:0; z-index:200; }
-    .topbar-brand { display:flex; align-items:center; gap:.65rem; min-width:calc(var(--sidebar-w) - 1.5rem); }
-    .brand-mark { width:34px; height:34px; background:linear-gradient(135deg,var(--brand),#0ea5e9); border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:.85rem; color:#0b0f1a; letter-spacing:-.5px; }
-    .brand-name { font-size:1.05rem; font-weight:700; color:#f1f5f9; letter-spacing:-.3px; }
-    .brand-badge { font-size:.65rem; font-weight:600; background:var(--brand-glow); color:var(--brand); padding:.2em .55em; border-radius:20px; border:1px solid rgba(0,212,160,.3); text-transform:uppercase; letter-spacing:.5px; }
-    .topbar-search { flex:1; max-width:440px; display:flex; align-items:center; gap:.6rem; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); border-radius:8px; padding:.45rem .9rem; color:var(--text-muted); font-size:.85rem; transition:border-color .2s; }
-    .topbar-search:hover { border-color:rgba(255,255,255,.2); }
-    .topbar-search input { background:transparent; border:none; outline:none; color:#e2e8f0; font:inherit; flex:1; font-size:.9rem; }
-    .topbar-search input::placeholder { color:#64748b; }
-    .topbar-right { margin-left:auto; display:flex; align-items:center; gap:.75rem; }
-    .topbar-link { color:#94a3b8; font-size:.85rem; font-weight:500; padding:.35rem .75rem; border-radius:6px; transition:all .2s; display:flex; align-items:center; gap:.4rem; }
-    .topbar-link:hover { background:rgba(255,255,255,.08); color:#f1f5f9; text-decoration:none; }
-    .btn-cta { background:var(--brand); color:#0b0f1a; font-size:.82rem; font-weight:700; padding:.45rem 1rem; border-radius:7px; text-decoration:none; transition:all .2s; display:flex; align-items:center; gap:.4rem; }
-    .btn-cta:hover { background:var(--brand-dim); transform:translateY(-1px); box-shadow:0 4px 16px rgba(0,212,160,.35); text-decoration:none; }
+      /* Topbar */
+      .topbar {
+        grid-area: topbar;
+        background: var(--sidebar-bg);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        display: flex;
+        align-items: center;
+        padding: 0 1.5rem;
+        gap: 1.5rem;
+        position: sticky;
+        top: 0;
+        z-index: 200;
+      }
+      .topbar-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        min-width: calc(var(--sidebar-w) - 1.5rem);
+      }
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        background: linear-gradient(135deg, var(--brand), #0ea5e9);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 800;
+        font-size: 0.85rem;
+        color: #0b0f1a;
+        letter-spacing: -0.5px;
+      }
+      .brand-name {
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #f1f5f9;
+        letter-spacing: -0.3px;
+      }
+      .brand-badge {
+        font-size: 0.65rem;
+        font-weight: 600;
+        background: var(--brand-glow);
+        color: var(--brand);
+        padding: 0.2em 0.55em;
+        border-radius: 20px;
+        border: 1px solid rgba(0, 212, 160, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .topbar-search {
+        flex: 1;
+        max-width: 440px;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 0.45rem 0.9rem;
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        transition: border-color 0.2s;
+      }
+      .topbar-search:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+      }
+      .topbar-search input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: #e2e8f0;
+        font: inherit;
+        flex: 1;
+        font-size: 0.9rem;
+      }
+      .topbar-search input::placeholder {
+        color: #64748b;
+      }
+      .topbar-right {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .topbar-link {
+        color: #94a3b8;
+        font-size: 0.85rem;
+        font-weight: 500;
+        padding: 0.35rem 0.75rem;
+        border-radius: 6px;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .topbar-link:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: #f1f5f9;
+        text-decoration: none;
+      }
+      .btn-cta {
+        background: var(--brand);
+        color: #0b0f1a;
+        font-size: 0.82rem;
+        font-weight: 700;
+        padding: 0.45rem 1rem;
+        border-radius: 7px;
+        text-decoration: none;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+      }
+      .btn-cta:hover {
+        background: var(--brand-dim);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 16px rgba(0, 212, 160, 0.35);
+        text-decoration: none;
+      }
 
-    /* Sidebar */
-    .sidebar { grid-area:sidebar; background:var(--sidebar-bg); border-right:1px solid rgba(255,255,255,.05); position:sticky; top:var(--topbar-h); height:calc(100vh - var(--topbar-h)); overflow-y:auto; padding:1.5rem 0 2rem; scrollbar-width:thin; scrollbar-color:#1e293b transparent; }
-    .sidebar::-webkit-scrollbar { width:4px; }
-    .sidebar::-webkit-scrollbar-thumb { background:#1e293b; border-radius:4px; }
-    .nav-group-label { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:1.2px; color:#475569; padding:1.2rem 1.4rem .5rem; }
-    .nav-link { display:flex; align-items:center; gap:.65rem; padding:.52rem 1.4rem; color:#64748b; font-size:.875rem; font-weight:450; text-decoration:none; border-left:2px solid transparent; transition:all .15s; }
-    .nav-link:hover { color:#cbd5e1; background:rgba(255,255,255,.04); text-decoration:none; }
-    .nav-link.active { color:var(--brand); background:var(--brand-glow); border-left-color:var(--brand); font-weight:500; }
-    .nav-link i { width:16px; text-align:center; font-size:.8rem; flex-shrink:0; }
-    .nav-method { margin-left:auto; font-size:.62rem; font-weight:700; padding:.15em .5em; border-radius:3px; text-transform:uppercase; letter-spacing:.5px; }
-    .nav-method.post { background:rgba(251,191,36,.15); color:#fbbf24; }
-    .nav-method.get  { background:rgba(99,102,241,.15); color:#818cf8; }
+      /* Sidebar */
+      .sidebar {
+        grid-area: sidebar;
+        background: var(--sidebar-bg);
+        border-right: 1px solid rgba(255, 255, 255, 0.05);
+        position: sticky;
+        top: var(--topbar-h);
+        height: calc(100vh - var(--topbar-h));
+        overflow-y: auto;
+        padding: 1.5rem 0 2rem;
+        scrollbar-width: thin;
+        scrollbar-color: #1e293b transparent;
+      }
+      .sidebar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar::-webkit-scrollbar-thumb {
+        background: #1e293b;
+        border-radius: 4px;
+      }
+      .nav-group-label {
+        font-size: 0.68rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        color: #475569;
+        padding: 1.2rem 1.4rem 0.5rem;
+      }
+      .nav-link {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.52rem 1.4rem;
+        color: #64748b;
+        font-size: 0.875rem;
+        font-weight: 450;
+        text-decoration: none;
+        border-left: 2px solid transparent;
+        transition: all 0.15s;
+      }
+      .nav-link:hover {
+        color: #cbd5e1;
+        background: rgba(255, 255, 255, 0.04);
+        text-decoration: none;
+      }
+      .nav-link.active {
+        color: var(--brand);
+        background: var(--brand-glow);
+        border-left-color: var(--brand);
+        font-weight: 500;
+      }
+      .nav-link i {
+        width: 16px;
+        text-align: center;
+        font-size: 0.8rem;
+        flex-shrink: 0;
+      }
+      .nav-method {
+        margin-left: auto;
+        font-size: 0.62rem;
+        font-weight: 700;
+        padding: 0.15em 0.5em;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .nav-method.post {
+        background: rgba(251, 191, 36, 0.15);
+        color: #fbbf24;
+      }
+      .nav-method.get {
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+      }
 
-    /* Main */
-    .main { grid-area:main; padding:2.5rem 3.5rem 5rem; max-width:900px; }
+      /* Main */
+      .main {
+        grid-area: main;
+        padding: 2.5rem 3.5rem 5rem;
+        max-width: 900px;
+      }
 
-    /* Hero */
-    .page-hero { background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%); border:1px solid #1e293b; border-radius:var(--radius-lg); padding:2.5rem; margin-bottom:2.5rem; position:relative; overflow:hidden; }
-    .page-hero::before { content:""; position:absolute; top:-60px; right:-60px; width:280px; height:280px; background:radial-gradient(circle,rgba(0,212,160,.12) 0%,transparent 70%); pointer-events:none; }
-    .page-hero-eyebrow { display:inline-flex; align-items:center; gap:.45rem; font-size:.75rem; font-weight:600; color:var(--brand); text-transform:uppercase; letter-spacing:1px; margin-bottom:.9rem; }
-    .page-hero-eyebrow span { width:6px; height:6px; background:var(--brand); border-radius:50%; display:inline-block; }
-    .page-hero h1 { font-size:2rem; font-weight:800; color:#f8fafc; letter-spacing:-.7px; line-height:1.2; margin-bottom:.75rem; }
-    .page-hero p { font-size:.95rem; color:#94a3b8; max-width:580px; margin:0; }
-    .hero-stats { display:flex; gap:2rem; margin-top:1.75rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,.07); }
-    .hero-stat { display:flex; flex-direction:column; gap:.2rem; }
-    .hero-stat-val { font-size:1.1rem; font-weight:700; color:#f1f5f9; }
-    .hero-stat-label { font-size:.75rem; color:#64748b; text-transform:uppercase; letter-spacing:.5px; }
+      /* Hero */
+      .page-hero {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        border: 1px solid #1e293b;
+        border-radius: var(--radius-lg);
+        padding: 2.5rem;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .page-hero::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        right: -60px;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(
+          circle,
+          rgba(0, 212, 160, 0.12) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .page-hero-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--brand);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.9rem;
+      }
+      .page-hero-eyebrow span {
+        width: 6px;
+        height: 6px;
+        background: var(--brand);
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .page-hero h1 {
+        font-size: 2rem;
+        font-weight: 800;
+        color: #f8fafc;
+        letter-spacing: -0.7px;
+        line-height: 1.2;
+        margin-bottom: 0.75rem;
+      }
+      .page-hero p {
+        font-size: 0.95rem;
+        color: #94a3b8;
+        max-width: 580px;
+        margin: 0;
+      }
+      .hero-stats {
+        display: flex;
+        gap: 2rem;
+        margin-top: 1.75rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .hero-stat {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .hero-stat-val {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #f1f5f9;
+      }
+      .hero-stat-label {
+        font-size: 0.75rem;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
 
-    /* Sections */
-    .doc-section { margin-bottom:3.5rem; scroll-margin-top:calc(var(--topbar-h) + 1.5rem); }
-    .section-heading { display:flex; align-items:center; gap:.85rem; margin-bottom:1.25rem; padding-bottom:.9rem; border-bottom:1px solid var(--border); }
-    .section-icon { width:34px; height:34px; border-radius:8px; background:linear-gradient(135deg,#0f172a,#1e293b); border:1px solid #334155; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.85rem; color:var(--brand); }
-    .section-heading h2 { font-size:1.35rem; font-weight:700; color:var(--text-primary); letter-spacing:-.3px; }
-    .section-num { font-size:.7rem; font-weight:700; color:var(--text-muted); background:#f1f5f9; border:1px solid var(--border); padding:.2em .6em; border-radius:20px; margin-left:auto; }
-    h3 { font-size:1rem; font-weight:650; color:var(--text-primary); margin:1.75rem 0 .75rem; letter-spacing:-.15px; }
-    p { color:var(--text-secondary); margin-bottom:.9rem; }
-    ul, ol { color:var(--text-secondary); padding-left:1.3rem; margin-bottom:1rem; }
-    li { margin-bottom:.35rem; }
+      /* Sections */
+      .doc-section {
+        margin-bottom: 3.5rem;
+        scroll-margin-top: calc(var(--topbar-h) + 1.5rem);
+      }
+      .section-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        margin-bottom: 1.25rem;
+        padding-bottom: 0.9rem;
+        border-bottom: 1px solid var(--border);
+      }
+      .section-icon {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #0f172a, #1e293b);
+        border: 1px solid #334155;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        font-size: 0.85rem;
+        color: var(--brand);
+      }
+      .section-heading h2 {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--text-primary);
+        letter-spacing: -0.3px;
+      }
+      .section-num {
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--text-muted);
+        background: #f1f5f9;
+        border: 1px solid var(--border);
+        padding: 0.2em 0.6em;
+        border-radius: 20px;
+        margin-left: auto;
+      }
+      h3 {
+        font-size: 1rem;
+        font-weight: 650;
+        color: var(--text-primary);
+        margin: 1.75rem 0 0.75rem;
+        letter-spacing: -0.15px;
+      }
+      p {
+        color: var(--text-secondary);
+        margin-bottom: 0.9rem;
+      }
+      ul,
+      ol {
+        color: var(--text-secondary);
+        padding-left: 1.3rem;
+        margin-bottom: 1rem;
+      }
+      li {
+        margin-bottom: 0.35rem;
+      }
 
-    /* Endpoint Row */
-    .endpoint-row { display:flex; align-items:center; gap:.75rem; background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:.75rem 1rem; margin:1rem 0 1.25rem; box-shadow:var(--shadow-sm); }
-    .method-badge { font-family:var(--mono); font-size:.72rem; font-weight:700; padding:.35em .8em; border-radius:5px; text-transform:uppercase; letter-spacing:.5px; flex-shrink:0; }
-    .method-post { background:#fef3c7; color:#b45309; border:1px solid #fde68a; }
-    .method-get  { background:#e0e7ff; color:#3730a3; border:1px solid #c7d2fe; }
-    .method-base { background:#f1f5f9; color:#475569; border:1px solid #e2e8f0; }
-    .endpoint-url { font-family:var(--mono); font-size:.875rem; color:var(--text-primary); word-break:break-all; flex:1; }
-    .endpoint-copy { background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:.8rem; padding:.3rem .5rem; border-radius:5px; transition:all .2s; }
-    .endpoint-copy:hover { background:#f1f5f9; color:var(--brand-dim); }
+      /* Endpoint Row */
+      .endpoint-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 0.75rem 1rem;
+        margin: 1rem 0 1.25rem;
+        box-shadow: var(--shadow-sm);
+      }
+      .method-badge {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.35em 0.8em;
+        border-radius: 5px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        flex-shrink: 0;
+      }
+      .method-post {
+        background: #fef3c7;
+        color: #b45309;
+        border: 1px solid #fde68a;
+      }
+      .method-get {
+        background: #e0e7ff;
+        color: #3730a3;
+        border: 1px solid #c7d2fe;
+      }
+      .method-base {
+        background: #f1f5f9;
+        color: #475569;
+        border: 1px solid #e2e8f0;
+      }
+      .endpoint-url {
+        font-family: var(--mono);
+        font-size: 0.875rem;
+        color: var(--text-primary);
+        word-break: break-all;
+        flex: 1;
+      }
+      .endpoint-copy {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        padding: 0.3rem 0.5rem;
+        border-radius: 5px;
+        transition: all 0.2s;
+      }
+      .endpoint-copy:hover {
+        background: #f1f5f9;
+        color: var(--brand-dim);
+      }
 
-    /* Code */
-    .code-wrap { margin:1.25rem 0; border-radius:var(--radius-md); overflow:hidden; border:1px solid #1e293b; box-shadow:var(--shadow-md); }
-    .code-header { background:#161b27; display:flex; align-items:center; padding:.6rem 1rem; gap:.75rem; border-bottom:1px solid #1e293b; }
-    .code-dots { display:flex; gap:.35rem; }
-    .code-dots span { width:11px; height:11px; border-radius:50%; }
-    .code-dots span:nth-child(1) { background:#ff5f57; }
-    .code-dots span:nth-child(2) { background:#febc2e; }
-    .code-dots span:nth-child(3) { background:#28c840; }
-    .code-lang { font-family:var(--mono); font-size:.72rem; color:#475569; font-weight:500; text-transform:uppercase; letter-spacing:.5px; }
-    .code-copy-btn { margin-left:auto; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); color:#64748b; font-size:.75rem; font-weight:500; padding:.3rem .75rem; border-radius:5px; cursor:pointer; display:flex; align-items:center; gap:.4rem; transition:all .2s; font-family:var(--font); }
-    .code-copy-btn:hover { background:rgba(0,212,160,.12); color:var(--brand); border-color:rgba(0,212,160,.3); }
-    .code-copy-btn.copied { background:rgba(0,212,160,.15); color:var(--brand); border-color:rgba(0,212,160,.4); }
-    .code-body { background:var(--code-bg); padding:1.25rem 1.4rem; overflow-x:auto; font-family:var(--mono); font-size:.84rem; line-height:1.75; color:var(--code-fg); }
-    .code-body pre { margin:0; }
-    .tk-kw  { color:#ff7b72; }
-    .tk-str { color:#a5d6ff; }
-    .tk-num { color:#79c0ff; }
-    .tk-key { color:#7ee787; }
-    .tk-cmt { color:#8b949e; font-style:italic; }
-    .tk-url { color:#d2a8ff; }
-    .tk-flag{ color:#ffa657; }
-    .tk-var { color:#e3b341; }
+      /* Code */
+      .code-wrap {
+        margin: 1.25rem 0;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid #1e293b;
+        box-shadow: var(--shadow-md);
+      }
+      .code-header {
+        background: #161b27;
+        display: flex;
+        align-items: center;
+        padding: 0.6rem 1rem;
+        gap: 0.75rem;
+        border-bottom: 1px solid #1e293b;
+      }
+      .code-dots {
+        display: flex;
+        gap: 0.35rem;
+      }
+      .code-dots span {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+      }
+      .code-dots span:nth-child(1) {
+        background: #ff5f57;
+      }
+      .code-dots span:nth-child(2) {
+        background: #febc2e;
+      }
+      .code-dots span:nth-child(3) {
+        background: #28c840;
+      }
+      .code-lang {
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: #475569;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .code-copy-btn {
+        margin-left: auto;
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 500;
+        padding: 0.3rem 0.75rem;
+        border-radius: 5px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        transition: all 0.2s;
+        font-family: var(--font);
+      }
+      .code-copy-btn:hover {
+        background: rgba(0, 212, 160, 0.12);
+        color: var(--brand);
+        border-color: rgba(0, 212, 160, 0.3);
+      }
+      .code-copy-btn.copied {
+        background: rgba(0, 212, 160, 0.15);
+        color: var(--brand);
+        border-color: rgba(0, 212, 160, 0.4);
+      }
+      .code-body {
+        background: var(--code-bg);
+        padding: 1.25rem 1.4rem;
+        overflow-x: auto;
+        font-family: var(--mono);
+        font-size: 0.84rem;
+        line-height: 1.75;
+        color: var(--code-fg);
+      }
+      .code-body pre {
+        margin: 0;
+      }
+      .tk-kw {
+        color: #ff7b72;
+      }
+      .tk-str {
+        color: #a5d6ff;
+      }
+      .tk-num {
+        color: #79c0ff;
+      }
+      .tk-key {
+        color: #7ee787;
+      }
+      .tk-cmt {
+        color: #8b949e;
+        font-style: italic;
+      }
+      .tk-url {
+        color: #d2a8ff;
+      }
+      .tk-flag {
+        color: #ffa657;
+      }
+      .tk-var {
+        color: #e3b341;
+      }
 
-    /* Tables */
-    .param-table-wrap { margin:1.25rem 0; border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow-sm); }
-    .param-table { width:100%; border-collapse:collapse; font-size:.875rem; }
-    .param-table thead tr { background:#f8fafc; border-bottom:2px solid var(--border); }
-    .param-table th { padding:.7rem 1rem; text-align:left; font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--text-muted); }
-    .param-table tbody tr { border-bottom:1px solid #f1f5f9; transition:background .15s; }
-    .param-table tbody tr:last-child { border-bottom:none; }
-    .param-table tbody tr:hover { background:#fafbfc; }
-    .param-table td { padding:.75rem 1rem; vertical-align:top; color:var(--text-secondary); }
-    .param-table td:first-child { font-family:var(--mono); font-size:.82rem; color:#0f172a; font-weight:500; }
-    .badge-req, .badge-opt { display:inline-block; font-size:.65rem; font-weight:700; padding:.2em .55em; border-radius:3px; text-transform:uppercase; letter-spacing:.4px; }
-    .badge-req { background:#fff1f2; color:var(--red-fg); border:1px solid var(--red-border); }
-    .badge-opt { background:#f0fdf4; color:var(--green-fg); border:1px solid var(--green-border); }
-    .type-badge { display:inline-block; font-family:var(--mono); font-size:.72rem; color:#7c3aed; background:#f5f3ff; border:1px solid #ede9fe; padding:.15em .5em; border-radius:3px; }
+      /* Tables */
+      .param-table-wrap {
+        margin: 1.25rem 0;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow-sm);
+      }
+      .param-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 0.875rem;
+      }
+      .param-table thead tr {
+        background: #f8fafc;
+        border-bottom: 2px solid var(--border);
+      }
+      .param-table th {
+        padding: 0.7rem 1rem;
+        text-align: left;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+      }
+      .param-table tbody tr {
+        border-bottom: 1px solid #f1f5f9;
+        transition: background 0.15s;
+      }
+      .param-table tbody tr:last-child {
+        border-bottom: none;
+      }
+      .param-table tbody tr:hover {
+        background: #fafbfc;
+      }
+      .param-table td {
+        padding: 0.75rem 1rem;
+        vertical-align: top;
+        color: var(--text-secondary);
+      }
+      .param-table td:first-child {
+        font-family: var(--mono);
+        font-size: 0.82rem;
+        color: #0f172a;
+        font-weight: 500;
+      }
+      .badge-req,
+      .badge-opt {
+        display: inline-block;
+        font-size: 0.65rem;
+        font-weight: 700;
+        padding: 0.2em 0.55em;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      .badge-req {
+        background: #fff1f2;
+        color: var(--red-fg);
+        border: 1px solid var(--red-border);
+      }
+      .badge-opt {
+        background: #f0fdf4;
+        color: var(--green-fg);
+        border: 1px solid var(--green-border);
+      }
+      .type-badge {
+        display: inline-block;
+        font-family: var(--mono);
+        font-size: 0.72rem;
+        color: #7c3aed;
+        background: #f5f3ff;
+        border: 1px solid #ede9fe;
+        padding: 0.15em 0.5em;
+        border-radius: 3px;
+      }
 
-    /* Callouts */
-    .callout { display:flex; gap:.85rem; padding:1rem 1.15rem; border-radius:var(--radius-md); margin:1.25rem 0; border:1px solid; }
-    .callout-icon { font-size:1rem; flex-shrink:0; margin-top:.1rem; }
-    .callout-body { flex:1; }
-    .callout-body strong { display:block; font-weight:650; margin-bottom:.3rem; font-size:.9rem; }
-    .callout-body p, .callout-body li { font-size:.875rem; margin-bottom:.25rem; }
-    .callout-body ul { margin:.4rem 0 0; }
-    .callout.info    { background:var(--blue-bg);  border-color:var(--blue-border); }
-    .callout.info    .callout-body strong { color:var(--blue-fg); }
-    .callout.info    .callout-body p, .callout.info li { color:#1e40af; }
-    .callout.warning { background:var(--amber-bg); border-color:var(--amber-border); }
-    .callout.warning .callout-body strong { color:var(--amber-fg); }
-    .callout.warning .callout-body p, .callout.warning li { color:var(--amber-fg); }
-    .callout.success { background:var(--green-bg); border-color:var(--green-border); }
-    .callout.success .callout-body strong { color:var(--green-fg); }
-    .callout.success .callout-body p, .callout.success li { color:var(--green-fg); }
-    .callout.danger  { background:var(--red-bg);   border-color:var(--red-border); }
-    .callout.danger  .callout-body strong { color:var(--red-fg); }
-    .callout.danger  .callout-body p, .callout.danger li { color:var(--red-fg); }
+      /* Callouts */
+      .callout {
+        display: flex;
+        gap: 0.85rem;
+        padding: 1rem 1.15rem;
+        border-radius: var(--radius-md);
+        margin: 1.25rem 0;
+        border: 1px solid;
+      }
+      .callout-icon {
+        font-size: 1rem;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+      .callout-body {
+        flex: 1;
+      }
+      .callout-body strong {
+        display: block;
+        font-weight: 650;
+        margin-bottom: 0.3rem;
+        font-size: 0.9rem;
+      }
+      .callout-body p,
+      .callout-body li {
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+      }
+      .callout-body ul {
+        margin: 0.4rem 0 0;
+      }
+      .callout.info {
+        background: var(--blue-bg);
+        border-color: var(--blue-border);
+      }
+      .callout.info .callout-body strong {
+        color: var(--blue-fg);
+      }
+      .callout.info .callout-body p,
+      .callout.info li {
+        color: #1e40af;
+      }
+      .callout.warning {
+        background: var(--amber-bg);
+        border-color: var(--amber-border);
+      }
+      .callout.warning .callout-body strong {
+        color: var(--amber-fg);
+      }
+      .callout.warning .callout-body p,
+      .callout.warning li {
+        color: var(--amber-fg);
+      }
+      .callout.success {
+        background: var(--green-bg);
+        border-color: var(--green-border);
+      }
+      .callout.success .callout-body strong {
+        color: var(--green-fg);
+      }
+      .callout.success .callout-body p,
+      .callout.success li {
+        color: var(--green-fg);
+      }
+      .callout.danger {
+        background: var(--red-bg);
+        border-color: var(--red-border);
+      }
+      .callout.danger .callout-body strong {
+        color: var(--red-fg);
+      }
+      .callout.danger .callout-body p,
+      .callout.danger li {
+        color: var(--red-fg);
+      }
 
-    /* Status Pill */
-    .status-pill { display:inline-flex; align-items:center; gap:.4rem; font-size:.75rem; font-weight:600; padding:.3em .75em; border-radius:20px; }
-    .status-pill::before { content:""; width:6px; height:6px; border-radius:50%; display:inline-block; }
-    .status-200 { background:#f0fdf4; color:#15803d; border:1px solid #bbf7d0; }
-    .status-200::before { background:#22c55e; }
+      /* Status Pill */
+      .status-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0.3em 0.75em;
+        border-radius: 20px;
+      }
+      .status-pill::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        display: inline-block;
+      }
+      .status-200 {
+        background: #f0fdf4;
+        color: #15803d;
+        border: 1px solid #bbf7d0;
+      }
+      .status-200::before {
+        background: #22c55e;
+      }
 
-    /* Steps */
-    .steps { list-style:none; padding:0; }
-    .step-item { display:flex; gap:1rem; padding:.85rem 0; border-bottom:1px solid #f1f5f9; }
-    .step-item:last-child { border-bottom:none; }
-    .step-num { width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--brand),#0ea5e9); color:#0b0f1a; font-size:.75rem; font-weight:800; display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:.1rem; }
-    .step-body strong { display:block; font-size:.9rem; color:var(--text-primary); margin-bottom:.2rem; }
-    .step-body p { font-size:.86rem; margin:0; }
+      /* Steps */
+      .steps {
+        list-style: none;
+        padding: 0;
+      }
+      .step-item {
+        display: flex;
+        gap: 1rem;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .step-item:last-child {
+        border-bottom: none;
+      }
+      .step-num {
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--brand), #0ea5e9);
+        color: #0b0f1a;
+        font-size: 0.75rem;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        margin-top: 0.1rem;
+      }
+      .step-body strong {
+        display: block;
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        margin-bottom: 0.2rem;
+      }
+      .step-body p {
+        font-size: 0.86rem;
+        margin: 0;
+      }
 
-    /* Creds */
-    .creds-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.25rem 0; }
-    .cred-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:1rem 1.15rem; }
-    .cred-card .label { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.6px; color:var(--text-muted); margin-bottom:.35rem; }
-    .cred-card .value { font-family:var(--mono); font-size:.9rem; color:var(--text-primary); font-weight:500; }
+      /* Creds */
+      .creds-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 1.25rem 0;
+      }
+      .cred-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 1rem 1.15rem;
+      }
+      .cred-card .label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--text-muted);
+        margin-bottom: 0.35rem;
+      }
+      .cred-card .value {
+        font-family: var(--mono);
+        font-size: 0.9rem;
+        color: var(--text-primary);
+        font-weight: 500;
+      }
 
-    /* Support */
-    .support-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:1rem; margin:1.25rem 0; }
-    .support-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-md); padding:1.25rem; box-shadow:var(--shadow-sm); transition:all .2s; }
-    .support-card:hover { border-color:var(--brand); box-shadow:0 0 0 3px var(--brand-glow); transform:translateY(-2px); }
-    .support-card-icon { width:38px; height:38px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:1rem; margin-bottom:.85rem; }
-    .support-card-icon.email { background:#eff6ff; color:#3b82f6; }
-    .support-card-icon.wa    { background:#f0fdf4; color:#22c55e; }
-    .support-card-icon.docs  { background:#fdf4ff; color:#a855f7; }
-    .support-card h4 { font-size:.875rem; font-weight:650; margin-bottom:.3rem; }
-    .support-card p  { font-size:.82rem; color:var(--text-muted); margin:0; }
-    .support-card a  { font-size:.82rem; font-weight:500; color:var(--brand-dim); }
+      /* Support */
+      .support-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 1rem;
+        margin: 1.25rem 0;
+      }
+      .support-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 1.25rem;
+        box-shadow: var(--shadow-sm);
+        transition: all 0.2s;
+      }
+      .support-card:hover {
+        border-color: var(--brand);
+        box-shadow: 0 0 0 3px var(--brand-glow);
+        transform: translateY(-2px);
+      }
+      .support-card-icon {
+        width: 38px;
+        height: 38px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1rem;
+        margin-bottom: 0.85rem;
+      }
+      .support-card-icon.email {
+        background: #eff6ff;
+        color: #3b82f6;
+      }
+      .support-card-icon.wa {
+        background: #f0fdf4;
+        color: #22c55e;
+      }
+      .support-card-icon.docs {
+        background: #fdf4ff;
+        color: #a855f7;
+      }
+      .support-card h4 {
+        font-size: 0.875rem;
+        font-weight: 650;
+        margin-bottom: 0.3rem;
+      }
+      .support-card p {
+        font-size: 0.82rem;
+        color: var(--text-muted);
+        margin: 0;
+      }
+      .support-card a {
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--brand-dim);
+      }
 
-    /* Footer */
-    .doc-footer { margin-top:4rem; padding:2rem 0 0; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
-    .doc-footer-brand { display:flex; align-items:center; gap:.5rem; }
-    .doc-footer-brand span { font-weight:700; color:var(--text-primary); }
-    .doc-footer p { font-size:.8rem; color:var(--text-muted); margin:0; }
-    .footer-links { display:flex; gap:1.5rem; }
-    .footer-links a { font-size:.8rem; color:var(--text-muted); }
-    .footer-links a:hover { color:var(--brand-dim); }
+      /* Footer */
+      .doc-footer {
+        margin-top: 4rem;
+        padding: 2rem 0 0;
+        border-top: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .doc-footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .doc-footer-brand span {
+        font-weight: 700;
+        color: var(--text-primary);
+      }
+      .doc-footer p {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        margin: 0;
+      }
+      .footer-links {
+        display: flex;
+        gap: 1.5rem;
+      }
+      .footer-links a {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+      }
+      .footer-links a:hover {
+        color: var(--brand-dim);
+      }
 
-    /* Toast */
-    .toast { position:fixed; bottom:1.5rem; right:1.5rem; background:#1e293b; color:#f1f5f9; padding:.65rem 1.1rem; border-radius:8px; font-size:.82rem; font-weight:500; display:flex; align-items:center; gap:.5rem; box-shadow:0 8px 30px rgba(0,0,0,.35); transform:translateY(80px); opacity:0; transition:all .3s cubic-bezier(.34,1.56,.64,1); z-index:1000; pointer-events:none; }
-    .toast.show { transform:translateY(0); opacity:1; }
-    .toast i { color:var(--brand); }
+      /* Toast */
+      .toast {
+        position: fixed;
+        bottom: 1.5rem;
+        right: 1.5rem;
+        background: #1e293b;
+        color: #f1f5f9;
+        padding: 0.65rem 1.1rem;
+        border-radius: 8px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+        transform: translateY(80px);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        z-index: 1000;
+        pointer-events: none;
+      }
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      .toast i {
+        color: var(--brand);
+      }
 
-    @media (max-width:1024px) {
-      .shell { grid-template-columns:1fr; grid-template-areas:"topbar" "main"; }
-      .sidebar { display:none; }
-      .main { padding:1.5rem; max-width:100%; }
-      .creds-grid { grid-template-columns:1fr; }
-      .hero-stats { flex-wrap:wrap; gap:1rem; }
-    }
-    @media (max-width:640px) {
-      .topbar-search,.topbar-link:not(.btn-cta) { display:none; }
-      .page-hero h1 { font-size:1.5rem; }
-    }
-  </style>
-</head>
-<body>
-<div class="shell">
-
-  <!-- TOPBAR -->
-  <header class="topbar">
-    <div class="topbar-brand">
-      <div class="brand-mark">PP</div>
-      <span class="brand-name">PalmPesa</span>
-      <span class="brand-badge">v1.0</span>
-    </div>
-    <div class="topbar-search">
-      <i class="fas fa-search" style="font-size:.8rem;"></i>
-      <input type="text" placeholder="Search endpoints, parameters…" id="docSearch" onkeyup="searchDocs(this.value)"/>
-      <kbd style="font-size:.7rem;color:#475569;background:#1e293b;border:1px solid #334155;border-radius:4px;padding:.1em .45em;">⌘K</kbd>
-    </div>
-    <div class="topbar-right">
-      <a href="#support" class="topbar-link"><i class="fas fa-headset"></i> Support</a>
-      <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank" class="btn-cta"><i class="fas fa-rocket" style="font-size:.75rem;"></i> Get API Keys</a>
-    </div>
-  </header>
-
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
-    <nav>
-      <div class="nav-group">
-        <div class="nav-group-label">Overview</div>
-        <a href="#welcome"         class="nav-link active"><i class="fas fa-home"></i> Introduction</a>
-        <a href="#getting-started" class="nav-link"><i class="fas fa-key"></i> Getting Started</a>
-        <a href="#authentication"  class="nav-link"><i class="fas fa-shield-alt"></i> Authentication</a>
-        <a href="#base-url"        class="nav-link"><i class="fas fa-server"></i> Base URL</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-label">Core Payments</div>
-        <a href="#pay-link"    class="nav-link"><i class="fas fa-link"></i> Pay by Link <span class="nav-method post">POST</span></a>
-        <a href="#webhook"     class="nav-link"><i class="fas fa-bolt"></i> Initiate Payment <span class="nav-method post">POST</span></a>
-        <a href="#pay-mobile"  class="nav-link"><i class="fas fa-mobile-alt"></i> Pay via Mobile <span class="nav-method post">POST</span></a>
-        <a href="#order-status" class="nav-link"><i class="fas fa-circle-check"></i> Order Status <span class="nav-method post">POST</span></a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-label">Accounts &amp; Cards</div>
-        <a href="#transactions"   class="nav-link"><i class="fas fa-list-ul"></i> Transactions <span class="nav-method get">GET</span></a>
-        <a href="#palm-card"      class="nav-link"><i class="fas fa-credit-card"></i> Palm Card</a>
-        <a href="#send-money"     class="nav-link"><i class="fas fa-paper-plane"></i> Send Money <span class="nav-method post">POST</span></a>
-        <a href="#register-login" class="nav-link"><i class="fas fa-user-plus"></i> Register &amp; Login</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-label">Help</div>
-        <a href="#support" class="nav-link"><i class="fas fa-headset"></i> Support &amp; Resources</a>
-      </div>
-    </nav>
-  </aside>
-
-  <!-- MAIN -->
-  <main class="main" id="mainContent">
-
-    <!-- HERO -->
-    <section id="welcome" class="doc-section">
-      <div class="page-hero">
-        <div class="page-hero-eyebrow"><span></span> Developer Documentation</div>
-        <h1>PalmPesa Payment API</h1>
-        <p>Production-grade REST API for mobile money, pay-by-link, and card operations across Tanzania. Built and maintained by <strong style="color:#e2e8f0;">Eagle Star Technology</strong>.</p>
-        <div class="hero-stats">
-          <div class="hero-stat"><span class="hero-stat-val">99.9%</span><span class="hero-stat-label">Uptime SLA</span></div>
-          <div class="hero-stat"><span class="hero-stat-val">&lt;3s</span><span class="hero-stat-label">Avg Response</span></div>
-          <div class="hero-stat"><span class="hero-stat-val">TZS</span><span class="hero-stat-label">Currency</span></div>
-          <div class="hero-stat"><span class="hero-stat-val">REST</span><span class="hero-stat-label">Protocol</span></div>
+      @media (max-width: 1024px) {
+        .shell {
+          grid-template-columns: 1fr;
+          grid-template-areas: "topbar" "main";
+        }
+        .sidebar {
+          display: none;
+        }
+        .main {
+          padding: 1.5rem;
+          max-width: 100%;
+        }
+        .creds-grid {
+          grid-template-columns: 1fr;
+        }
+        .hero-stats {
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+      }
+      @media (max-width: 640px) {
+        .topbar-search,
+        .topbar-link:not(.btn-cta) {
+          display: none;
+        }
+        .page-hero h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-brand">
+          <div class="brand-mark">PP</div>
+          <span class="brand-name">PalmPesa</span>
+          <span class="brand-badge">v1.0</span>
         </div>
-      </div>
-      <div class="callout info">
-        <i class="fas fa-book-open callout-icon"></i>
-        <div class="callout-body">
-          <strong>Official Live Reference</strong>
-          <p>For the complete interactive reference visit the <a href="https://apidog.com/" target="_blank" style="font-weight:600;">PalmPesa API Reference on Apidog ↗</a>. This document is optimised for cURL integration workflows.</p>
+        <div class="topbar-search">
+          <i class="fas fa-search" style="font-size: 0.8rem"></i>
+          <input
+            type="text"
+            placeholder="Search endpoints, parameters…"
+            id="docSearch"
+            onkeyup="searchDocs(this.value)"
+          />
+          <kbd
+            style="
+              font-size: 0.7rem;
+              color: #475569;
+              background: #1e293b;
+              border: 1px solid #334155;
+              border-radius: 4px;
+              padding: 0.1em 0.45em;
+            "
+            >⌘K</kbd
+          >
         </div>
-      </div>
-    </section>
+        <div class="topbar-right">
+          <a href="#support" class="topbar-link"
+            ><i class="fas fa-headset"></i> Support</a
+          >
+          <a
+            href="https://palmpesa.drmlelwa.co.tz/"
+            target="_blank"
+            class="btn-cta"
+            ><i class="fas fa-rocket" style="font-size: 0.75rem"></i> Get API
+            Keys</a
+          >
+        </div>
+      </header>
 
-    <!-- GETTING STARTED -->
-    <section id="getting-started" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-key"></i></div>
-        <h2>Getting Started</h2>
-      </div>
-      <p>You need two credentials before making any API call:</p>
-      <div class="creds-grid">
-        <div class="cred-card"><div class="label">User ID</div><div class="value">Unique developer account ID</div></div>
-        <div class="cred-card"><div class="label">API Token</div><div class="value">Bearer token for Authorization header</div></div>
-      </div>
-      <ul class="steps">
-        <li class="step-item">
-          <div class="step-num">1</div>
-          <div class="step-body"><strong>Create your account</strong><p>Register at <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank">palmpesa.drmlelwa.co.tz</a> and complete the developer registration form.</p></div>
-        </li>
-        <li class="step-item">
-          <div class="step-num">2</div>
-          <div class="step-body"><strong>Receive your credentials</strong><p>Your <code>user_id</code> and <code>API Token</code> are issued after account verification. Never expose them client-side.</p></div>
-        </li>
-        <li class="step-item">
-          <div class="step-num">3</div>
-          <div class="step-body"><strong>Make your first test call</strong><p>Start with a small amount (200–500 TZS) and verify the callback response before going live.</p></div>
-        </li>
-      </ul>
-      <div class="callout danger">
-        <i class="fas fa-triangle-exclamation callout-icon"></i>
-        <div class="callout-body">
-          <strong>Security Notice</strong>
-          <p>Never include your API token in client-side JavaScript, public repositories, or frontend code. Always make API calls from your server backend.</p>
-        </div>
-      </div>
-    </section>
+      <!-- SIDEBAR -->
+      <aside class="sidebar" id="sidebar">
+        <nav>
+          <div class="nav-group">
+            <div class="nav-group-label">Overview</div>
+            <a href="#welcome" class="nav-link active"
+              ><i class="fas fa-home"></i> Introduction</a
+            >
+            <a href="#getting-started" class="nav-link"
+              ><i class="fas fa-key"></i> Getting Started</a
+            >
+            <a href="#authentication" class="nav-link"
+              ><i class="fas fa-shield-alt"></i> Authentication</a
+            >
+            <a href="#base-url" class="nav-link"
+              ><i class="fas fa-server"></i> Base URL</a
+            >
+          </div>
+          <div class="nav-group">
+            <div class="nav-group-label">Core Payments</div>
+            <a href="#pay-link" class="nav-link"
+              ><i class="fas fa-link"></i> Pay by Link
+              <span class="nav-method post">POST</span></a
+            >
+            <a href="#webhook" class="nav-link"
+              ><i class="fas fa-bolt"></i> Webhook Payment
+              <span class="nav-method post">POST</span></a
+            >
+            <a href="#pay-mobile" class="nav-link"
+              ><i class="fas fa-mobile-alt"></i> Pay via Mobile
+              <span class="nav-method post">POST</span></a
+            >
+            <a href="#order-status" class="nav-link"
+              ><i class="fas fa-circle-check"></i> Order Status
+              <span class="nav-method post">POST</span></a
+            >
+          </div>
+          <div class="nav-group">
+            <div class="nav-group-label">Accounts &amp; Cards</div>
+            <a href="#transactions" class="nav-link"
+              ><i class="fas fa-list-ul"></i> Transactions
+              <span class="nav-method get">GET</span></a
+            >
+            <a href="#palm-card" class="nav-link"
+              ><i class="fas fa-credit-card"></i> Palm Card</a
+            >
+            <a href="#send-money" class="nav-link"
+              ><i class="fas fa-paper-plane"></i> Send Money
+              <span class="nav-method post">POST</span></a
+            >
+            <a href="#register-login" class="nav-link"
+              ><i class="fas fa-user-plus"></i> Register &amp; Login</a
+            >
+          </div>
+          <div class="nav-group">
+            <div class="nav-group-label">Help</div>
+            <a href="#support" class="nav-link"
+              ><i class="fas fa-headset"></i> Support &amp; Resources</a
+            >
+          </div>
+        </nav>
+      </aside>
 
-    <!-- AUTHENTICATION -->
-    <section id="authentication" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-shield-alt"></i></div>
-        <h2>Authentication</h2>
-      </div>
-      <p>All API requests must include a <strong>Bearer token</strong> in the HTTP <code>Authorization</code> header.</p>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">HTTP Headers</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-key">Authorization</span>: <span class="tk-str">Bearer YOUR_API_TOKEN</span>
-<span class="tk-key">Content-Type</span>:  <span class="tk-str">application/json</span>
-<span class="tk-key">Accept</span>:         <span class="tk-str">application/json</span></pre></div>
-      </div>
-      <div class="callout warning">
-        <i class="fas fa-circle-info callout-icon"></i>
-        <div class="callout-body">
-          <strong>Token Format</strong>
-          <p>Replace <code>YOUR_API_TOKEN</code> with the exact token issued during registration. The <code>Bearer</code> prefix is required and case-sensitive.</p>
-        </div>
-      </div>
-    </section>
+      <!-- MAIN -->
+      <main class="main" id="mainContent">
+        <!-- HERO -->
+        <section id="welcome" class="doc-section">
+          <div class="page-hero">
+            <div class="page-hero-eyebrow">
+              <span></span> Developer Documentation
+            </div>
+            <h1>PalmPesa Payment API</h1>
+            <p>
+              Production-grade REST API for mobile money, pay-by-link, and card
+              operations across Tanzania. Built and maintained by
+              <strong style="color: #e2e8f0">Eagle Star Technology</strong>.
+            </p>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <span class="hero-stat-val">99.9%</span
+                ><span class="hero-stat-label">Uptime SLA</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-val">&lt;3s</span
+                ><span class="hero-stat-label">Avg Response</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-val">TZS</span
+                ><span class="hero-stat-label">Currency</span>
+              </div>
+              <div class="hero-stat">
+                <span class="hero-stat-val">REST</span
+                ><span class="hero-stat-label">Protocol</span>
+              </div>
+            </div>
+          </div>
+          <div class="callout info">
+            <i class="fas fa-book-open callout-icon"></i>
+            <div class="callout-body">
+              <strong>Official Live Reference</strong>
+              <p>
+                For the complete interactive reference visit the
+                <a
+                  href="https://apidog.com/"
+                  target="_blank"
+                  style="font-weight: 600"
+                  >PalmPesa API Reference on Apidog ↗</a
+                >. This document is optimised for cURL integration workflows.
+              </p>
+            </div>
+          </div>
+        </section>
 
-    <!-- BASE URL -->
-    <section id="base-url" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-server"></i></div>
-        <h2>Base URL</h2>
-      </div>
-      <div class="endpoint-row">
-        <span class="method-badge method-base">BASE</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz',this)" title="Copy URL"><i class="fas fa-copy"></i></button>
-      </div>
-      <p>Prepend this base URL to every endpoint path. Example: <code>https://palmpesa.drmlelwa.co.tz/api/process-payment</code></p>
-      <div class="callout info">
-        <i class="fas fa-info-circle callout-icon"></i>
-        <div class="callout-body">
-          <strong>Important Integration Notes</strong>
-          <ul>
-            <li>Use Tanzanian phone format starting with <strong>06</strong> or <strong>07</strong> (no + sign), or country code <strong>255</strong></li>
-            <li>Your <code>callback_url</code> must return <strong>HTTP 200 OK</strong> within 10 seconds and be publicly reachable</li>
-            <li>After initiating a payment, poll <a href="#order-status">Get Order Status</a> or listen on your webhook to confirm the final state</li>
-            <li>Always test with small amounts (200–1000 TZS) before processing live transactions</li>
+        <!-- GETTING STARTED -->
+        <section id="getting-started" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-key"></i></div>
+            <h2>Getting Started</h2>
+          </div>
+          <p>You need two credentials before making any API call:</p>
+          <div class="creds-grid">
+            <div class="cred-card">
+              <div class="label">User ID</div>
+              <div class="value">Unique developer account ID</div>
+            </div>
+            <div class="cred-card">
+              <div class="label">API Token</div>
+              <div class="value">Bearer token for Authorization header</div>
+            </div>
+          </div>
+          <ul class="steps">
+            <li class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <strong>Create your account</strong>
+                <p>
+                  Register at
+                  <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank"
+                    >palmpesa.drmlelwa.co.tz</a
+                  >
+                  and complete the developer registration form.
+                </p>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <strong>Receive your credentials</strong>
+                <p>
+                  Your <code>user_id</code> and <code>API Token</code> are
+                  issued after account verification. Never expose them
+                  client-side.
+                </p>
+              </div>
+            </li>
+            <li class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <strong>Make your first test call</strong>
+                <p>
+                  Start with a small amount (200–500 TZS) and verify the
+                  callback response before going live.
+                </p>
+              </div>
+            </li>
           </ul>
-        </div>
-      </div>
-    </section>
+          <div class="callout danger">
+            <i class="fas fa-triangle-exclamation callout-icon"></i>
+            <div class="callout-body">
+              <strong>Security Notice</strong>
+              <p>
+                Never include your API token in client-side JavaScript, public
+                repositories, or frontend code. Always make API calls from your
+                server backend.
+              </p>
+            </div>
+          </div>
+        </section>
 
-    <!-- PAY BY LINK -->
-    <section id="pay-link" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-link"></i></div>
-        <h2>Pay by Link</h2>
-        <span class="section-num">Endpoint 01</span>
-      </div>
-      <p>Generate a shareable hosted payment page. The buyer completes their preferred payment method on the PalmPesa-hosted checkout.</p>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/process-payment</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/process-payment',this)"><i class="fas fa-copy"></i></button>
-      </div>
+        <!-- AUTHENTICATION -->
+        <section id="authentication" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-shield-alt"></i></div>
+            <h2>Authentication</h2>
+          </div>
+          <p>
+            All API requests must include a <strong>Bearer token</strong> in the
+            HTTP <code>Authorization</code> header.
+          </p>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">HTTP Headers</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-key">Authorization</span>: <span class="tk-str">Bearer YOUR_API_TOKEN</span>
+<span class="tk-key">Content-Type</span>:  <span class="tk-str">application/json</span>
+<span class="tk-key">Accept</span>:         <span class="tk-str">application/json</span></pre>
+            </div>
+          </div>
+          <div class="callout warning">
+            <i class="fas fa-circle-info callout-icon"></i>
+            <div class="callout-body">
+              <strong>Token Format</strong>
+              <p>
+                Replace <code>YOUR_API_TOKEN</code> with the exact token issued
+                during registration. The <code>Bearer</code> prefix is required
+                and case-sensitive.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      <h3>Request Headers</h3>
-      <div class="param-table-wrap">
-        <table class="param-table">
-          <thead><tr><th>Header</th><th>Required</th><th>Value</th></tr></thead>
-          <tbody>
-            <tr><td>Authorization</td><td><span class="badge-req">Required</span></td><td>Bearer YOUR_API_TOKEN</td></tr>
-            <tr><td>Content-Type</td><td><span class="badge-req">Required</span></td><td>application/json</td></tr>
-            <tr><td>Accept</td><td><span class="badge-req">Required</span></td><td>application/json</td></tr>
-          </tbody>
-        </table>
-      </div>
+        <!-- BASE URL -->
+        <section id="base-url" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-server"></i></div>
+            <h2>Base URL</h2>
+          </div>
+          <div class="endpoint-row">
+            <span class="method-badge method-base">BASE</span>
+            <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz</span>
+            <button
+              class="endpoint-copy"
+              onclick="copyText('https://palmpesa.drmlelwa.co.tz', this)"
+              title="Copy URL"
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <p>
+            Prepend this base URL to every endpoint path. Example:
+            <code>https://palmpesa.drmlelwa.co.tz/api/process-payment</code>
+          </p>
+          <div class="callout info">
+            <i class="fas fa-info-circle callout-icon"></i>
+            <div class="callout-body">
+              <strong>Important Integration Notes</strong>
+              <ul>
+                <li>
+                  Use Tanzanian phone format starting with
+                  <strong>06</strong> or <strong>07</strong> (no + sign), or
+                  country code <strong>255</strong>
+                </li>
+                <li>
+                  Your <code>callback_url</code> must return
+                  <strong>HTTP 200 OK</strong> within 10 seconds and be publicly
+                  reachable
+                </li>
+                <li>
+                  After initiating a payment, poll
+                  <a href="#order-status">Get Order Status</a> or listen on your
+                  webhook to confirm the final state
+                </li>
+                <li>
+                  Always test with small amounts (200–1000 TZS) before
+                  processing live transactions
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
-      <h3>Request Body</h3>
-      <div class="param-table-wrap">
-        <table class="param-table">
-          <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
-          <tbody>
-            <tr><td>user_id</td><td><span class="type-badge">integer</span></td><td><span class="badge-req">Required</span></td><td>Your PalmPesa developer User ID</td><td>25</td></tr>
-            <tr><td>vendor</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Vendor identifier — use <code>TILL61103867</code> unless instructed otherwise</td><td>"TILL61103867"</td></tr>
-            <tr><td>order_id</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Unique ID per transaction</td><td>"ORDER-100"</td></tr>
-            <tr><td>buyer_email</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Buyer email address</td><td>"user@example.com"</td></tr>
-            <tr><td>buyer_name</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Full name of the buyer</td><td>"Sephania Nathan"</td></tr>
-            <tr><td>buyer_phone</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Phone with country code, no + sign</td><td>"255744000000"</td></tr>
-            <tr><td>amount</td><td><span class="type-badge">integer</span></td><td><span class="badge-req">Required</span></td><td>Transaction amount in TZS</td><td>500</td></tr>
-            <tr><td>currency</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Currency code</td><td>"TZS"</td></tr>
-            <tr><td>redirect_url</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>URL after successful payment</td><td>"https://yourdomain.com/success"</td></tr>
-            <tr><td>cancel_url</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>URL if payment is cancelled</td><td>"https://yourdomain.com/cancel"</td></tr>
-            <tr><td>webhook</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Webhook URL for async payment status updates</td><td>"https://yourdomain.com/webhook"</td></tr>
-            <tr><td>buyer_remarks</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Buyer notes</td><td>"Online Delivery"</td></tr>
-            <tr><td>merchant_remarks</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Description of items or service</td><td>"Starlink Kit"</td></tr>
-            <tr><td>no_of_items</td><td><span class="type-badge">integer</span></td><td><span class="badge-req">Required</span></td><td>Number of items in order</td><td>1</td></tr>
-          </tbody>
-        </table>
-      </div>
+        <!-- PAY BY LINK -->
+        <section id="pay-link" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-link"></i></div>
+            <h2>Pay by Link</h2>
+            <span class="section-num">Endpoint 01</span>
+          </div>
+          <p>
+            Generate a shareable hosted payment page. The buyer completes their
+            preferred payment method on the PalmPesa-hosted checkout.
+          </p>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/process-payment</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/process-payment',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
 
-      <h3>Example Request</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/process-payment'</span> \
+          <h3>Request Headers</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Header</th>
+                  <th>Required</th>
+                  <th>Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Authorization</td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Bearer YOUR_API_TOKEN</td>
+                </tr>
+                <tr>
+                  <td>Content-Type</td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>application/json</td>
+                </tr>
+                <tr>
+                  <td>Accept</td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>application/json</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Request Body</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>user_id</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Your PalmPesa developer User ID</td>
+                  <td>25</td>
+                </tr>
+                <tr>
+                  <td>vendor</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>
+                    Vendor identifier — use <code>TILL61103867</code> unless
+                    instructed otherwise
+                  </td>
+                  <td>"TILL61103867"</td>
+                </tr>
+                <tr>
+                  <td>order_id</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Unique ID per transaction</td>
+                  <td>"ORDER-100"</td>
+                </tr>
+                <tr>
+                  <td>buyer_email</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Buyer email address</td>
+                  <td>"user@example.com"</td>
+                </tr>
+                <tr>
+                  <td>buyer_name</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Full name of the buyer</td>
+                  <td>"Sephania Nathan"</td>
+                </tr>
+                <tr>
+                  <td>buyer_phone</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Phone with country code, no + sign</td>
+                  <td>"255744000000"</td>
+                </tr>
+                <tr>
+                  <td>amount</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Transaction amount in TZS</td>
+                  <td>500</td>
+                </tr>
+                <tr>
+                  <td>currency</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Currency code</td>
+                  <td>"TZS"</td>
+                </tr>
+                <tr>
+                  <td>redirect_url</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>URL after successful payment</td>
+                  <td>"https://yourdomain.com/success"</td>
+                </tr>
+                <tr>
+                  <td>cancel_url</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>URL if payment is cancelled</td>
+                  <td>"https://yourdomain.com/cancel"</td>
+                </tr>
+                <tr>
+                  <td>webhook</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Webhook URL for async payment status updates</td>
+                  <td>"https://yourdomain.com/webhook"</td>
+                </tr>
+                <tr>
+                  <td>buyer_remarks</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Buyer notes</td>
+                  <td>"Online Delivery"</td>
+                </tr>
+                <tr>
+                  <td>merchant_remarks</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Description of items or service</td>
+                  <td>"Starlink Kit"</td>
+                </tr>
+                <tr>
+                  <td>no_of_items</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Number of items in order</td>
+                  <td>1</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Example Request</h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/process-payment'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
@@ -473,32 +1525,44 @@
     "buyer_remarks": "Online Delivery",
     "merchant_remarks": "Starlink Kit",
     "no_of_items": 1
-  }'</span></pre></div>
-      </div>
+  }'</span></pre>
+            </div>
+          </div>
 
-      <h3>Response <span class="status-pill status-200">200 OK</span></h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">JSON — Payment Link</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre>{
+          <h3>Response <span class="status-pill status-200">200 OK</span></h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">JSON — Payment Link</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre>{
   <span class="tk-key">"error"</span>: <span class="tk-str">"sharable payment link"</span>,
   <span class="tk-key">"raw"</span>: {
     <span class="tk-key">"payment_gateway_url"</span>: <span class="tk-str">"https://tz.selcom.online/paymentgw/checkout/VVNKSzVQWFpmRDBa..."</span>
   }
-}</pre></div>
-      </div>
+}</pre>
+            </div>
+          </div>
 
-      <h3>Callback / Webhook Payload</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">JSON — Async Callback</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre>{
+          <h3>Callback / Webhook Payload</h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">JSON — Async Callback</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre>{
   <span class="tk-key">"reference"</span>:  <span class="tk-str">"0927530628"</span>,
   <span class="tk-key">"resultcode"</span>: <span class="tk-str">"000"</span>,
   <span class="tk-key">"data"</span>: [{
@@ -511,145 +1575,397 @@
     <span class="tk-key">"reference"</span>:       <span class="tk-str">"0927530628"</span>,
     <span class="tk-key">"msisdn"</span>:          <span class="tk-str">"255693662424"</span>
   }]
-}</pre></div>
-      </div>
-      <div class="callout info">
-        <i class="fas fa-circle-info callout-icon"></i>
-        <div class="callout-body">
-          <strong>No Immediate Status</strong>
-          <p>This endpoint returns a hosted checkout URL only. Final payment status arrives asynchronously via your <code>webhook</code> URL or by polling <a href="#order-status">Get Order Status</a>.</p>
-        </div>
-      </div>
-    </section>
+}</pre>
+            </div>
+          </div>
+          <div class="callout info">
+            <i class="fas fa-circle-info callout-icon"></i>
+            <div class="callout-body">
+              <strong>No Immediate Status</strong>
+              <p>
+                This endpoint returns a hosted checkout URL only. Final payment
+                status arrives asynchronously via your <code>webhook</code> URL
+                or by polling <a href="#order-status">Get Order Status</a>.
+              </p>
+            </div>
+          </div>
+        </section>
 
-    <!-- INITIATE PAYMENT -->
-    <section id="webhook" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-bolt"></i></div>
-        <h2>Initiate Payment via Phone</h2>
-        <span class="section-num">Endpoint 02</span>
-      </div>
-      <p>Send a direct USSD push to a buyer's mobile wallet. The user receives a payment prompt on their phone and approves the transaction in real-time.</p>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate',this)"><i class="fas fa-copy"></i></button>
-      </div>
+        <!-- INITIATE PAYMENT -->
+        <section id="webhook" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-bolt"></i></div>
+            <h2>Webhook Payment using phone number</h2>
+            <span class="section-num">Endpoint 02</span>
+          </div>
+          <h3>The Result May</h3>
+          <p>
+            This endpoint initiates a direct payment request to the user's
+            mobile money wallet (typically via USSD push or prompt). The user
+            will receive a payment prompt on their phone to approve the
+            transaction.
+          </p>
+          <p>
+            Remember you can monitor the payment status via your
+            <strong>callback_url</strong> (webhook) or by polling the
+            <strong>Get Order Status</strong> endpoint using the provided
+            <code>transaction_id</code>.
+          </p>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
 
-      <h3>Request Body</h3>
-      <div class="param-table-wrap">
-        <table class="param-table">
-          <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
-          <tbody>
-            <tr><td>name</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Full name of the payer</td><td>"Sara John"</td></tr>
-            <tr><td>email</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Payer email address</td><td>"sara@example.com"</td></tr>
-            <tr><td>phone</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Tanzania phone to receive USSD push (no +)</td><td>"0693662424"</td></tr>
-            <tr><td>amount</td><td><span class="type-badge">integer</span></td><td><span class="badge-req">Required</span></td><td>Amount to charge in TZS</td><td>200</td></tr>
-            <tr><td>transaction_id</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Your unique transaction identifier</td><td>"TXN-2775"</td></tr>
-            <tr><td>address</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Payer address</td><td>"Dar es Salaam"</td></tr>
-            <tr><td>postcode</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Postal code</td><td>"11111"</td></tr>
-            <tr><td>callback_url</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Publicly accessible URL to receive payment status updates</td><td>"https://yourdomain.com/callback"</td></tr>
-          </tbody>
-        </table>
-      </div>
+          <h3>Headers</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Required</th>
+                  <th>Example Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Authorization</td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Bearer YOUR_API_TOKEN</td>
+                </tr>
+                <tr>
+                  <td>Content-Type</td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>application/json</td>
+                </tr>
+                <tr>
+                  <td>Accept</td>
+                  <td><span class="badge-opt">Recommended</span></td>
+                  <td>application/json</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <h3>Example Request</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">--location --request POST</span> \
+          <h3>Request Body Parameters</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>name</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Full name of the payer / buyer</td>
+                  <td>"Sara John"</td>
+                </tr>
+                <tr>
+                  <td>email</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Email address of the payer</td>
+                  <td>"john@example.com"</td>
+                </tr>
+                <tr>
+                  <td>phone</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>
+                    Phone number to receive the payment prompt (Tanzania format
+                    with country code, no +)
+                  </td>
+                  <td>"0693662424"</td>
+                </tr>
+                <tr>
+                  <td>amount</td>
+                  <td><span class="type-badge">integer / number</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Amount to charge in TZS</td>
+                  <td>200</td>
+                </tr>
+                <tr>
+                  <td>transaction_id</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Your unique transaction / order identifier</td>
+                  <td>"2775"</td>
+                </tr>
+                <tr>
+                  <td>address</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Address or location of the payer</td>
+                  <td>"Dar es Salaam"</td>
+                </tr>
+                <tr>
+                  <td>postcode</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Postcode / postal code</td>
+                  <td>"11111"</td>
+                </tr>
+                <tr>
+                  <td>callback_url</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>
+                    Your server webhook / callback URL to receive payment status
+                    updates (must be publicly accessible)
+                  </td>
+                  <td>"http://anord.site/your-test-url"</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Example Request Body</h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">JSON</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre>{
+  <span class="tk-key">"name"</span>: <span class="tk-str">"Sara John"</span>,
+  <span class="tk-key">"email"</span>: <span class="tk-str">"john@example.com"</span>,
+  <span class="tk-key">"phone"</span>: <span class="tk-str">"0693662424"</span>,
+  <span class="tk-key">"amount"</span>: <span class="tk-num">200</span>,
+  <span class="tk-key">"transaction_id"</span>: <span class="tk-str">"2775"</span>,
+  <span class="tk-key">"address"</span>: <span class="tk-str">"Dar es Salaam"</span>,
+  <span class="tk-key">"postcode"</span>: <span class="tk-str">"11111"</span>,
+  <span class="tk-key">"callback_url"</span>: <span class="tk-str">"http://anord.site/your-test-url"</span>
+}</pre>
+            </div>
+          </div>
+
+          <h3>cURL Example</h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">--location --request POST</span> \
   <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate'</span> \
   <span class="tk-flag">--header</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">--header</span> <span class="tk-str">'Content-Type: application/json'</span> \
   <span class="tk-flag">--data-raw</span> <span class="tk-str">'{
     "name": "Sara John",
-    "email": "sara@example.com",
+    "email": "john@example.com",
     "phone": "0693662424",
     "amount": 200,
-    "transaction_id": "TXN-2775",
+    "transaction_id": "2775",
     "address": "Dar es Salaam",
     "postcode": "11111",
-    "callback_url": "https://yourdomain.com/callback"
-  }'</span></pre></div>
-      </div>
+    "callback_url": "http://anord.site/your-test-url"
+  }'</span></pre>
+            </div>
+          </div>
 
-      <h3>Initiation Response <span class="status-pill status-200">200 OK</span></h3>
-      <div class="callout success">
-        <i class="fas fa-circle-check callout-icon"></i>
-        <div class="callout-body">
-          <strong>Save your order_id immediately</strong>
-          <p>The <code>order_id</code> is your primary reference for tracking this transaction. Persist it to your database before processing anything else.</p>
-        </div>
-      </div>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">JSON</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre>{
+          <h3>
+            Response when Payment initiated
+            <span class="status-pill status-200">200 OK</span>
+          </h3>
+          <div class="callout success">
+            <i class="fas fa-circle-check callout-icon"></i>
+            <div class="callout-body">
+              <strong>Store this order id for transaction tracking</strong>
+              <p>
+                Make sure you also store this order id safely for later
+                reconciliation and status checks.
+              </p>
+            </div>
+          </div>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">JSON</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre>{
   <span class="tk-key">"message"</span>:  <span class="tk-str">"Payment initiated. Processing will continue asynchronously."</span>,
   <span class="tk-key">"order_id"</span>: <span class="tk-str">"PALMPESA17682869972044"</span>
-}</pre></div>
-      </div>
+}</pre>
+            </div>
+          </div>
 
-      <h3>Webhook Callback (Async)</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">JSON — Webhook Delivery</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre>{
+          <h3>This is a Callback Response</h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">JSON — Webhook Delivery</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre>{
   <span class="tk-key">"order_id"</span>:       <span class="tk-str">"PALMPESA17683440586334"</span>,
   <span class="tk-key">"payment_status"</span>: <span class="tk-str">"PENDING"</span>  <span class="tk-cmt">// COMPLETED | FAILED | PENDING</span>
-}</pre></div>
-      </div>
-    </section>
+}</pre>
+            </div>
+          </div>
+        </section>
 
-    <!-- PAY VIA MOBILE -->
-    <section id="pay-mobile" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-mobile-alt"></i></div>
-        <h2>Pay via Mobile / USSD</h2>
-        <span class="section-num">Endpoint 03</span>
-      </div>
-      <p>Directly initiate a mobile money payment push without a hosted checkout page.</p>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile',this)"><i class="fas fa-copy"></i></button>
-      </div>
+        <!-- PAY VIA MOBILE -->
+        <section id="pay-mobile" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-mobile-alt"></i></div>
+            <h2>Pay via Mobile / USSD</h2>
+            <span class="section-num">Endpoint 03</span>
+          </div>
+          <p>
+            Directly initiate a mobile money payment push without a hosted
+            checkout page.
+          </p>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
 
-      <h3>Request Body</h3>
-      <div class="param-table-wrap">
-        <table class="param-table">
-          <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
-          <tbody>
-            <tr><td>user_id</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Your PalmPesa User ID</td><td>"2"</td></tr>
-            <tr><td>name</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Full name of the buyer</td><td>"Alune Kyusa"</td></tr>
-            <tr><td>email</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Buyer email address</td><td>"alune@example.com"</td></tr>
-            <tr><td>phone</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Phone with country code, no + sign</td><td>"255744000000"</td></tr>
-            <tr><td>amount</td><td><span class="type-badge">integer</span></td><td><span class="badge-req">Required</span></td><td>Amount in TZS</td><td>500</td></tr>
-            <tr><td>transaction_id</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Unique transaction identifier</td><td>"TXN1234567891"</td></tr>
-            <tr><td>address</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Buyer address</td><td>"Mbeya"</td></tr>
-            <tr><td>postcode</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Postal code</td><td>"53127"</td></tr>
-            <tr><td>buyer_uuid</td><td><span class="type-badge">integer</span></td><td><span class="badge-req">Required</span></td><td>Unique buyer identifier in your system</td><td>988776</td></tr>
-          </tbody>
-        </table>
-      </div>
+          <h3>Request Body</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>user_id</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Your PalmPesa User ID</td>
+                  <td>"2"</td>
+                </tr>
+                <tr>
+                  <td>name</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Full name of the buyer</td>
+                  <td>"Alune Kyusa"</td>
+                </tr>
+                <tr>
+                  <td>email</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Buyer email address</td>
+                  <td>"alune@example.com"</td>
+                </tr>
+                <tr>
+                  <td>phone</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Phone with country code, no + sign</td>
+                  <td>"255744000000"</td>
+                </tr>
+                <tr>
+                  <td>amount</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Amount in TZS</td>
+                  <td>500</td>
+                </tr>
+                <tr>
+                  <td>transaction_id</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Unique transaction identifier</td>
+                  <td>"TXN1234567891"</td>
+                </tr>
+                <tr>
+                  <td>address</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Buyer address</td>
+                  <td>"Mbeya"</td>
+                </tr>
+                <tr>
+                  <td>postcode</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Postal code</td>
+                  <td>"53127"</td>
+                </tr>
+                <tr>
+                  <td>buyer_uuid</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Unique buyer identifier in your system</td>
+                  <td>988776</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <h3>Example Request</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile'</span> \
+          <h3>Example Request</h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
@@ -663,17 +1979,23 @@
     "address": "Mbeya",
     "postcode": "53127",
     "buyer_uuid": 988776
-  }'</span></pre></div>
-      </div>
+  }'</span></pre>
+            </div>
+          </div>
 
-      <h3>Response <span class="status-pill status-200">200 OK</span></h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">JSON</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre>{
+          <h3>Response <span class="status-pill status-200">200 OK</span></h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">JSON</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre>{
   <span class="tk-key">"message"</span>:  <span class="tk-str">"Payment request sent to user's phone"</span>,
   <span class="tk-key">"order_id"</span>: <span class="tk-str">"SELCOM17458294939723"</span>,
   <span class="tk-key">"response"</span>: {
@@ -684,55 +2006,96 @@
     <span class="tk-key">"message"</span>:    <span class="tk-str">"Wallet push successful"</span>,
     <span class="tk-key">"data"</span>: []
   }
-}</pre></div>
-      </div>
-    </section>
+}</pre>
+            </div>
+          </div>
+        </section>
 
-    <!-- ORDER STATUS -->
-    <section id="order-status" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-circle-check"></i></div>
-        <h2>Get Order Status</h2>
-        <span class="section-num">Endpoint 04</span>
-      </div>
-      <p>Poll for the current status of any payment order using its <code>order_id</code>.</p>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/order-status</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/order-status',this)"><i class="fas fa-copy"></i></button>
-      </div>
+        <!-- ORDER STATUS -->
+        <section id="order-status" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-circle-check"></i></div>
+            <h2>Get Order Status</h2>
+            <span class="section-num">Endpoint 04</span>
+          </div>
+          <p>
+            Poll for the current status of any payment order using its
+            <code>order_id</code>.
+          </p>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/order-status</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/order-status',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
 
-      <h3>Request Body</h3>
-      <div class="param-table-wrap">
-        <table class="param-table">
-          <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
-          <tbody>
-            <tr><td>order_id</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Order ID returned during payment initiation</td><td>"PALMPESA17458309277044"</td></tr>
-          </tbody>
-        </table>
-      </div>
+          <h3>Request Body</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>order_id</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Order ID returned during payment initiation</td>
+                  <td>"PALMPESA17458309277044"</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <h3>Example Request</h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/order-status'</span> \
+          <h3>Example Request</h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/order-status'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{"order_id": "PALMPESA17458309277044"}'</span></pre></div>
-      </div>
+  <span class="tk-flag">-d</span> <span class="tk-str">'{"order_id": "PALMPESA17458309277044"}'</span></pre>
+            </div>
+          </div>
 
-      <h3>Response <span class="status-pill status-200">200 OK</span></h3>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">JSON</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre>{
+          <h3>Response <span class="status-pill status-200">200 OK</span></h3>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">JSON</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre>{
   <span class="tk-key">"reference"</span>:  <span class="tk-str">"0927530628"</span>,
   <span class="tk-key">"resultcode"</span>: <span class="tk-str">"000"</span>,
   <span class="tk-key">"result"</span>:     <span class="tk-str">"SUCCESS"</span>,
@@ -747,184 +2110,344 @@
     <span class="tk-key">"reference"</span>:       <span class="tk-str">"0927530628"</span>,
     <span class="tk-key">"msisdn"</span>:          <span class="tk-str">"255693662424"</span>
   }]
-}</pre></div>
-      </div>
-      <div class="callout info">
-        <i class="fas fa-circle-info callout-icon"></i>
-        <div class="callout-body">
-          <strong>Status Values</strong>
-          <p>Check <code>data[0].payment_status</code>. Values: <code>COMPLETED</code>, <code>PENDING</code>, <code>FAILED</code>. Use exponential backoff when polling.</p>
-        </div>
-      </div>
-    </section>
+}</pre>
+            </div>
+          </div>
+          <div class="callout info">
+            <i class="fas fa-circle-info callout-icon"></i>
+            <div class="callout-body">
+              <strong>Status Values</strong>
+              <p>
+                Check <code>data[0].payment_status</code>. Values:
+                <code>COMPLETED</code>, <code>PENDING</code>,
+                <code>FAILED</code>. Use exponential backoff when polling.
+              </p>
+            </div>
+          </div>
+        </section>
 
-    <!-- TRANSACTIONS -->
-    <section id="transactions" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-list-ul"></i></div>
-        <h2>Get Transaction List</h2>
-        <span class="section-num">Endpoint 05</span>
-      </div>
-      <p>Retrieve a paginated list of all transactions associated with your account.</p>
-      <div class="endpoint-row">
-        <span class="method-badge method-get">GET</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&amp;per_page=20</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20',this)"><i class="fas fa-copy"></i></button>
-      </div>
+        <!-- TRANSACTIONS -->
+        <section id="transactions" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-list-ul"></i></div>
+            <h2>Get Transaction List</h2>
+            <span class="section-num">Endpoint 05</span>
+          </div>
+          <p>
+            Retrieve a paginated list of all transactions associated with your
+            account.
+          </p>
+          <div class="endpoint-row">
+            <span class="method-badge method-get">GET</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&amp;per_page=20</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
 
-      <h3>Query Parameters</h3>
-      <div class="param-table-wrap">
-        <table class="param-table">
-          <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
-          <tbody>
-            <tr><td>page</td><td><span class="type-badge">integer</span></td><td><span class="badge-opt">Optional</span></td><td>Page number (default: 1)</td></tr>
-            <tr><td>per_page</td><td><span class="type-badge">integer</span></td><td><span class="badge-opt">Optional</span></td><td>Results per page (default: 20, max: 100)</td></tr>
-          </tbody>
-        </table>
-      </div>
+          <h3>Query Parameters</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>page</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-opt">Optional</span></td>
+                  <td>Page number (default: 1)</td>
+                </tr>
+                <tr>
+                  <td>per_page</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-opt">Optional</span></td>
+                  <td>Results per page (default: 20, max: 100)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X GET</span> \
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X GET</span> \
   <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&amp;per_page=20'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span></pre></div>
-      </div>
-    </section>
+  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span></pre>
+            </div>
+          </div>
+        </section>
 
-    <!-- PALM CARD -->
-    <section id="palm-card" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-credit-card"></i></div>
-        <h2>Palm Card Operations</h2>
-        <span class="section-num">Endpoint 06</span>
-      </div>
-      <p>Issue virtual Palm Cards, deposit funds, and manage card activation status.</p>
+        <!-- PALM CARD -->
+        <section id="palm-card" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-credit-card"></i></div>
+            <h2>Palm Card Operations</h2>
+            <span class="section-num">Endpoint 06</span>
+          </div>
+          <p>
+            Issue virtual Palm Cards, deposit funds, and manage card activation
+            status.
+          </p>
 
-      <h3>Create Palm Card</h3>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/cards</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/cards',this)"><i class="fas fa-copy"></i></button>
-      </div>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL — Create Card</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/cards'</span> \
+          <h3>Create Palm Card</h3>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/cards</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText('https://palmpesa.drmlelwa.co.tz/api/cards', this)
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL — Create Card</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/cards'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{"pin": "1234"}'</span></pre></div>
-      </div>
+  <span class="tk-flag">-d</span> <span class="tk-str">'{"pin": "1234"}'</span></pre>
+            </div>
+          </div>
 
-      <h3>Deposit Money to Palm Card</h3>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/card/add-money</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/card/add-money',this)"><i class="fas fa-copy"></i></button>
-      </div>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL — Add Money</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/card/add-money'</span> \
+          <h3>Deposit Money to Palm Card</h3>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/card/add-money</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/card/add-money',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL — Add Money</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/card/add-money'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{"phone": "0744000000", "amount": "500"}'</span></pre></div>
-      </div>
+  <span class="tk-flag">-d</span> <span class="tk-str">'{"phone": "0744000000", "amount": "500"}'</span></pre>
+            </div>
+          </div>
 
-      <h3>Toggle Card Status (Enable / Disable)</h3>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/cards/{card_id}/toggle-status</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/cards/{card_id}/toggle-status',this)"><i class="fas fa-copy"></i></button>
-      </div>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL — Toggle Status</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> \
+          <h3>Toggle Card Status (Enable / Disable)</h3>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/cards/{card_id}/toggle-status</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/cards/{card_id}/toggle-status',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL — Toggle Status</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> \
   <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/cards/<span class="tk-var">10</span>/toggle-status'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span></pre></div>
-      </div>
-    </section>
+  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span></pre>
+            </div>
+          </div>
+        </section>
 
-    <!-- SEND MONEY -->
-    <section id="send-money" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-paper-plane"></i></div>
-        <h2>Send Money (Card → Card)</h2>
-        <span class="section-num">Endpoint 07</span>
-      </div>
-      <p>Transfer funds from your Palm Card to another Palm Card instantly.</p>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/send-to-card</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/send-to-card',this)"><i class="fas fa-copy"></i></button>
-      </div>
+        <!-- SEND MONEY -->
+        <section id="send-money" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-paper-plane"></i></div>
+            <h2>Send Money (Card → Card)</h2>
+            <span class="section-num">Endpoint 07</span>
+          </div>
+          <p>
+            Transfer funds from your Palm Card to another Palm Card instantly.
+          </p>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/send-to-card</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText(
+                  'https://palmpesa.drmlelwa.co.tz/api/send-to-card',
+                  this,
+                )
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
 
-      <h3>Request Body</h3>
-      <div class="param-table-wrap">
-        <table class="param-table">
-          <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th><th>Example</th></tr></thead>
-          <tbody>
-            <tr><td>card_number</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Recipient Palm Card number</td><td>"3410020000"</td></tr>
-            <tr><td>amount</td><td><span class="type-badge">integer</span></td><td><span class="badge-req">Required</span></td><td>Amount to transfer in TZS</td><td>500</td></tr>
-            <tr><td>pin</td><td><span class="type-badge">string</span></td><td><span class="badge-req">Required</span></td><td>Sender 4-digit card PIN</td><td>"1234"</td></tr>
-          </tbody>
-        </table>
-      </div>
+          <h3>Request Body</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Parameter</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                  <th>Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>card_number</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Recipient Palm Card number</td>
+                  <td>"3410020000"</td>
+                </tr>
+                <tr>
+                  <td>amount</td>
+                  <td><span class="type-badge">integer</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Amount to transfer in TZS</td>
+                  <td>500</td>
+                </tr>
+                <tr>
+                  <td>pin</td>
+                  <td><span class="type-badge">string</span></td>
+                  <td><span class="badge-req">Required</span></td>
+                  <td>Sender 4-digit card PIN</td>
+                  <td>"1234"</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/send-to-card'</span> \
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/send-to-card'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
   <span class="tk-flag">-d</span> <span class="tk-str">'{
     "card_number": "3410020000",
     "amount": 500,
     "pin": "1234"
-  }'</span></pre></div>
-      </div>
-    </section>
+  }'</span></pre>
+            </div>
+          </div>
+        </section>
 
-    <!-- REGISTER & LOGIN -->
-    <section id="register-login" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-user-plus"></i></div>
-        <h2>User Registration &amp; Login</h2>
-        <span class="section-num">Endpoint 08</span>
-      </div>
-      <p>Create new user accounts and authenticate to obtain API tokens programmatically.</p>
+        <!-- REGISTER & LOGIN -->
+        <section id="register-login" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-user-plus"></i></div>
+            <h2>User Registration &amp; Login</h2>
+            <span class="section-num">Endpoint 08</span>
+          </div>
+          <p>
+            Create new user accounts and authenticate to obtain API tokens
+            programmatically.
+          </p>
 
-      <h3>Register New User</h3>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/register</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/register',this)"><i class="fas fa-copy"></i></button>
-      </div>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL — Register</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/register'</span> \
+          <h3>Register New User</h3>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/register</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText('https://palmpesa.drmlelwa.co.tz/api/register', this)
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL — Register</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/register'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
   <span class="tk-flag">-d</span> <span class="tk-str">'{
@@ -937,153 +2460,242 @@
     "email":                 "sephania@eaglestar.com",
     "password":              "StrongPassword123!",
     "password_confirmation": "StrongPassword123!"
-  }'</span></pre></div>
-      </div>
+  }'</span></pre>
+            </div>
+          </div>
 
-      <h3>User Login</h3>
-      <div class="endpoint-row">
-        <span class="method-badge method-post">POST</span>
-        <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz/api/login</span>
-        <button class="endpoint-copy" onclick="copyText('https://palmpesa.drmlelwa.co.tz/api/login',this)"><i class="fas fa-copy"></i></button>
-      </div>
-      <div class="code-wrap">
-        <div class="code-header">
-          <div class="code-dots"><span></span><span></span><span></span></div>
-          <span class="code-lang">cURL — Login</span>
-          <button class="code-copy-btn" onclick="copyCode(this)"><i class="fas fa-copy"></i> Copy</button>
-        </div>
-        <div class="code-body"><pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/login'</span> \
+          <h3>User Login</h3>
+          <div class="endpoint-row">
+            <span class="method-badge method-post">POST</span>
+            <span class="endpoint-url"
+              >https://palmpesa.drmlelwa.co.tz/api/login</span
+            >
+            <button
+              class="endpoint-copy"
+              onclick="
+                copyText('https://palmpesa.drmlelwa.co.tz/api/login', this)
+              "
+            >
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+          <div class="code-wrap">
+            <div class="code-header">
+              <div class="code-dots">
+                <span></span><span></span><span></span>
+              </div>
+              <span class="code-lang">cURL — Login</span>
+              <button class="code-copy-btn" onclick="copyCode(this)">
+                <i class="fas fa-copy"></i> Copy
+              </button>
+            </div>
+            <div class="code-body">
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/login'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
   <span class="tk-flag">-d</span> <span class="tk-str">'{
     "email":    "sephania@eaglestar.com",
     "password": "StrongPassword123!"
-  }'</span></pre></div>
-      </div>
-    </section>
+  }'</span></pre>
+            </div>
+          </div>
+        </section>
 
-    <!-- SUPPORT -->
-    <section id="support" class="doc-section">
-      <div class="section-heading">
-        <div class="section-icon"><i class="fas fa-headset"></i></div>
-        <h2>Support &amp; Resources</h2>
-      </div>
-      <p>Our team is available to help you integrate PalmPesa into your platform.</p>
+        <!-- SUPPORT -->
+        <section id="support" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-headset"></i></div>
+            <h2>Support &amp; Resources</h2>
+          </div>
+          <p>
+            Our team is available to help you integrate PalmPesa into your
+            platform.
+          </p>
 
-      <div class="support-grid">
-        <div class="support-card">
-          <div class="support-card-icon email"><i class="fas fa-envelope"></i></div>
-          <h4>Email Support</h4>
-          <p>Technical questions &amp; escalations</p>
-          <a href="mailto:anoldmwinuka@gmail.com">anoldmwinuka@gmail.com</a>
-          <p style="margin-top:.5rem;font-size:.75rem;color:#94a3b8;">24–48 hour response</p>
-        </div>
-        <div class="support-card">
-          <div class="support-card-icon wa"><i class="fab fa-whatsapp"></i></div>
-          <h4>WhatsApp</h4>
-          <p>Fast responses during business hours</p>
-          <a href="https://wa.me/255693662424" target="_blank">+255 693 662 424</a>
-          <p style="margin-top:.5rem;font-size:.75rem;color:#94a3b8;">Mon–Fri, 8AM–5PM EAT</p>
-        </div>
-        <div class="support-card">
-          <div class="support-card-icon docs"><i class="fas fa-book"></i></div>
-          <h4>Live API Reference</h4>
-          <p>Interactive endpoint explorer</p>
-          <a href="https://documentation.palmpesa.co.tz" target="_blank">palmpesa-docs.netlify.app</a>
-          <p style="margin-top:.5rem;font-size:.75rem;color:#94a3b8;">Always available</p>
-        </div>
-      </div>
+          <div class="support-grid">
+            <div class="support-card">
+              <div class="support-card-icon email">
+                <i class="fas fa-envelope"></i>
+              </div>
+              <h4>Email Support</h4>
+              <p>Technical questions &amp; escalations</p>
+              <a href="mailto:anoldmwinuka@gmail.com">anoldmwinuka@gmail.com</a>
+              <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #94a3b8">
+                24–48 hour response
+              </p>
+            </div>
+            <div class="support-card">
+              <div class="support-card-icon wa">
+                <i class="fab fa-whatsapp"></i>
+              </div>
+              <h4>WhatsApp</h4>
+              <p>Fast responses during business hours</p>
+              <a href="https://wa.me/255693662424" target="_blank"
+                >+255 693 662 424</a
+              >
+              <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #94a3b8">
+                Mon–Fri, 8AM–5PM EAT
+              </p>
+            </div>
+            <div class="support-card">
+              <div class="support-card-icon docs">
+                <i class="fas fa-book"></i>
+              </div>
+              <h4>Live API Reference</h4>
+              <p>Interactive endpoint explorer</p>
+              <a href="https://documentation.palmpesa.co.tz" target="_blank"
+                >palmpesa-docs.netlify.app</a
+              >
+              <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #94a3b8">
+                Always available
+              </p>
+            </div>
+          </div>
 
-      <h3>Integration Checklist</h3>
-      <div class="callout success">
-        <i class="fas fa-circle-check callout-icon"></i>
-        <div class="callout-body">
-          <strong>Best Practices</strong>
-          <ul>
-            <li>Test with small amounts (200–500 TZS) before going to production</li>
-            <li>Implement both webhook listeners <strong>and</strong> Order Status polling for reliability</li>
-            <li>Generate cryptographically unique <code>order_id</code> per transaction (e.g. UUID v4)</li>
-            <li>Log all API requests and responses with timestamps for audit trails</li>
-            <li>Ensure your <code>callback_url</code> is publicly accessible and returns HTTP 200 promptly</li>
-            <li>Never hard-code credentials — use environment variables or a secrets manager</li>
-          </ul>
-        </div>
-      </div>
-    </section>
+          <h3>Integration Checklist</h3>
+          <div class="callout success">
+            <i class="fas fa-circle-check callout-icon"></i>
+            <div class="callout-body">
+              <strong>Best Practices</strong>
+              <ul>
+                <li>
+                  Test with small amounts (200–500 TZS) before going to
+                  production
+                </li>
+                <li>
+                  Implement both webhook listeners <strong>and</strong> Order
+                  Status polling for reliability
+                </li>
+                <li>
+                  Generate cryptographically unique <code>order_id</code> per
+                  transaction (e.g. UUID v4)
+                </li>
+                <li>
+                  Log all API requests and responses with timestamps for audit
+                  trails
+                </li>
+                <li>
+                  Ensure your <code>callback_url</code> is publicly accessible
+                  and returns HTTP 200 promptly
+                </li>
+                <li>
+                  Never hard-code credentials — use environment variables or a
+                  secrets manager
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
 
-    <!-- FOOTER -->
-    <footer class="doc-footer">
-      <div class="doc-footer-brand">
-        <div class="brand-mark" style="width:26px;height:26px;font-size:.7rem;">PP</div>
-        <span>PalmPesa</span>
-      </div>
-      <p>&#169; 2026 PalmPesa API Documentation &middot; Built by <strong>Eagle Star Technology</strong></p>
-      <div class="footer-links">
-        <a href="#welcome">Docs</a>
-        <a href="#support">Support</a>
-        <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank">Dashboard</a>
-      </div>
-    </footer>
+        <!-- FOOTER -->
+        <footer class="doc-footer">
+          <div class="doc-footer-brand">
+            <div
+              class="brand-mark"
+              style="width: 26px; height: 26px; font-size: 0.7rem"
+            >
+              PP
+            </div>
+            <span>PalmPesa</span>
+          </div>
+          <p>
+            &#169; 2026 PalmPesa API Documentation &middot; Built by
+            <strong>Eagle Star Technology</strong>
+          </p>
+          <div class="footer-links">
+            <a href="#welcome">Docs</a>
+            <a href="#support">Support</a>
+            <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank"
+              >Dashboard</a
+            >
+          </div>
+        </footer>
+      </main>
+    </div>
 
-  </main>
-</div>
+    <!-- Toast -->
+    <div class="toast" id="toast">
+      <i class="fas fa-check-circle"></i>
+      <span id="toastMsg">Copied to clipboard</span>
+    </div>
 
-<!-- Toast -->
-<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Copied to clipboard</span></div>
+    <script>
+      const sections = document.querySelectorAll(".doc-section");
+      const navLinks = document.querySelectorAll(".nav-link");
 
-<script>
-  const sections = document.querySelectorAll('.doc-section');
-  const navLinks  = document.querySelectorAll('.nav-link');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              navLinks.forEach((l) => l.classList.remove("active"));
+              const active = document.querySelector(
+                '.nav-link[href="#' + entry.target.id + '"]',
+              );
+              if (active) active.classList.add("active");
+            }
+          });
+        },
+        { rootMargin: "-20% 0px -70% 0px" },
+      );
 
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(l => l.classList.remove('active'));
-        const active = document.querySelector('.nav-link[href="#' + entry.target.id + '"]');
-        if (active) active.classList.add('active');
+      sections.forEach((s) => observer.observe(s));
+
+      function showToast(msg) {
+        const t = document.getElementById("toast");
+        document.getElementById("toastMsg").textContent =
+          msg || "Copied to clipboard";
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 2200);
       }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
 
-  sections.forEach(s => observer.observe(s));
+      function copyCode(btn) {
+        const codeEl = btn
+          .closest(".code-wrap")
+          .querySelector(".code-body pre");
+        const text = codeEl ? codeEl.innerText : "";
+        navigator.clipboard.writeText(text).then(() => {
+          btn.classList.add("copied");
+          btn.innerHTML = '<i class="fas fa-check"></i> Copied';
+          showToast();
+          setTimeout(() => {
+            btn.classList.remove("copied");
+            btn.innerHTML = '<i class="fas fa-copy"></i> Copy';
+          }, 2000);
+        });
+      }
 
-  function showToast(msg) {
-    const t = document.getElementById('toast');
-    document.getElementById('toastMsg').textContent = msg || 'Copied to clipboard';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2200);
-  }
+      function copyText(text, btn) {
+        navigator.clipboard.writeText(text).then(() => {
+          const orig = btn.innerHTML;
+          btn.innerHTML = '<i class="fas fa-check"></i>';
+          btn.style.color = "var(--brand)";
+          showToast("URL copied");
+          setTimeout(() => {
+            btn.innerHTML = orig;
+            btn.style.color = "";
+          }, 2000);
+        });
+      }
 
-  function copyCode(btn) {
-    const codeEl = btn.closest('.code-wrap').querySelector('.code-body pre');
-    const text = codeEl ? codeEl.innerText : '';
-    navigator.clipboard.writeText(text).then(() => {
-      btn.classList.add('copied');
-      btn.innerHTML = '<i class="fas fa-check"></i> Copied';
-      showToast();
-      setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = '<i class="fas fa-copy"></i> Copy'; }, 2000);
-    });
-  }
+      function searchDocs(q) {
+        if (!q.trim()) {
+          sections.forEach((s) => (s.style.opacity = "1"));
+          return;
+        }
+        const lq = q.toLowerCase();
+        sections.forEach((s) => {
+          s.style.opacity = s.textContent.toLowerCase().includes(lq)
+            ? "1"
+            : "0.25";
+        });
+      }
 
-  function copyText(text, btn) {
-    navigator.clipboard.writeText(text).then(() => {
-      const orig = btn.innerHTML;
-      btn.innerHTML = '<i class="fas fa-check"></i>';
-      btn.style.color = 'var(--brand)';
-      showToast('URL copied');
-      setTimeout(() => { btn.innerHTML = orig; btn.style.color = ''; }, 2000);
-    });
-  }
-
-  function searchDocs(q) {
-    if (!q.trim()) { sections.forEach(s => s.style.opacity = '1'); return; }
-    const lq = q.toLowerCase();
-    sections.forEach(s => { s.style.opacity = s.textContent.toLowerCase().includes(lq) ? '1' : '0.25'; });
-  }
-
-  navLinks.forEach(link => {
-    link.addEventListener('click', () => { navLinks.forEach(l => l.classList.remove('active')); link.classList.add('active'); });
-  });
-</script>
-</body>
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          navLinks.forEach((l) => l.classList.remove("active"));
+          link.classList.add("active");
+        });
+      });
+    </script>
+  </body>
 </html>
