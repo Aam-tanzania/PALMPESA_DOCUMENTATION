@@ -2208,9 +2208,9 @@
                 <tr>
                   <td>EXPIRED</td>
                   <td>
-                    No payment was received: the payment was still unpaid about
-                    45 minutes after it was created. Do not fulfil the order.
-                    See <a href="#expired">Expired payments</a>.
+                    No payment was received: the customer had not paid within
+                    about an hour of the request. Do not fulfil the order. See
+                    <a href="#expired">Expired payments</a>.
                   </td>
                   <td>Yes (a late <code>COMPLETED</code> can still follow)</td>
                 </tr>
@@ -2253,11 +2253,14 @@
 
           <h3 id="expired">Expired payments</h3>
           <p>
-            A mobile-money payment request stays open for 30 minutes. If a
-            payment is still <code>INITIATING</code>, <code>PENDING</code> or
-            <code>AMBIGUOUS</code> about <strong>45 minutes</strong> after it
-            was created (those 30 minutes plus a 15-minute grace period for late
-            confirmations), PalmPesa checks it with the network one last time:
+            If the customer hasn't paid within <strong>about an hour</strong>,
+            the payment becomes <code>EXPIRED</code> and you receive a
+            <code>payment.expired</code> callback. A mobile-money payment request
+            stays open for 30 minutes, and PalmPesa waits a further grace period
+            for late confirmations. Then, if the payment is still
+            <code>INITIATING</code>, <code>PENDING</code> or
+            <code>AMBIGUOUS</code>, PalmPesa checks it with the network one last
+            time:
           </p>
           <ul>
             <li>
@@ -2274,11 +2277,11 @@
             </li>
           </ul>
           <p>
-            The check runs every 5 minutes, so a payment usually expires between
-            45 and 50 minutes after it was created (later if the network cannot
-            be reached). <code>EXPIRED</code> means no payment was received: do
-            not fulfil the order. To collect the money, create a new payment with
-            a new <code>transaction_id</code>.
+            This usually happens 45 to 60 minutes after the payment was created,
+            occasionally later if the network cannot be reached.
+            <code>EXPIRED</code> means no payment was received: do not fulfil the
+            order. To collect the money, create a new payment with a new
+            <code>transaction_id</code>.
           </p>
           <div class="callout warning">
             <i class="fas fa-circle-info callout-icon"></i>
@@ -2417,7 +2420,7 @@
                   <td>payment.expired</td>
                   <td>EXPIRED</td>
                   <td>
-                    No payment within about 45 minutes. Do not fulfil. A late
+                    Not paid within about an hour. Do not fulfil. A late
                     <code>payment.completed</code> can still follow (see
                     <a href="#expired">Expired payments</a>).
                   </td>
