@@ -1040,7 +1040,7 @@
             ><i class="fas fa-headset"></i> Support</a
           >
           <a
-            href="https://palmpesa.drmlelwa.co.tz/"
+            href="https://palmpesa.co.tz/"
             target="_blank"
             class="btn-cta"
             ><i class="fas fa-rocket" style="font-size: 0.75rem"></i> Get API
@@ -1069,38 +1069,13 @@
           </div>
           <div class="nav-group">
             <div class="nav-group-label">Core Payments</div>
-            <a href="#pay-link" class="nav-link"
-              ><i class="fas fa-link"></i> Pay by Link
-              <span class="nav-method post">POST</span></a
-            >
-            <a href="#webhook" class="nav-link"
-              ><i class="fas fa-bolt"></i> Webhook Payment
-              <span class="nav-method post">POST</span></a
-            >
-            <a href="#pay-mobile" class="nav-link"
-              ><i class="fas fa-mobile-alt"></i> Pay via Mobile
+            <a href="#initiate-payment" class="nav-link"
+              ><i class="fas fa-bolt"></i> Initiate Payment
               <span class="nav-method post">POST</span></a
             >
             <a href="#order-status" class="nav-link"
-              ><i class="fas fa-circle-check"></i> Order Status
-              <span class="nav-method post">POST</span></a
-            >
-          </div>
-          <div class="nav-group">
-            <div class="nav-group-label">Accounts &amp; Cards</div>
-            <a href="#transactions" class="nav-link"
-              ><i class="fas fa-list-ul"></i> Transactions
+              ><i class="fas fa-circle-check"></i> Check Payment Status
               <span class="nav-method get">GET</span></a
-            >
-            <a href="#palm-card" class="nav-link"
-              ><i class="fas fa-credit-card"></i> Palm Card</a
-            >
-            <a href="#send-money" class="nav-link"
-              ><i class="fas fa-paper-plane"></i> Send Money
-              <span class="nav-method post">POST</span></a
-            >
-            <a href="#register-login" class="nav-link"
-              ><i class="fas fa-user-plus"></i> Register &amp; Login</a
             >
           </div>
           <div class="nav-group">
@@ -1122,8 +1097,7 @@
             </div>
             <h1>PalmPesa Payment API</h1>
             <p>
-              Production-grade REST API for mobile money, pay-by-link, and card
-              operations across Tanzania. Built and maintained by
+              REST API for asynchronous mobile money payments and transaction status checks across Tanzania. Built and maintained by
               <strong style="color: #e2e8f0">Eagle Star Technology</strong>.
             </p>
             <div class="hero-stats">
@@ -1145,21 +1119,6 @@
               </div>
             </div>
           </div>
-          <div class="callout info">
-            <i class="fas fa-book-open callout-icon"></i>
-            <div class="callout-body">
-              <strong>Official Live Reference</strong>
-              <p>
-                For the complete interactive reference visit the
-                <a
-                  href="https://share.apidog.com/0215f0ea-faef-40b9-9a76-1facac842527"
-                  target="_blank"
-                  style="font-weight: 600"
-                  >PalmPesa API Reference on Apidog ↗</a
-                >. This document is optimised for cURL integration workflows.
-              </p>
-            </div>
-          </div>
         </section>
 
         <!-- GETTING STARTED -->
@@ -1168,12 +1127,8 @@
             <div class="section-icon"><i class="fas fa-key"></i></div>
             <h2>Getting Started</h2>
           </div>
-          <p>You need two credentials before making any API call:</p>
+          <p>You need your PalmPesa API token before making an API call:</p>
           <div class="creds-grid">
-            <div class="cred-card">
-              <div class="label">User ID</div>
-              <div class="value">Unique developer account ID</div>
-            </div>
             <div class="cred-card">
               <div class="label">API Token</div>
               <div class="value">Bearer token for Authorization header</div>
@@ -1183,14 +1138,8 @@
             <li class="step-item">
               <div class="step-num">1</div>
               <div class="step-body">
-                <strong>Create your account</strong>
-                <p>
-                  Register at
-                  <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank"
-                    >palmpesa.drmlelwa.co.tz</a
-                  >
-                  and complete the developer registration form.
-                </p>
+                <strong>Get your API token</strong>
+                <p>Obtain your API token from the PalmPesa dashboard at <a href="https://palmpesa.co.tz/" target="_blank">palmpesa.co.tz</a>.</p>
               </div>
             </li>
             <li class="step-item">
@@ -1198,8 +1147,7 @@
               <div class="step-body">
                 <strong>Receive your credentials</strong>
                 <p>
-                  Your <code>user_id</code> and <code>API Token</code> are
-                  issued after account verification. Never expose them
+                  Your <code>API Token</code> is issued for your integration. Never expose it
                   client-side.
                 </p>
               </div>
@@ -1259,8 +1207,7 @@
             <div class="callout-body">
               <strong>Token Format</strong>
               <p>
-                Replace <code>YOUR_API_TOKEN</code> with the exact token issued
-                during registration. The <code>Bearer</code> prefix is required
+                Replace <code>YOUR_API_TOKEN</code> with your PalmPesa API token. The <code>Bearer</code> prefix is required
                 and case-sensitive.
               </p>
             </div>
@@ -1275,10 +1222,10 @@
           </div>
           <div class="endpoint-row">
             <span class="method-badge method-base">BASE</span>
-            <span class="endpoint-url">https://palmpesa.drmlelwa.co.tz</span>
+            <span class="endpoint-url">https://palmpesa.co.tz</span>
             <button
               class="endpoint-copy"
-              onclick="copyText('https://palmpesa.drmlelwa.co.tz', this)"
+              onclick="copyText('https://palmpesa.co.tz', this)"
               title="Copy URL"
             >
               <i class="fas fa-copy"></i>
@@ -1286,7 +1233,7 @@
           </div>
           <p>
             Prepend this base URL to every endpoint path. Example:
-            <code>https://palmpesa.drmlelwa.co.tz/api/process-payment</code>
+            <code>https://palmpesa.co.tz/api/v2/async/payments</code>
           </p>
           <div class="callout info">
             <i class="fas fa-info-circle callout-icon"></i>
@@ -1305,8 +1252,7 @@
                 </li>
                 <li>
                   After initiating a payment, poll
-                  <a href="#order-status">Get Order Status</a> or listen on your
-                  webhook to confirm the final state
+                  <a href="#order-status">Check Payment Status</a> using the stored order_id to confirm the final state
                 </li>
                 <li>
                   Always test with small amounts (200–1000 TZS) before
@@ -1317,1188 +1263,107 @@
           </div>
         </section>
 
-        <!-- PAY BY LINK -->
-        <section id="pay-link" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-link"></i></div>
-            <h2>Pay by Link</h2>
-            <span class="section-num">Endpoint 01</span>
-          </div>
-          <p>
-            Generate a shareable hosted payment page. The buyer completes their
-            preferred payment method on the PalmPesa-hosted checkout.
-          </p>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/process-payment</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/process-payment',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-
-          <h3>Request Headers</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Header</th>
-                  <th>Required</th>
-                  <th>Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Authorization</td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Bearer YOUR_API_TOKEN</td>
-                </tr>
-                <tr>
-                  <td>Content-Type</td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>application/json</td>
-                </tr>
-                <tr>
-                  <td>Accept</td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>application/json</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Request Body</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
-                  <th>Example</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>user_id</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Your PalmPesa developer User ID</td>
-                  <td>25</td>
-                </tr>
-                <tr>
-                  <td>vendor</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>
-                    Vendor identifier — use <code>TILL61103867</code> unless
-                    instructed otherwise
-                  </td>
-                  <td>"TILL61103867"</td>
-                </tr>
-                <tr>
-                  <td>order_id</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Unique ID per transaction</td>
-                  <td>"ORDER-100"</td>
-                </tr>
-                <tr>
-                  <td>buyer_email</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Buyer email address</td>
-                  <td>"user@example.com"</td>
-                </tr>
-                <tr>
-                  <td>buyer_name</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Full name of the buyer</td>
-                  <td>"Sephania Nathan"</td>
-                </tr>
-                <tr>
-                  <td>buyer_phone</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Phone with country code, no + sign</td>
-                  <td>"255744000000"</td>
-                </tr>
-                <tr>
-                  <td>amount</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Transaction amount in TZS</td>
-                  <td>500</td>
-                </tr>
-                <tr>
-                  <td>currency</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Currency code</td>
-                  <td>"TZS"</td>
-                </tr>
-                <tr>
-                  <td>redirect_url</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>URL after successful payment</td>
-                  <td>"https://yourdomain.com/success"</td>
-                </tr>
-                <tr>
-                  <td>cancel_url</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>URL if payment is cancelled</td>
-                  <td>"https://yourdomain.com/cancel"</td>
-                </tr>
-                <tr>
-                  <td>webhook</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Webhook URL for async payment status updates</td>
-                  <td>"https://yourdomain.com/webhook"</td>
-                </tr>
-                <tr>
-                  <td>buyer_remarks</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Buyer notes</td>
-                  <td>"Online Delivery"</td>
-                </tr>
-                <tr>
-                  <td>merchant_remarks</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Description of items or service</td>
-                  <td>"Starlink Kit"</td>
-                </tr>
-                <tr>
-                  <td>no_of_items</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Number of items in order</td>
-                  <td>1</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Example Request</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/process-payment'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{
-    "user_id": 25,
-    "vendor": "TILL61103867",
-    "order_id": "TEST-ORDER-100",
-    "buyer_email": "sephania@eaglestar.com",
-    "buyer_name": "Sephania Nathan",
-    "buyer_phone": "255744000000",
-    "amount": 500,
-    "currency": "TZS",
-    "redirect_url": "https://yourdomain.com/success",
-    "cancel_url": "https://yourdomain.com/cancel",
-    "webhook": "https://yourdomain.com/webhook",
-    "buyer_remarks": "Online Delivery",
-    "merchant_remarks": "Starlink Kit",
-    "no_of_items": 1
-  }'</span></pre>
-            </div>
-          </div>
-
-          <h3>Response <span class="status-pill status-200">200 OK</span></h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON — Payment Link</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"error"</span>: <span class="tk-str">"sharable payment link"</span>,
-  <span class="tk-key">"raw"</span>: {
-    <span class="tk-key">"payment_gateway_url"</span>: <span class="tk-str">"https://tz.selcom.online/paymentgw/checkout/VVNKSzVQWFpmRDBa..."</span>
-  }
-}</pre>
-            </div>
-          </div>
-
-          <h3>Callback / Webhook Payload</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON — Async Callback</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"reference"</span>:  <span class="tk-str">"0927530628"</span>,
-  <span class="tk-key">"resultcode"</span>: <span class="tk-str">"000"</span>,
-  <span class="tk-key">"data"</span>: [{
-    <span class="tk-key">"order_id"</span>:        <span class="tk-str">"SELCOM17454039012135"</span>,
-    <span class="tk-key">"creation_date"</span>:   <span class="tk-str">"2025-04-23 13:26:54"</span>,
-    <span class="tk-key">"amount"</span>:          <span class="tk-str">"500"</span>,
-    <span class="tk-key">"payment_status"</span>:  <span class="tk-str">"COMPLETED"</span>,
-    <span class="tk-key">"transid"</span>:         <span class="tk-str">"805613901007"</span>,
-    <span class="tk-key">"channel"</span>:         <span class="tk-str">"AIRTELMONEY"</span>,
-    <span class="tk-key">"reference"</span>:       <span class="tk-str">"0927530628"</span>,
-    <span class="tk-key">"msisdn"</span>:          <span class="tk-str">"255693662424"</span>
-  }]
-}</pre>
-            </div>
-          </div>
-          <div class="callout info">
-            <i class="fas fa-circle-info callout-icon"></i>
-            <div class="callout-body">
-              <strong>No Immediate Status</strong>
-              <p>
-                This endpoint returns a hosted checkout URL only. Final payment
-                status arrives asynchronously via your <code>webhook</code> URL
-                or by polling <a href="#order-status">Get Order Status</a>.
-              </p>
-            </div>
-          </div>
-        </section>
-
         <!-- INITIATE PAYMENT -->
-        <section id="webhook" class="doc-section">
+        <section id="initiate-payment" class="doc-section">
           <div class="section-heading">
             <div class="section-icon"><i class="fas fa-bolt"></i></div>
-            <h2>Webhook Payment using phone number</h2>
-            <span class="section-num">Endpoint 02</span>
+            <h2>Initiate Mobile Money Payment</h2>
+            <span class="section-num">POST</span>
           </div>
-          <h3>The Result May</h3>
-          <p>
-            This endpoint initiates a direct payment request to the user's
-            mobile money wallet (typically via USSD push or prompt). The user
-            will receive a payment prompt on their phone to approve the
-            transaction.
-          </p>
-          <p>
-            Remember you can monitor the payment status via your
-            <strong>callback_url</strong> (webhook) or by polling the
-            <strong>Get Order Status</strong> endpoint using the provided
-            <code>transaction_id</code>.
-          </p>
+          <p>Start an asynchronous mobile money payment. The buyer approves the payment on their phone. Use the returned <code>order_id</code> to check status and reconcile the transaction.</p>
           <div class="endpoint-row">
             <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
+            <span class="endpoint-url">https://palmpesa.co.tz/api/v2/async/payments</span>
+            <button class="endpoint-copy" onclick="copyText('https://palmpesa.co.tz/api/v2/async/payments', this)" title="Copy URL"><i class="fas fa-copy"></i></button>
           </div>
-
           <h3>Headers</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Required</th>
-                  <th>Example Value</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Authorization</td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Bearer YOUR_API_TOKEN</td>
-                </tr>
-                <tr>
-                  <td>Content-Type</td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>application/json</td>
-                </tr>
-                <tr>
-                  <td>Accept</td>
-                  <td><span class="badge-opt">Recommended</span></td>
-                  <td>application/json</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Request Body Parameters</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
-                  <th>Example</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>name</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Full name of the payer / buyer</td>
-                  <td>"Sara John"</td>
-                </tr>
-                <tr>
-                  <td>email</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Email address of the payer</td>
-                  <td>"john@example.com"</td>
-                </tr>
-                <tr>
-                  <td>phone</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>
-                    Phone number to receive the payment prompt (Tanzania format
-                    with country code, no +)
-                  </td>
-                  <td>"0693662424"</td>
-                </tr>
-                <tr>
-                  <td>amount</td>
-                  <td><span class="type-badge">integer / number</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Amount to charge in TZS</td>
-                  <td>200</td>
-                </tr>
-                <tr>
-                  <td>transaction_id</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Your unique transaction / order identifier</td>
-                  <td>"2775"</td>
-                </tr>
-                <tr>
-                  <td>address</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Address or location of the payer</td>
-                  <td>"Dar es Salaam"</td>
-                </tr>
-                <tr>
-                  <td>postcode</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Postcode / postal code</td>
-                  <td>"11111"</td>
-                </tr>
-                <tr>
-                  <td>callback_url</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>
-                    Your server webhook / callback URL to receive payment status
-                    updates (must be publicly accessible)
-                  </td>
-                  <td>"http://anord.site/your-test-url"</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Example Request Body</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"name"</span>: <span class="tk-str">"Sara John"</span>,
-  <span class="tk-key">"email"</span>: <span class="tk-str">"john@example.com"</span>,
-  <span class="tk-key">"phone"</span>: <span class="tk-str">"0693662424"</span>,
-  <span class="tk-key">"amount"</span>: <span class="tk-num">200</span>,
-  <span class="tk-key">"transaction_id"</span>: <span class="tk-str">"2775"</span>,
-  <span class="tk-key">"address"</span>: <span class="tk-str">"Dar es Salaam"</span>,
-  <span class="tk-key">"postcode"</span>: <span class="tk-str">"11111"</span>,
-  <span class="tk-key">"callback_url"</span>: <span class="tk-str">"http://anord.site/your-test-url"</span>
-}</pre>
-            </div>
-          </div>
-
-          <h3>cURL Example</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">--location --request POST</span> \
-  <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/palmpesa/initiate'</span> \
-  <span class="tk-flag">--header</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">--header</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">--data-raw</span> <span class="tk-str">'{
-    "name": "Sara John",
-    "email": "john@example.com",
-    "phone": "0693662424",
-    "amount": 200,
-    "transaction_id": "2775",
-    "address": "Dar es Salaam",
-    "postcode": "11111",
-    "callback_url": "http://anord.site/your-test-url"
-  }'</span></pre>
-            </div>
-          </div>
-
-          <h3>
-            Response when Payment initiated
-            <span class="status-pill status-200">200 OK</span>
-          </h3>
-          <div class="callout success">
-            <i class="fas fa-circle-check callout-icon"></i>
-            <div class="callout-body">
-              <strong>Store this order id for transaction tracking</strong>
-              <p>
-                Make sure you also store this order id safely for later
-                reconciliation and status checks.
-              </p>
-            </div>
-          </div>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"message"</span>:  <span class="tk-str">"Payment initiated. Processing will continue asynchronously."</span>,
-  <span class="tk-key">"order_id"</span>: <span class="tk-str">"PALMPESA17682869972044"</span>
-}</pre>
-            </div>
-          </div>
-
-          <h3>This is a Callback Response</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON — Webhook Delivery</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"order_id"</span>:       <span class="tk-str">"PALMPESA17683440586334"</span>,
-  <span class="tk-key">"payment_status"</span>: <span class="tk-str">"PENDING"</span>  <span class="tk-cmt">// COMPLETED | FAILED | PENDING</span>
-}</pre>
-            </div>
-          </div>
-        </section>
-
-        <!-- PAY VIA MOBILE -->
-        <section id="pay-mobile" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-mobile-alt"></i></div>
-            <h2>Pay via Mobile / USSD</h2>
-            <span class="section-num">Endpoint 03</span>
-          </div>
-          <p>
-            Directly initiate a mobile money payment push without a hosted
-            checkout page.
-          </p>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-
+          <div class="code-wrap"><div class="code-body"><pre>Accept: application/json
+Content-Type: application/json
+Authorization: Bearer YOUR_API_TOKEN</pre></div></div>
           <h3>Request Body</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
-                  <th>Example</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>user_id</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Your PalmPesa User ID</td>
-                  <td>"2"</td>
-                </tr>
-                <tr>
-                  <td>name</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Full name of the buyer</td>
-                  <td>"Alune Kyusa"</td>
-                </tr>
-                <tr>
-                  <td>email</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Buyer email address</td>
-                  <td>"alune@example.com"</td>
-                </tr>
-                <tr>
-                  <td>phone</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Phone with country code, no + sign</td>
-                  <td>"255744000000"</td>
-                </tr>
-                <tr>
-                  <td>amount</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Amount in TZS</td>
-                  <td>500</td>
-                </tr>
-                <tr>
-                  <td>transaction_id</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Unique transaction identifier</td>
-                  <td>"TXN1234567891"</td>
-                </tr>
-                <tr>
-                  <td>address</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Buyer address</td>
-                  <td>"Mbeya"</td>
-                </tr>
-                <tr>
-                  <td>postcode</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Postal code</td>
-                  <td>"53127"</td>
-                </tr>
-                <tr>
-                  <td>buyer_uuid</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Unique buyer identifier in your system</td>
-                  <td>988776</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Example Request</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/pay-via-mobile'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{
-    "user_id": "2",
-    "name": "Alune Kyusa",
-    "email": "alune@example.com",
-    "phone": "255744000000",
-    "amount": 500,
-    "transaction_id": "TXN1234567891",
-    "address": "Mbeya",
-    "postcode": "53127",
-    "buyer_uuid": 988776
-  }'</span></pre>
-            </div>
-          </div>
-
-          <h3>Response <span class="status-pill status-200">200 OK</span></h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"message"</span>:  <span class="tk-str">"Payment request sent to user's phone"</span>,
-  <span class="tk-key">"order_id"</span>: <span class="tk-str">"SELCOM17458294939723"</span>,
-  <span class="tk-key">"response"</span>: {
-    <span class="tk-key">"reference"</span>:   <span class="tk-str">"S19997158895"</span>,
-    <span class="tk-key">"transid"</span>:     <span class="tk-str">"TXN1745829493"</span>,
-    <span class="tk-key">"resultcode"</span>: <span class="tk-str">"000"</span>,
-    <span class="tk-key">"result"</span>:      <span class="tk-str">"SUCCESS"</span>,
-    <span class="tk-key">"message"</span>:    <span class="tk-str">"Wallet push successful"</span>,
-    <span class="tk-key">"data"</span>: []
+          <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead><tbody>
+            <tr><td>transaction_id</td><td>string</td><td>Yes</td><td>Your unique transaction identifier</td></tr>
+            <tr><td>amount</td><td>number</td><td>Yes</td><td>Amount to charge</td></tr>
+            <tr><td>currency</td><td>string</td><td>Yes</td><td>Currency code, for example TZS</td></tr>
+            <tr><td>phone</td><td>string</td><td>Yes</td><td>Buyer mobile number</td></tr>
+            <tr><td>name</td><td>string</td><td>Yes</td><td>Buyer name</td></tr>
+            <tr><td>email</td><td>string</td><td>Yes</td><td>Buyer email address</td></tr>
+            <tr><td>callback_url</td><td>string</td><td>Yes</td><td>Public URL to receive payment callback</td></tr>
+            <tr><td>buyer_remarks</td><td>string</td><td>No</td><td>Remarks from buyer</td></tr>
+            <tr><td>merchant_remarks</td><td>string</td><td>No</td><td>Merchant reference or remarks</td></tr>
+          </tbody></table></div>
+          <h3>cURL Example</h3>
+          <div class="code-wrap"><div class="code-body"><pre>curl --location 'https://palmpesa.co.tz/api/v2/async/payments' \
+  --header 'Accept: application/json' \
+  --header 'Content-Type: application/json' \
+  --header 'Authorization: Bearer YOUR_API_TOKEN' \
+  --data-raw '{
+    "transaction_id": "YOUR_UNIQUE_TXN_ID",
+    "amount": 1000,
+    "currency": "TZS",
+    "phone": "0693662424",
+    "name": "Anord Tester",
+    "email": "buyer@example.com",
+    "callback_url": "https://yourdomain.com/ictsat/callback.php",
+    "buyer_remarks": "Payment for order",
+    "merchant_remarks": "Merchant reference"
+  }'</pre></div></div>
+          <h3>Response</h3>
+          <div class="callout success"><i class="fas fa-circle-check callout-icon"></i><div class="callout-body"><strong>Persist the returned order_id</strong><p>Save <code>data.order_id</code> with your transaction record. Use it for status checks and reconciliation; do not rely on the locally generated transaction ID for the status endpoint.</p></div></div>
+          <div class="code-wrap"><div class="code-body"><pre>{
+  "success": true,
+  "message": "Payment accepted.",
+  "data": {
+    "transaction_id": "PM-1791461522297-IZDPBM",
+    "order_id": "PALMPESAV2A20261008151203511OHW1ICM0",
+    "status": "INITIATING",
+    "failure_reason": null,
+    "amount": 1000,
+    "currency": "TZS",
+    "reference": null,
+    "channel": null,
+    "created_at": "2026-10-08 15:12:03",
+    "updated_at": "2026-10-08 15:12:03",
+    "status_url": "https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008151203511OHW1ICM0"
   }
-}</pre>
-            </div>
-          </div>
+}</pre></div></div>
         </section>
 
-        <!-- ORDER STATUS -->
+        <!-- PAYMENT STATUS -->
         <section id="order-status" class="doc-section">
           <div class="section-heading">
             <div class="section-icon"><i class="fas fa-circle-check"></i></div>
-            <h2>Get Order Status</h2>
-            <span class="section-num">Endpoint 04</span>
+            <h2>Check Payment Status</h2>
+            <span class="section-num">GET</span>
           </div>
-          <p>
-            Poll for the current status of any payment order using its
-            <code>order_id</code>.
-          </p>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/order-status</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/order-status',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-
-          <h3>Request Body</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
-                  <th>Example</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>order_id</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Order ID returned during payment initiation</td>
-                  <td>"PALMPESA17458309277044"</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h3>Example Request</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/order-status'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{"order_id": "PALMPESA17458309277044"}'</span></pre>
-            </div>
-          </div>
-
-          <h3>Response <span class="status-pill status-200">200 OK</span></h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"reference"</span>:  <span class="tk-str">"0927530628"</span>,
-  <span class="tk-key">"resultcode"</span>: <span class="tk-str">"000"</span>,
-  <span class="tk-key">"result"</span>:     <span class="tk-str">"SUCCESS"</span>,
-  <span class="tk-key">"message"</span>:    <span class="tk-str">"Order fetch successful"</span>,
-  <span class="tk-key">"data"</span>: [{
-    <span class="tk-key">"order_id"</span>:        <span class="tk-str">"SELCOM17454039012135"</span>,
-    <span class="tk-key">"creation_date"</span>:   <span class="tk-str">"2025-04-23 13:26:54"</span>,
-    <span class="tk-key">"amount"</span>:          <span class="tk-str">"500"</span>,
-    <span class="tk-key">"payment_status"</span>:  <span class="tk-str">"COMPLETED"</span>,  <span class="tk-cmt">// COMPLETED | PENDING | FAILED</span>
-    <span class="tk-key">"transid"</span>:         <span class="tk-str">"805613901007"</span>,
-    <span class="tk-key">"channel"</span>:         <span class="tk-str">"AIRTELMONEY"</span>,
-    <span class="tk-key">"reference"</span>:       <span class="tk-str">"0927530628"</span>,
-    <span class="tk-key">"msisdn"</span>:          <span class="tk-str">"255693662424"</span>
-  }]
-}</pre>
-            </div>
-          </div>
-          <div class="callout info">
-            <i class="fas fa-circle-info callout-icon"></i>
-            <div class="callout-body">
-              <strong>Status Values</strong>
-              <p>
-                Check <code>data[0].payment_status</code>. Values:
-                <code>COMPLETED</code>, <code>PENDING</code>,
-                <code>FAILED</code>. Use exponential backoff when polling.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- TRANSACTIONS -->
-        <section id="transactions" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-list-ul"></i></div>
-            <h2>Get Transaction List</h2>
-            <span class="section-num">Endpoint 05</span>
-          </div>
-          <p>
-            Retrieve a paginated list of all transactions associated with your
-            account.
-          </p>
+          <p>Retrieve the latest status using the <code>order_id</code> saved from the initiate payment response.</p>
           <div class="endpoint-row">
             <span class="method-badge method-get">GET</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&amp;per_page=20</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&per_page=20',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
+            <span class="endpoint-url">https://palmpesa.co.tz/api/v2/async/payments/{order_id}</span>
+            <button class="endpoint-copy" onclick="copyText('https://palmpesa.co.tz/api/v2/async/payments/{order_id}', this)" title="Copy URL"><i class="fas fa-copy"></i></button>
           </div>
-
-          <h3>Query Parameters</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>page</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-opt">Optional</span></td>
-                  <td>Page number (default: 1)</td>
-                </tr>
-                <tr>
-                  <td>per_page</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-opt">Optional</span></td>
-                  <td>Results per page (default: 20, max: 100)</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X GET</span> \
-  <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/transactions?page=1&amp;per_page=20'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span></pre>
-            </div>
-          </div>
-        </section>
-
-        <!-- PALM CARD -->
-        <section id="palm-card" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-credit-card"></i></div>
-            <h2>Palm Card Operations</h2>
-            <span class="section-num">Endpoint 06</span>
-          </div>
-          <p>
-            Issue virtual Palm Cards, deposit funds, and manage card activation
-            status.
-          </p>
-
-          <h3>Create Palm Card</h3>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/cards</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText('https://palmpesa.drmlelwa.co.tz/api/cards', this)
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL — Create Card</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/cards'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{"pin": "1234"}'</span></pre>
-            </div>
-          </div>
-
-          <h3>Deposit Money to Palm Card</h3>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/card/add-money</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/card/add-money',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL — Add Money</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/card/add-money'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{"phone": "0744000000", "amount": "500"}'</span></pre>
-            </div>
-          </div>
-
-          <h3>Toggle Card Status (Enable / Disable)</h3>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/cards/{card_id}/toggle-status</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/cards/{card_id}/toggle-status',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL — Toggle Status</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> \
-  <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/cards/<span class="tk-var">10</span>/toggle-status'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span></pre>
-            </div>
-          </div>
-        </section>
-
-        <!-- SEND MONEY -->
-        <section id="send-money" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-paper-plane"></i></div>
-            <h2>Send Money (Card → Card)</h2>
-            <span class="section-num">Endpoint 07</span>
-          </div>
-          <p>
-            Transfer funds from your Palm Card to another Palm Card instantly.
-          </p>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/send-to-card</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText(
-                  'https://palmpesa.drmlelwa.co.tz/api/send-to-card',
-                  this,
-                )
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-
-          <h3>Request Body</h3>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th>Parameter</th>
-                  <th>Type</th>
-                  <th>Required</th>
-                  <th>Description</th>
-                  <th>Example</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>card_number</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Recipient Palm Card number</td>
-                  <td>"3410020000"</td>
-                </tr>
-                <tr>
-                  <td>amount</td>
-                  <td><span class="type-badge">integer</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Amount to transfer in TZS</td>
-                  <td>500</td>
-                </tr>
-                <tr>
-                  <td>pin</td>
-                  <td><span class="type-badge">string</span></td>
-                  <td><span class="badge-req">Required</span></td>
-                  <td>Sender 4-digit card PIN</td>
-                  <td>"1234"</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/send-to-card'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{
-    "card_number": "3410020000",
-    "amount": 500,
-    "pin": "1234"
-  }'</span></pre>
-            </div>
-          </div>
-        </section>
-
-        <!-- REGISTER & LOGIN -->
-        <section id="register-login" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-user-plus"></i></div>
-            <h2>User Registration &amp; Login</h2>
-            <span class="section-num">Endpoint 08</span>
-          </div>
-          <p>
-            Create new user accounts and authenticate to obtain API tokens
-            programmatically.
-          </p>
-
-          <h3>Register New User</h3>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/register</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText('https://palmpesa.drmlelwa.co.tz/api/register', this)
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL — Register</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/register'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{
-    "name":                  "Sephania Nathan",
-    "phoneNumber":           "0744000000",
-    "location":              "Dar es Salaam",
-    "gender":                "male",
-    "role":                  "Normal",
-    "nida_number":           "123456789012341",
-    "email":                 "sephania@eaglestar.com",
-    "password":              "StrongPassword123!",
-    "password_confirmation": "StrongPassword123!"
-  }'</span></pre>
-            </div>
-          </div>
-
-          <h3>User Login</h3>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.drmlelwa.co.tz/api/login</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="
-                copyText('https://palmpesa.drmlelwa.co.tz/api/login', this)
-              "
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL — Login</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.drmlelwa.co.tz/api/login'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{
-    "email":    "sephania@eaglestar.com",
-    "password": "StrongPassword123!"
-  }'</span></pre>
-            </div>
-          </div>
+          <h3>cURL Example</h3>
+          <div class="code-wrap"><div class="code-body"><pre>curl --location 'https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008151203511OHW1ICM0' \
+  --header 'Accept: application/json' \
+  --header 'Authorization: Bearer YOUR_API_TOKEN'</pre></div></div>
+          <h3>Response</h3>
+          <div class="code-wrap"><div class="code-body"><pre>{
+  "success": true,
+  "data": {
+    "transaction_id": "ICTSAT20261008151750661",
+    "order_id": "PALMPESAV2A20261008151750625BGD3TKYG",
+    "status": "COMPLETED",
+    "failure_reason": null,
+    "amount": 200,
+    "currency": "TZS",
+    "reference": "1921921992",
+    "channel": "AIRTELMONEY",
+    "created_at": "2026-10-08 15:17:50",
+    "updated_at": "2026-10-08 15:18:13",
+    "status_url": "https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008151750625BGD3TKYG"
+  }
+}</pre></div></div>
+          <p>Status values are returned in <code>data.status</code> (for example, <code>INITIATING</code> or <code>COMPLETED</code>). Keep the order ID in your records for support and reconciliation.</p>
         </section>
 
         <!-- SUPPORT -->
@@ -2563,20 +1428,19 @@
                   production
                 </li>
                 <li>
-                  Implement both webhook listeners <strong>and</strong> Order
-                  Status polling for reliability
+                  Check the payment status endpoint with the saved
+                  <code>order_id</code> for reconciliation
                 </li>
                 <li>
-                  Generate cryptographically unique <code>order_id</code> per
-                  transaction (e.g. UUID v4)
+                  Generate a unique <code>transaction_id</code> for each
+                  payment request
                 </li>
                 <li>
                   Log all API requests and responses with timestamps for audit
                   trails
                 </li>
                 <li>
-                  Ensure your <code>callback_url</code> is publicly accessible
-                  and returns HTTP 200 promptly
+                  Ensure your <code>callback_url</code> is publicly accessible and can receive payment updates
                 </li>
                 <li>
                   Never hard-code credentials — use environment variables or a
@@ -2605,7 +1469,7 @@
           <div class="footer-links">
             <a href="#welcome">Docs</a>
             <a href="#support">Support</a>
-            <a href="https://palmpesa.drmlelwa.co.tz/" target="_blank"
+            <a href="https://palmpesa.co.tz/" target="_blank"
               >Dashboard</a
             >
           </div>
