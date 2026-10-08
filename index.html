@@ -922,9 +922,9 @@
         background: #f0fdf4;
         color: #22c55e;
       }
-      .support-card-icon.docs {
-        background: #fdf4ff;
-        color: #a855f7;
+      .support-card-icon.postman {
+        background: #fff7ed;
+        color: #ea580c;
       }
       .support-card h4 {
         font-size: 0.875rem;
@@ -940,6 +940,72 @@
         font-size: 0.82rem;
         font-weight: 500;
         color: var(--brand-dim);
+      }
+
+      /* Postman collection */
+      .postman-card {
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-md);
+        padding: 1.25rem 1.35rem 0.5rem;
+        margin: 1.25rem 0;
+        box-shadow: var(--shadow-sm);
+      }
+      .postman-card-head {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.85rem;
+        margin-bottom: 1rem;
+      }
+      .postman-card-title {
+        flex: 1;
+        min-width: 0;
+      }
+      .postman-card-title > strong {
+        display: block;
+        font-size: 0.95rem;
+        color: var(--text-primary);
+        margin-bottom: 0.15rem;
+      }
+      .postman-card-title p {
+        font-size: 0.86rem;
+        margin: 0;
+      }
+      .postman-card .support-card-icon {
+        flex-shrink: 0;
+        margin-bottom: 0;
+      }
+      .postman-card-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.5rem 1rem;
+        margin-bottom: 0.5rem;
+      }
+      .postman-card-actions span {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+      .btn-download {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--brand);
+        color: #0b0f1a;
+        font-size: 0.85rem;
+        font-weight: 700;
+        padding: 0.55rem 1.1rem;
+        border-radius: 8px;
+        transition: all 0.2s;
+      }
+      .btn-download:hover {
+        background: var(--brand-dim);
+        box-shadow: 0 4px 16px rgba(0, 212, 160, 0.35);
+        text-decoration: none;
+      }
+      /* Anchors below a section heading also clear the sticky top bar. */
+      h3[id] {
+        scroll-margin-top: calc(var(--topbar-h) + 1.5rem);
       }
 
       /* Footer */
@@ -1023,6 +1089,10 @@
         }
         .menu-toggle {
           display: inline-flex;
+        }
+        /* The Postman link stays in Getting Started and Support on small screens. */
+        .topbar-postman {
+          display: none;
         }
         /* The sidebar becomes a drawer opened from the menu button. */
         .sidebar {
@@ -1278,6 +1348,13 @@
           >
         </div>
         <div class="topbar-right">
+          <a
+            href="postman/PalmPesa-API-v2-Async.postman_collection.json"
+            download
+            class="topbar-link topbar-postman"
+            title="Download the Postman collection"
+            ><i class="fas fa-download"></i> Postman</a
+          >
           <a href="#support" class="topbar-link"
             ><i class="fas fa-headset"></i> Support</a
           >
@@ -1302,27 +1379,23 @@
             <a href="#getting-started" class="nav-link"
               ><i class="fas fa-key"></i> Getting Started</a
             >
+            <a href="#postman" class="nav-link"
+              ><i class="fas fa-download"></i> Postman Collection</a
+            >
             <a href="#authentication" class="nav-link"
               ><i class="fas fa-shield-alt"></i> Authentication</a
             >
             <a href="#base-url" class="nav-link"
               ><i class="fas fa-server"></i> Base URL</a
             >
-            <a href="#choose-api" class="nav-link"
-              ><i class="fas fa-code-branch"></i> Standard or Async</a
-            >
           </div>
           <div class="nav-group">
             <div class="nav-group-label">Payments API v2</div>
-            <a href="#v2-payments" class="nav-link"
+            <a href="#request-payment" class="nav-link"
               ><i class="fas fa-mobile-alt"></i> Request Payment
               <span class="nav-method post">POST</span></a
             >
-            <a href="#v2-async-payments" class="nav-link"
-              ><i class="fas fa-bolt"></i> Request Payment (Async)
-              <span class="nav-method post">POST</span></a
-            >
-            <a href="#v2-async-status" class="nav-link"
+            <a href="#payment-status" class="nav-link"
               ><i class="fas fa-circle-check"></i> Payment Status
               <span class="nav-method get">GET</span></a
             >
@@ -1392,7 +1465,8 @@
                 <p>
                   Send the amount, the customer's phone number and your
                   <code>callback_url</code>. PalmPesa answers
-                  <strong>202 Accepted</strong> with an <code>order_id</code>.
+                  <strong>202 Accepted</strong> with an <code>order_id</code>
+                  straight away and sends the prompt in the background.
                 </p>
               </div>
             </li>
@@ -1414,8 +1488,9 @@
                 <p>
                   When the payment reaches a final state, PalmPesa sends a
                   <a href="#callbacks">callback</a> to your
-                  <code>callback_url</code>. Only <code>COMPLETED</code> means
-                  the money was received.
+                  <code>callback_url</code>. You can also
+                  <a href="#payment-status">check the status</a> at any time.
+                  Only <code>COMPLETED</code> means the money was received.
                 </p>
               </div>
             </li>
@@ -1485,6 +1560,73 @@
               </p>
             </div>
           </div>
+
+          <h3 id="postman">Try it in Postman</h3>
+          <div class="postman-card">
+            <div class="postman-card-head">
+              <div class="support-card-icon postman">
+                <i class="fas fa-paper-plane"></i>
+              </div>
+              <div class="postman-card-title">
+                <strong>PalmPesa API v2 Postman collection</strong>
+                <p>
+                  Request Payment and Payment Status, ready to send, with
+                  example responses for each.
+                </p>
+              </div>
+            </div>
+            <div class="postman-card-actions">
+              <a
+                class="btn-download"
+                href="postman/PalmPesa-API-v2-Async.postman_collection.json"
+                download
+                ><i class="fas fa-download"></i> Download collection</a
+              >
+              <span>JSON &middot; Postman collection format v2.1</span>
+            </div>
+            <ul class="steps">
+              <li class="step-item">
+                <div class="step-num">1</div>
+                <div class="step-body">
+                  <strong>Import</strong>
+                  <p>
+                    In Postman, choose <strong>Import</strong> and select the
+                    downloaded file.
+                  </p>
+                </div>
+              </li>
+              <li class="step-item">
+                <div class="step-num">2</div>
+                <div class="step-body">
+                  <strong>Set <code>api_token</code> and your test details</strong>
+                  <p>
+                    Open the collection's <strong>Variables</strong> tab and
+                    enter your <code>api_token</code>, your own phone number
+                    as <code>payer_phone</code> (for example
+                    <code>255712345678</code>) and your HTTPS
+                    <code>callback_url</code>.
+                  </p>
+                </div>
+              </li>
+              <li class="step-item">
+                <div class="step-num">3</div>
+                <div class="step-body">
+                  <strong>Send "Request payment"</strong>
+                  <p>
+                    Approve the prompt on your phone, then send
+                    <strong>Get payment status</strong>. The
+                    <code>order_id</code> is saved for you, and every send of
+                    Request payment uses a new <code>transaction_id</code>.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <p>
+            These are real payments: each one charges <code>amount</code> TZS
+            (1,000 by default) to <code>payer_phone</code>. Don't share or
+            export the collection after adding your token.
+          </p>
         </section>
 
         <!-- AUTHENTICATION -->
@@ -1566,99 +1708,32 @@
           </div>
           <p>
             Prepend the base URL to every path on this page, for example
-            <code>https://palmpesa.co.tz/api/v2/palmpesa/payments</code>.
+            <code>https://palmpesa.co.tz/api/v2/async/payments</code>.
           </p>
         </section>
 
-        <!-- STANDARD OR ASYNC -->
-        <section id="choose-api" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-code-branch"></i></div>
-            <h2>Standard or Async</h2>
-          </div>
-          <p>
-            API v2 offers two ways to request the same mobile-money payment.
-            Both take the same request body and send the same callbacks. Pick
-            one per payment: a <code>transaction_id</code> used on one cannot be
-            reused on the other.
-          </p>
-          <div class="param-table-wrap">
-            <table class="param-table">
-              <thead>
-                <tr>
-                  <th></th>
-                  <th>Standard</th>
-                  <th>Async</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Endpoint</td>
-                  <td><code>POST /api/v2/palmpesa/payments</code></td>
-                  <td><code>POST /api/v2/async/payments</code></td>
-                </tr>
-                <tr>
-                  <td>When it responds</td>
-                  <td>After the prompt has been sent to the customer's phone</td>
-                  <td>Immediately, before the prompt is sent</td>
-                </tr>
-                <tr>
-                  <td>First status</td>
-                  <td><code>PENDING</code></td>
-                  <td><code>INITIATING</code></td>
-                </tr>
-                <tr>
-                  <td>Provider failure</td>
-                  <td>Reported in the response (<code>502</code>)</td>
-                  <td>Reported later, in the status and a callback</td>
-                </tr>
-                <tr>
-                  <td>Check status</td>
-                  <td>Callbacks only</td>
-                  <td>Callbacks, or <code>GET</code> the status endpoint</td>
-                </tr>
-                <tr>
-                  <td>Pending callback</td>
-                  <td>May send <code>payment.pending</code></td>
-                  <td>Final events only</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="callout success">
-            <i class="fas fa-circle-check callout-icon"></i>
-            <div class="callout-body">
-              <strong>Which one?</strong>
-              <p>
-                Use <strong>Async</strong> if you want a fast response and the
-                ability to look up a payment's status at any time. Use
-                <strong>Standard</strong> if you want to know in the response
-                itself that the prompt was sent.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <!-- STANDARD PAYMENT -->
-        <section id="v2-payments" class="doc-section">
+        <!-- REQUEST PAYMENT -->
+        <section id="request-payment" class="doc-section">
           <div class="section-heading">
             <div class="section-icon"><i class="fas fa-mobile-alt"></i></div>
             <h2>Request Payment</h2>
             <span class="section-num">Endpoint 01</span>
           </div>
           <p>
-            Sends a mobile-money prompt to the customer's phone and answers once
-            the prompt has been sent. The final result arrives later as a
-            <a href="#callbacks">callback</a>.
+            Starts a mobile-money payment. PalmPesa records the request and
+            answers <strong>202 Accepted</strong> straight away, then sends the
+            prompt to the customer's phone in the background. Follow the
+            payment with <a href="#callbacks">callbacks</a> or the
+            <a href="#payment-status">Payment Status</a> endpoint.
           </p>
           <div class="endpoint-row">
             <span class="method-badge method-post">POST</span>
             <span class="endpoint-url"
-              >https://palmpesa.co.tz/api/v2/palmpesa/payments</span
+              >https://palmpesa.co.tz/api/v2/async/payments</span
             >
             <button
               class="endpoint-copy"
-              onclick="copyText('https://palmpesa.co.tz/api/v2/palmpesa/payments', this)"
+              onclick="copyText('https://palmpesa.co.tz/api/v2/async/payments', this)"
               title="Copy URL"
             >
               <i class="fas fa-copy"></i>
@@ -1716,7 +1791,7 @@
                     Your own unique ID for this payment. Up to 191 characters:
                     letters, digits, <code>.</code> <code>_</code>
                     <code>:</code> <code>-</code>. Reusing it safely retries the
-                    same payment (see <a href="#v2-retries">Retries</a>).
+                    same payment (see <a href="#retries">Retries</a>).
                   </td>
                   <td>"ORDER-2026-000123"</td>
                 </tr>
@@ -1801,7 +1876,7 @@
               </button>
             </div>
             <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.co.tz/api/v2/palmpesa/payments'</span> \
+              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.co.tz/api/v2/async/payments'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
   <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
@@ -1832,141 +1907,9 @@
             <div class="code-body">
               <pre>{
   <span class="tk-key">"success"</span>: <span class="tk-kw">true</span>,
-  <span class="tk-key">"message"</span>: <span class="tk-str">"Payment request sent."</span>,
-  <span class="tk-key">"data"</span>: {
-    <span class="tk-key">"transaction_id"</span>: <span class="tk-str">"ORDER-2026-000123"</span>,
-    <span class="tk-key">"order_id"</span>:       <span class="tk-str">"PALMPESAV220261008120000123ABCD1234"</span>,
-    <span class="tk-key">"status"</span>:         <span class="tk-str">"PENDING"</span>
-  }
-}</pre>
-            </div>
-          </div>
-          <p>
-            Store <code>transaction_id</code> and <code>order_id</code> with your
-            order. <code>PENDING</code> means the prompt was sent. It does
-            <strong>not</strong> mean the money was received: wait for a
-            <code>payment.completed</code> <a href="#callbacks">callback</a>.
-          </p>
-
-          <h3>Response <span class="status-pill status-5xx">502 Bad Gateway</span></h3>
-          <p>
-            The prompt could not be sent (the mobile-money provider refused it
-            or was unavailable). Nothing was charged. Retry later with a
-            <strong>new</strong> <code>transaction_id</code>.
-          </p>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{ <span class="tk-key">"message"</span>: <span class="tk-str">"Payment provider is temporarily unavailable."</span> }</pre>
-            </div>
-          </div>
-
-          <h3 id="v2-retries">Retries and duplicate requests</h3>
-          <p>
-            Your account plus <code>transaction_id</code> identify a payment. If
-            your request times out, send the <strong>same</strong> request
-            again:
-          </p>
-          <ul>
-            <li>
-              Same <code>transaction_id</code> and same details: you get the
-              original <code>order_id</code> back and the customer is not
-              prompted again. The <code>status</code> in this response is
-              <code>PENDING</code> (or <code>INITIATION_FAILED</code>); it does
-              not report completion. Final results come from callbacks.
-            </li>
-            <li>
-              Same <code>transaction_id</code> with different details:
-              <span class="status-pill status-4xx">409 Conflict</span>
-              <code>{"message":"This transaction_id was already used with different payment details."}</code>
-            </li>
-          </ul>
-        </section>
-
-        <!-- ASYNC PAYMENT -->
-        <section id="v2-async-payments" class="doc-section">
-          <div class="section-heading">
-            <div class="section-icon"><i class="fas fa-bolt"></i></div>
-            <h2>Request Payment (Async)</h2>
-            <span class="section-num">Endpoint 02</span>
-          </div>
-          <p>
-            Accepts the payment and answers immediately, before the prompt is
-            sent. PalmPesa then sends the prompt in the background. Follow the
-            payment with <a href="#callbacks">callbacks</a> or the
-            <a href="#v2-async-status">status endpoint</a>.
-          </p>
-          <div class="endpoint-row">
-            <span class="method-badge method-post">POST</span>
-            <span class="endpoint-url"
-              >https://palmpesa.co.tz/api/v2/async/payments</span
-            >
-            <button
-              class="endpoint-copy"
-              onclick="copyText('https://palmpesa.co.tz/api/v2/async/payments', this)"
-              title="Copy URL"
-            >
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
-          <p>
-            Headers and request body are exactly the same as
-            <a href="#v2-payments">Request Payment</a>.
-          </p>
-
-          <h3>Example Request</h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">cURL</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre><span class="tk-kw">curl</span> <span class="tk-flag">-X POST</span> <span class="tk-url">'https://palmpesa.co.tz/api/v2/async/payments'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Authorization: Bearer YOUR_API_TOKEN'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Content-Type: application/json'</span> \
-  <span class="tk-flag">-H</span> <span class="tk-str">'Accept: application/json'</span> \
-  <span class="tk-flag">-d</span> <span class="tk-str">'{
-    "transaction_id": "ORDER-2026-000124",
-    "amount": 10000,
-    "currency": "TZS",
-    "phone": "255712345678",
-    "name": "Juma Hassan",
-    "email": "juma@example.com",
-    "callback_url": "https://shop.example.com/palmpesa/callback"
-  }'</span></pre>
-            </div>
-          </div>
-
-          <h3>Response <span class="status-pill status-202">202 Accepted</span></h3>
-          <div class="code-wrap">
-            <div class="code-header">
-              <div class="code-dots">
-                <span></span><span></span><span></span>
-              </div>
-              <span class="code-lang">JSON</span>
-              <button class="code-copy-btn" onclick="copyCode(this)">
-                <i class="fas fa-copy"></i> Copy
-              </button>
-            </div>
-            <div class="code-body">
-              <pre>{
-  <span class="tk-key">"success"</span>: <span class="tk-kw">true</span>,
   <span class="tk-key">"message"</span>: <span class="tk-str">"Payment accepted."</span>,
   <span class="tk-key">"data"</span>: {
-    <span class="tk-key">"transaction_id"</span>: <span class="tk-str">"ORDER-2026-000124"</span>,
+    <span class="tk-key">"transaction_id"</span>: <span class="tk-str">"ORDER-2026-000123"</span>,
     <span class="tk-key">"order_id"</span>:       <span class="tk-str">"PALMPESAV2A20261008120000123EFGH5678"</span>,
     <span class="tk-key">"status"</span>:         <span class="tk-str">"INITIATING"</span>,
     <span class="tk-key">"failure_reason"</span>: <span class="tk-kw">null</span>,
@@ -1981,36 +1924,132 @@
 }</pre>
             </div>
           </div>
+          <p>
+            Store <code>transaction_id</code> and <code>order_id</code> with your
+            order. A <code>202</code> and <code>INITIATING</code> do
+            <strong>not</strong> mean the money was received: wait for a
+            <code>payment.completed</code> <a href="#callbacks">callback</a>.
+          </p>
+
+          <h3>Response fields</h3>
+          <div class="param-table-wrap">
+            <table class="param-table">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>transaction_id</td>
+                  <td>Your ID from the request.</td>
+                </tr>
+                <tr>
+                  <td>order_id</td>
+                  <td>
+                    PalmPesa's ID for the payment. Use it with the
+                    <a href="#payment-status">Payment Status</a> endpoint.
+                  </td>
+                </tr>
+                <tr>
+                  <td>status</td>
+                  <td>
+                    The current <a href="#statuses">status</a>. Always
+                    <code>INITIATING</code> on a new payment.
+                  </td>
+                </tr>
+                <tr>
+                  <td>failure_reason</td>
+                  <td>
+                    Why the prompt could not be sent, when the status is
+                    <code>INITIATION_FAILED</code>. Otherwise <code>null</code>.
+                  </td>
+                </tr>
+                <tr>
+                  <td>amount, currency</td>
+                  <td>As requested.</td>
+                </tr>
+                <tr>
+                  <td>reference</td>
+                  <td>
+                    The payment gateway's reference for the payment, once it
+                    has one. <code>null</code> at first.
+                  </td>
+                </tr>
+                <tr>
+                  <td>channel</td>
+                  <td>
+                    The mobile-money network that handled the payment, for
+                    example <code>TIGOPESATZ</code>. <code>null</code> until
+                    the network reports it.
+                  </td>
+                </tr>
+                <tr>
+                  <td>created_at, updated_at</td>
+                  <td>When the payment was created and when it last changed.</td>
+                </tr>
+                <tr>
+                  <td>status_url</td>
+                  <td>
+                    The full <a href="#payment-status">Payment Status</a> URL
+                    for this payment.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>If the prompt cannot be sent</h3>
+          <p>
+            The request itself still succeeds with <code>202</code>. If the
+            mobile-money provider refuses the payment or is unavailable, the
+            payment becomes <code>INITIATION_FAILED</code> with a
+            <a href="#failure-reasons"><code>failure_reason</code></a>, and you
+            receive a <code>payment.initiation_failed</code> callback. Nothing
+            was charged. To try again, send a new request with a
+            <strong>new</strong> <code>transaction_id</code>.
+          </p>
+
+          <h3 id="retries">Retries and duplicate requests</h3>
+          <p>
+            Your account plus <code>transaction_id</code> identify a payment. If
+            your request times out, send the <strong>same</strong> request
+            again:
+          </p>
           <ul>
             <li>
-              Every successful call returns <code>202</code>, including an
-              identical retry with the same <code>transaction_id</code>, which
-              returns the same payment and its current status.
+              Same <code>transaction_id</code> and same details:
+              <span class="status-pill status-202">202 Accepted</span> with the
+              original <code>order_id</code> and the payment's current status.
+              The customer is not prompted a second time.
             </li>
             <li>
-              There is no <code>502</code> here. If the prompt cannot be sent,
-              the payment becomes <code>INITIATION_FAILED</code> and you receive
-              a <code>payment.initiation_failed</code> callback.
+              Same <code>transaction_id</code> with different details:
+              <span class="status-pill status-4xx">409 Conflict</span>
+              <code>{"message":"This transaction_id was already used with different payment details."}</code>
             </li>
             <li>
-              A <code>transaction_id</code> already used with different details,
-              or already used on the Standard endpoint, returns
-              <span class="status-pill status-4xx">409 Conflict</span>.
+              A <code>transaction_id</code> belongs to one payment for good. To
+              charge the customer again after <code>INITIATION_FAILED</code>,
+              <code>CANCELLED</code>, <code>REJECTED</code> or
+              <code>EXPIRED</code>, use a new <code>transaction_id</code>.
             </li>
           </ul>
         </section>
 
-        <!-- ASYNC STATUS -->
-        <section id="v2-async-status" class="doc-section">
+        <!-- PAYMENT STATUS -->
+        <section id="payment-status" class="doc-section">
           <div class="section-heading">
             <div class="section-icon"><i class="fas fa-circle-check"></i></div>
             <h2>Payment Status</h2>
-            <span class="section-num">Endpoint 03</span>
+            <span class="section-num">Endpoint 02</span>
           </div>
           <p>
             Returns the current status of a payment created with
-            <a href="#v2-async-payments">Request Payment (Async)</a>. Use the
-            <code>status_url</code> from that response.
+            <a href="#request-payment">Request Payment</a>. Use the
+            <code>status_url</code> from that response, or put the
+            <code>order_id</code> in the path.
           </p>
           <div class="endpoint-row">
             <span class="method-badge method-get">GET</span>
@@ -2059,7 +2098,7 @@
               <pre>{
   <span class="tk-key">"success"</span>: <span class="tk-kw">true</span>,
   <span class="tk-key">"data"</span>: {
-    <span class="tk-key">"transaction_id"</span>: <span class="tk-str">"ORDER-2026-000124"</span>,
+    <span class="tk-key">"transaction_id"</span>: <span class="tk-str">"ORDER-2026-000123"</span>,
     <span class="tk-key">"order_id"</span>:       <span class="tk-str">"PALMPESAV2A20261008120000123EFGH5678"</span>,
     <span class="tk-key">"status"</span>:         <span class="tk-str">"COMPLETED"</span>,
     <span class="tk-key">"failure_reason"</span>: <span class="tk-kw">null</span>,
@@ -2074,6 +2113,10 @@
 }</pre>
             </div>
           </div>
+          <p>
+            The fields are the same as in the
+            <a href="#request-payment">Request Payment</a> response.
+          </p>
 
           <h3>Response <span class="status-pill status-4xx">404 Not Found</span></h3>
           <p>The order does not exist or belongs to another account.</p>
@@ -2097,9 +2140,9 @@
               <strong>Polling</strong>
               <p>
                 This endpoint reads PalmPesa's records and does not contact the
-                mobile-money network, so it is cheap to call. Prefer callbacks,
-                and if you poll, wait a few seconds between calls (limit: 120
-                requests per minute).
+                mobile-money network, so it is cheap to call. Prefer callbacks.
+                If you poll, wait a few seconds between calls (limit: 120
+                requests per minute) and stop once the status is final.
               </p>
             </div>
           </div>
@@ -2118,7 +2161,6 @@
                   <th>Status</th>
                   <th>Meaning</th>
                   <th>Final</th>
-                  <th>Used by</th>
                 </tr>
               </thead>
               <tbody>
@@ -2126,13 +2168,11 @@
                   <td>INITIATING</td>
                   <td>Accepted; the prompt has not been sent yet.</td>
                   <td>No</td>
-                  <td>Async</td>
                 </tr>
                 <tr>
                   <td>PENDING</td>
                   <td>Prompt sent; waiting for the customer to approve.</td>
                   <td>No</td>
-                  <td>Both</td>
                 </tr>
                 <tr>
                   <td>AMBIGUOUS</td>
@@ -2141,25 +2181,21 @@
                     checking the outcome. Do not resend the payment.
                   </td>
                   <td>No</td>
-                  <td>Async</td>
                 </tr>
                 <tr>
                   <td>COMPLETED</td>
                   <td><strong>Money received.</strong> The only status that means paid.</td>
                   <td>Yes</td>
-                  <td>Both</td>
                 </tr>
                 <tr>
                   <td>CANCELLED</td>
                   <td>The customer cancelled or did not approve.</td>
                   <td>Yes</td>
-                  <td>Both</td>
                 </tr>
                 <tr>
                   <td>REJECTED</td>
                   <td>The mobile-money network rejected the payment.</td>
                   <td>Yes</td>
-                  <td>Both</td>
                 </tr>
                 <tr>
                   <td>INITIATION_FAILED</td>
@@ -2168,14 +2204,22 @@
                     a new <code>transaction_id</code>.
                   </td>
                   <td>Yes</td>
-                  <td>Both</td>
+                </tr>
+                <tr>
+                  <td>EXPIRED</td>
+                  <td>
+                    No payment was received: the payment was still unpaid about
+                    45 minutes after it was created. Do not fulfil the order.
+                    See <a href="#expired">Expired payments</a>.
+                  </td>
+                  <td>Yes (a late <code>COMPLETED</code> can still follow)</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <h3>Failure reasons (Async)</h3>
+          <h3 id="failure-reasons">Failure reasons</h3>
           <p>
-            When an async payment is <code>INITIATION_FAILED</code>,
+            When a payment is <code>INITIATION_FAILED</code>,
             <code>failure_reason</code> explains why:
           </p>
           <div class="param-table-wrap">
@@ -2206,13 +2250,49 @@
               </tbody>
             </table>
           </div>
+
+          <h3 id="expired">Expired payments</h3>
+          <p>
+            A mobile-money payment request stays open for 30 minutes. If a
+            payment is still <code>INITIATING</code>, <code>PENDING</code> or
+            <code>AMBIGUOUS</code> about <strong>45 minutes</strong> after it
+            was created (those 30 minutes plus a 15-minute grace period for late
+            confirmations), PalmPesa checks it with the network one last time:
+          </p>
+          <ul>
+            <li>
+              Paid: it becomes <code>COMPLETED</code> and you receive
+              <code>payment.completed</code>.
+            </li>
+            <li>
+              Cancelled or rejected: it becomes <code>CANCELLED</code> or
+              <code>REJECTED</code>, with the matching callback.
+            </li>
+            <li>
+              Anything else: it becomes <code>EXPIRED</code> and you receive a
+              <code>payment.expired</code> callback.
+            </li>
+          </ul>
+          <p>
+            The check runs every 5 minutes, so a payment usually expires between
+            45 and 50 minutes after it was created (later if the network cannot
+            be reached). <code>EXPIRED</code> means no payment was received: do
+            not fulfil the order. To collect the money, create a new payment with
+            a new <code>transaction_id</code>.
+          </p>
           <div class="callout warning">
             <i class="fas fa-circle-info callout-icon"></i>
             <div class="callout-body">
               <strong>Late results</strong>
               <p>
-                A payment can still complete minutes after the prompt was sent.
-                Keep accepting callbacks for open payments, and never mark an
+                A payment can still complete minutes after the prompt was sent,
+                and in rare cases the network confirms it only after it has
+                expired. You then receive <code>payment.completed</code> after
+                <code>payment.expired</code>, and the status changes to
+                <code>COMPLETED</code>. <code>COMPLETED</code> always means paid,
+                whenever it arrives: fulfil the order, or contact the customer if
+                you have already closed it. Keep accepting callbacks,
+                deduplicate them on <code>event_id</code>, and never mark an
                 order as paid until you receive <code>COMPLETED</code>.
               </p>
             </div>
@@ -2226,9 +2306,11 @@
             <h2>Callbacks</h2>
           </div>
           <p>
-            When a payment changes to a reportable status, PalmPesa sends a
+            When a payment reaches a final status, PalmPesa sends a
             <code>POST</code> request with a JSON body to the
-            <code>callback_url</code> you supplied.
+            <code>callback_url</code> you supplied. There are no callbacks for
+            <code>INITIATING</code>, <code>PENDING</code> or
+            <code>AMBIGUOUS</code>.
           </p>
 
           <h3>Request headers sent to you</h3>
@@ -2254,13 +2336,16 @@
                 </tr>
                 <tr>
                   <td>X-PalmPesa-Timestamp</td>
-                  <td>When signing is enabled</td>
+                  <td>Only if signing is enabled</td>
                   <td>Unix time in seconds when the callback was signed</td>
                 </tr>
                 <tr>
                   <td>X-PalmPesa-Signature</td>
-                  <td>When signing is enabled</td>
-                  <td><code>sha256=</code> followed by a hex HMAC (see below)</td>
+                  <td>Only if signing is enabled</td>
+                  <td>
+                    <code>sha256=</code> followed by a hex HMAC (see
+                    <a href="#signing">signed callbacks</a>)
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -2282,7 +2367,7 @@
   <span class="tk-key">"event"</span>:            <span class="tk-str">"payment.completed"</span>,
   <span class="tk-key">"event_id"</span>:         <span class="tk-str">"82c12c18a92fc6f3bfb61f89bbf0b8f10f7790a3cfe7b0940734eb43eca87eb1"</span>,
   <span class="tk-key">"transaction_id"</span>:   <span class="tk-str">"ORDER-2026-000123"</span>,
-  <span class="tk-key">"order_id"</span>:         <span class="tk-str">"PALMPESAV220261008120000123ABCD1234"</span>,
+  <span class="tk-key">"order_id"</span>:         <span class="tk-str">"PALMPESAV2A20261008120000123EFGH5678"</span>,
   <span class="tk-key">"selcom_reference"</span>: <span class="tk-str">"0289999288"</span>,
   <span class="tk-key">"status"</span>:           <span class="tk-str">"COMPLETED"</span>,
   <span class="tk-key">"amount"</span>:           <span class="tk-num">10000</span>,
@@ -2301,41 +2386,49 @@
                 <tr>
                   <th>event</th>
                   <th>status</th>
-                  <th>Sent by</th>
+                  <th>What to do</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>payment.completed</td>
                   <td>COMPLETED</td>
-                  <td>Standard and Async</td>
+                  <td>Money received. Fulfil the order.</td>
                 </tr>
                 <tr>
                   <td>payment.cancelled</td>
                   <td>CANCELLED</td>
-                  <td>Standard and Async</td>
+                  <td>The customer cancelled. Do not fulfil.</td>
                 </tr>
                 <tr>
                   <td>payment.rejected</td>
                   <td>REJECTED</td>
-                  <td>Standard and Async</td>
+                  <td>The network rejected the payment. Do not fulfil.</td>
                 </tr>
                 <tr>
                   <td>payment.initiation_failed</td>
                   <td>INITIATION_FAILED</td>
-                  <td>Async</td>
+                  <td>
+                    The prompt was never sent and nothing was charged. Retry with a
+                    new <code>transaction_id</code> if you want to.
+                  </td>
                 </tr>
                 <tr>
-                  <td>payment.pending</td>
-                  <td>PENDING</td>
-                  <td>Standard, when the network reports progress (not final)</td>
+                  <td>payment.expired</td>
+                  <td>EXPIRED</td>
+                  <td>
+                    No payment within about 45 minutes. Do not fulfil. A late
+                    <code>payment.completed</code> can still follow (see
+                    <a href="#expired">Expired payments</a>).
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p>
-            <code>channel</code> and <code>selcom_reference</code> may be
-            <code>null</code> for payments that did not complete.
+            Every event has the same fields. <code>channel</code> and
+            <code>selcom_reference</code> may be <code>null</code> for payments
+            that did not complete.
           </p>
 
           <h3>Responding and retries</h3>
@@ -2357,7 +2450,9 @@
             </li>
             <li>
               A <code>payment.completed</code> event is never followed by a
-              different final status for the same payment.
+              different final status for the same payment. The reverse can
+              happen: in rare cases <code>payment.completed</code> arrives after
+              <code>payment.expired</code>. Treat it as paid.
             </li>
           </ul>
 
@@ -2370,15 +2465,20 @@
             </li>
             <li><code>amount</code> and <code>currency</code> equal what you requested.</li>
             <li>
-              For Async payments, you can also confirm with the
-              <a href="#v2-async-status">status endpoint</a> before fulfilling.
+              You can also confirm with the
+              <a href="#payment-status">Payment Status</a> endpoint before
+              fulfilling.
             </li>
           </ul>
+
+          <h3 id="signing">Signed callbacks (optional)</h3>
           <p>
-            If PalmPesa has issued you a <strong>signing secret</strong>, every
-            callback carries <code>X-PalmPesa-Timestamp</code> and
-            <code>X-PalmPesa-Signature</code>. The signature is computed over the
-            exact raw request body:
+            Signing is off unless PalmPesa has issued you a
+            <strong>signing secret</strong>. Without one, callbacks carry no
+            signature headers; rely on the checks above. With one, every
+            callback also carries <code>X-PalmPesa-Timestamp</code> and
+            <code>X-PalmPesa-Signature</code>, computed over the exact raw
+            request body:
           </p>
           <div class="code-wrap">
             <div class="code-header">
@@ -2427,7 +2527,8 @@ $event = json_decode($rawBody, true, 512, JSON_THROW_ON_ERROR);
 
 <span class="tk-cmt">// 1. Ignore events you have already processed (look up $event['event_id']).</span>
 <span class="tk-cmt">// 2. Match transaction_id, order_id, amount and currency with your order.</span>
-<span class="tk-cmt">// 3. Mark the order paid only when $event['status'] === 'COMPLETED'.</span>
+<span class="tk-cmt">// 3. Mark the order paid only when $event['status'] === 'COMPLETED',</span>
+<span class="tk-cmt">//    even if it arrives after a payment.expired event.</span>
 
 http_response_code(200);
 header('Content-Type: application/json');
@@ -2478,8 +2579,8 @@ echo json_encode(['received' =&gt; true]);</pre>
                 <tr>
                   <td>409</td>
                   <td>
-                    <code>transaction_id</code> reused with different details, or
-                    across Standard and Async
+                    <code>transaction_id</code> already used for a payment with
+                    different details
                   </td>
                   <td>Use a new <code>transaction_id</code> for a new payment.</td>
                 </tr>
@@ -2492,11 +2593,6 @@ echo json_encode(['received' =&gt; true]);</pre>
                   <td>429</td>
                   <td>Rate limit exceeded</td>
                   <td>Slow down and retry after a short wait.</td>
-                </tr>
-                <tr>
-                  <td>502</td>
-                  <td>Standard endpoint: the prompt could not be sent</td>
-                  <td>Nothing was charged. Retry later with a new <code>transaction_id</code>.</td>
                 </tr>
                 <tr>
                   <td>500</td>
@@ -2541,10 +2637,6 @@ echo json_encode(['received' =&gt; true]);</pre>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><code>POST /api/v2/palmpesa/payments</code></td>
-                  <td>30 requests per minute</td>
-                </tr>
                 <tr>
                   <td><code>POST /api/v2/async/payments</code></td>
                   <td>30 requests per minute</td>
@@ -2595,16 +2687,19 @@ echo json_encode(['received' =&gt; true]);</pre>
               </p>
             </div>
             <div class="support-card">
-              <div class="support-card-icon docs">
-                <i class="fas fa-book"></i>
+              <div class="support-card-icon postman">
+                <i class="fas fa-paper-plane"></i>
               </div>
-              <h4>Documentation</h4>
-              <p>This reference, always up to date</p>
-              <a href="https://documentation.palmpesa.co.tz" target="_blank"
-                >documentation.palmpesa.co.tz</a
+              <h4>Postman Collection</h4>
+              <p>Request Payment and Payment Status, ready to send</p>
+              <a
+                href="postman/PalmPesa-API-v2-Async.postman_collection.json"
+                download
+                ><i class="fas fa-download"></i> Download collection</a
               >
               <p style="margin-top: 0.5rem; font-size: 0.75rem; color: #94a3b8">
-                Always available
+                Import, set <code>api_token</code>, send.
+                <a href="#postman" style="font-size: 0.75rem">How to use it</a>
               </p>
             </div>
           </div>
@@ -2626,7 +2721,13 @@ echo json_encode(['received' =&gt; true]);</pre>
                 </li>
                 <li>
                   Treat only <code>COMPLETED</code> as paid. Never fulfil on
-                  <code>PENDING</code>, <code>INITIATING</code> or a <code>202</code>.
+                  <code>INITIATING</code>, <code>PENDING</code>,
+                  <code>AMBIGUOUS</code>, <code>EXPIRED</code> or a
+                  <code>202</code>.
+                </li>
+                <li>
+                  Handle a <code>payment.completed</code> that arrives after
+                  <code>payment.expired</code>: the customer has paid.
                 </li>
                 <li>
                   Make your <code>callback_url</code> public HTTPS, answer 2xx
@@ -2655,6 +2756,11 @@ echo json_encode(['received' =&gt; true]);</pre>
           </p>
           <div class="footer-links">
             <a href="#welcome">Docs</a>
+            <a
+              href="postman/PalmPesa-API-v2-Async.postman_collection.json"
+              download
+              >Postman collection</a
+            >
             <a href="#support">Support</a>
             <a href="https://palmpesa.co.tz/" target="_blank"
               >Dashboard</a

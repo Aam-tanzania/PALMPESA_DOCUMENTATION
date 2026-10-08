@@ -1,0 +1,468 @@
+{
+  "info": {
+    "_postman_id": "3b7e2f0c-8a4d-4c61-9e2b-5d1f6a9c0e47",
+    "name": "PalmPesa API v2 (Async)",
+    "description": "Request a mobile-money payment with the PalmPesa Payments API v2 and check its status.\n\nFull reference: https://documentation.palmpesa.co.tz\n\n## Setup\n\n1. Import this file into Postman.\n2. Open this collection's **Variables** tab and fill in:\n   - `api_token`: your API token from the PalmPesa dashboard.\n   - `payer_phone`: your own mobile-money number, for example `255712345678`. The prompt goes to this phone.\n   - `callback_url`: a public HTTPS URL on your server that receives PalmPesa callbacks.\n3. Send **Request payment**, approve the prompt on your phone, then send **Get payment status**.\n\nThese are real payments: each send of **Request payment** charges `amount` TZS to `payer_phone`\nand uses a new `transaction_id`. The collection sends `Authorization: Bearer {{api_token}}` on every\nrequest, and stops before sending if a variable it needs is still empty.\n\nKeep your token private: don't share or export the collection after adding it.\n\n## Statuses\n\n| Status | Final | Meaning |\n|---|---|---|\n| `INITIATING` | No | Accepted; the prompt has not been sent yet |\n| `PENDING` | No | Prompt sent; waiting for the customer |\n| `AMBIGUOUS` | No | PalmPesa is confirming the outcome; do not resend |\n| `COMPLETED` | Yes | Money received. The only status that means paid |\n| `CANCELLED` | Yes | The customer cancelled or did not approve |\n| `REJECTED` | Yes | The mobile-money network rejected the payment |\n| `INITIATION_FAILED` | Yes | The prompt could not be sent (see `failure_reason`); nothing charged |\n| `EXPIRED` | Yes | Still unpaid about 45 minutes after creation; no payment received |\n\nIn rare cases a late confirmation turns `EXPIRED` into `COMPLETED`, and `payment.completed` arrives\nafter `payment.expired`. Treat `COMPLETED` as paid whenever it arrives, and deduplicate callbacks on\n`event_id`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Request payment",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// A new transaction_id for every send, so each send is a new payment.",
+              "// To repeat a request safely, use \"Request payment - identical retry\".",
+              "var id = 'PM-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8).toUpperCase();",
+              "pm.collectionVariables.set('transaction_id', id);"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('202 Accepted', function () { pm.response.to.have.status(202); });",
+              "var res = {};",
+              "try { res = pm.response.json(); } catch (e) {}",
+              "if (res && res.data && res.data.order_id) {",
+              "  pm.collectionVariables.set('order_id', res.data.order_id);",
+              "  console.log('Saved order_id ' + res.data.order_id + ' (status ' + res.data.status + ')');",
+              "}"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v2/async/payments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "async",
+            "payments"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transaction_id\": \"{{transaction_id}}\",\n  \"amount\": {{amount}},\n  \"currency\": \"TZS\",\n  \"phone\": \"{{payer_phone}}\",\n  \"name\": \"{{payer_name}}\",\n  \"email\": \"{{payer_email}}\",\n  \"callback_url\": \"{{callback_url}}\",\n  \"buyer_remarks\": \"Postman test payment\",\n  \"merchant_remarks\": \"Postman test\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "`POST /api/v2/async/payments`\n\nSends a mobile-money prompt to `payer_phone` for `amount` TZS. PalmPesa answers **202 Accepted** with status `INITIATING` straight away and sends the prompt in the background.\n\n- The pre-request script sets a new `transaction_id` on every send.\n- The test script saves `data.order_id` for **Get payment status**.\n- `202` does not mean paid. Only `COMPLETED` does.\n\nLimit: 30 requests per minute."
+      },
+      "response": [
+        {
+          "name": "202 Accepted",
+          "status": "Accepted",
+          "code": 202,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"message\": \"Payment accepted.\",\n  \"data\": {\n    \"transaction_id\": \"ORDER-2026-000123\",\n    \"order_id\": \"PALMPESAV2A20261008120000123EFGH5678\",\n    \"status\": \"INITIATING\",\n    \"failure_reason\": null,\n    \"amount\": 1000,\n    \"currency\": \"TZS\",\n    \"reference\": null,\n    \"channel\": null,\n    \"created_at\": \"2026-10-08 12:00:00\",\n    \"updated_at\": \"2026-10-08 12:00:00\",\n    \"status_url\": \"https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008120000123EFGH5678\"\n  }\n}"
+        },
+        {
+          "name": "409 transaction_id used with different details",
+          "status": "Conflict",
+          "code": 409,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"message\": \"This transaction_id was already used with different payment details.\"\n}"
+        },
+        {
+          "name": "422 Validation error",
+          "status": "Unprocessable Content",
+          "code": 422,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"message\": \"The callback URL must be a publicly reachable HTTPS URL.\",\n  \"errors\": {\n    \"callback_url\": [\n      \"The callback URL must be a publicly reachable HTTPS URL.\"\n    ]\n  }\n}"
+        },
+        {
+          "name": "401 Missing token",
+          "status": "Unauthorized",
+          "code": 401,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"error\": \"Unauthorized\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get payment status",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "if (!pm.variables.get('order_id')) {",
+              "  throw new Error('Send \"Request payment\" first; it saves order_id.');",
+              "}"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('200 OK', function () { pm.response.to.have.status(200); });",
+              "var d = {};",
+              "try { d = pm.response.json().data || {}; } catch (e) {}",
+              "var finalStatuses = [\"COMPLETED\", \"CANCELLED\", \"REJECTED\", \"INITIATION_FAILED\", \"EXPIRED\"];",
+              "pm.test('status is a known payment status', function () {",
+              "  pm.expect([\"INITIATING\", \"PENDING\", \"AMBIGUOUS\"].concat(finalStatuses)).to.include(d.status);",
+              "});",
+              "console.log(d.order_id + ': ' + d.status + (finalStatuses.indexOf(d.status) === -1",
+              "  ? ' (not final yet; send again in a few seconds)'",
+              "  : ' (final)'));"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v2/async/payments/{{order_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "async",
+            "payments",
+            "{{order_id}}"
+          ]
+        },
+        "description": "`GET /api/v2/async/payments/{order_id}`\n\nReturns the payment's current status. Reads PalmPesa's records only, so it is cheap to call, but prefer callbacks and wait a few seconds between polls.\n\nOpen statuses: `INITIATING`, `PENDING`, `AMBIGUOUS`. Final: `COMPLETED`, `CANCELLED`, `REJECTED`, `INITIATION_FAILED`, `EXPIRED`. Only `COMPLETED` means paid.\n\nLimit: 120 requests per minute."
+      },
+      "response": [
+        {
+          "name": "200 Completed",
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"transaction_id\": \"ORDER-2026-000123\",\n    \"order_id\": \"PALMPESAV2A20261008120000123EFGH5678\",\n    \"status\": \"COMPLETED\",\n    \"failure_reason\": null,\n    \"amount\": 1000,\n    \"currency\": \"TZS\",\n    \"reference\": \"0289999288\",\n    \"channel\": \"TIGOPESATZ\",\n    \"created_at\": \"2026-10-08 12:00:00\",\n    \"updated_at\": \"2026-10-08 12:01:30\",\n    \"status_url\": \"https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008120000123EFGH5678\"\n  }\n}"
+        },
+        {
+          "name": "200 Expired (no payment received)",
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"transaction_id\": \"ORDER-2026-000123\",\n    \"order_id\": \"PALMPESAV2A20261008120000123EFGH5678\",\n    \"status\": \"EXPIRED\",\n    \"failure_reason\": null,\n    \"amount\": 1000,\n    \"currency\": \"TZS\",\n    \"reference\": \"0289999288\",\n    \"channel\": null,\n    \"created_at\": \"2026-10-08 12:00:00\",\n    \"updated_at\": \"2026-10-08 12:45:04\",\n    \"status_url\": \"https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008120000123EFGH5678\"\n  }\n}"
+        },
+        {
+          "name": "200 Initiation failed",
+          "status": "OK",
+          "code": 200,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"data\": {\n    \"transaction_id\": \"ORDER-2026-000123\",\n    \"order_id\": \"PALMPESAV2A20261008120000123EFGH5678\",\n    \"status\": \"INITIATION_FAILED\",\n    \"failure_reason\": \"PROVIDER_UNAVAILABLE\",\n    \"amount\": 1000,\n    \"currency\": \"TZS\",\n    \"reference\": null,\n    \"channel\": null,\n    \"created_at\": \"2026-10-08 12:00:00\",\n    \"updated_at\": \"2026-10-08 12:00:02\",\n    \"status_url\": \"https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008120000123EFGH5678\"\n  }\n}"
+        },
+        {
+          "name": "404 Not found",
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"message\": \"Payment not found.\",\n  \"order_id\": \"PALMPESAV2A20261008120000123EFGH5678\"\n}"
+        }
+      ]
+    },
+    {
+      "name": "Request payment - identical retry (same transaction_id)",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "// Reuses the transaction_id of the last \"Request payment\" send.",
+              "if (!pm.collectionVariables.get('transaction_id')) {",
+              "  throw new Error('Send \"Request payment\" first; this request repeats it with the same transaction_id.');",
+              "}"
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('202 Accepted', function () { pm.response.to.have.status(202); });",
+              "pm.test('returns the original order_id', function () {",
+              "  pm.expect(pm.response.json().data.order_id).to.eql(pm.collectionVariables.get('order_id'));",
+              "});"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v2/async/payments",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "async",
+            "payments"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transaction_id\": \"{{transaction_id}}\",\n  \"amount\": {{amount}},\n  \"currency\": \"TZS\",\n  \"phone\": \"{{payer_phone}}\",\n  \"name\": \"{{payer_name}}\",\n  \"email\": \"{{payer_email}}\",\n  \"callback_url\": \"{{callback_url}}\",\n  \"buyer_remarks\": \"Postman test payment\",\n  \"merchant_remarks\": \"Postman test\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "description": "Repeats the last **Request payment** with the same `transaction_id` and details, as you would after a timeout. PalmPesa returns the original payment and its current status; the customer is not prompted again. Changing any detail (for example `amount`) returns `409`."
+      },
+      "response": [
+        {
+          "name": "202 Same payment, current status",
+          "status": "Accepted",
+          "code": 202,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"success\": true,\n  \"message\": \"Payment accepted.\",\n  \"data\": {\n    \"transaction_id\": \"ORDER-2026-000123\",\n    \"order_id\": \"PALMPESAV2A20261008120000123EFGH5678\",\n    \"status\": \"PENDING\",\n    \"failure_reason\": null,\n    \"amount\": 1000,\n    \"currency\": \"TZS\",\n    \"reference\": \"0289999288\",\n    \"channel\": null,\n    \"created_at\": \"2026-10-08 12:00:00\",\n    \"updated_at\": \"2026-10-08 12:00:03\",\n    \"status_url\": \"https://palmpesa.co.tz/api/v2/async/payments/PALMPESAV2A20261008120000123EFGH5678\"\n  }\n}"
+        }
+      ]
+    },
+    {
+      "name": "Get payment status - unknown order (404)",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('404 Not Found', function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Accept",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/api/v2/async/payments/PALMPESAV2A20260101000000000NOTFOUND",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v2",
+            "async",
+            "payments",
+            "PALMPESAV2A20260101000000000NOTFOUND"
+          ]
+        },
+        "description": "An `order_id` that does not exist, or belongs to another account, returns `404`."
+      },
+      "response": [
+        {
+          "name": "404 Not found",
+          "status": "Not Found",
+          "code": 404,
+          "_postman_previewlanguage": "json",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "cookie": [],
+          "body": "{\n  \"message\": \"Payment not found.\",\n  \"order_id\": \"PALMPESAV2A20260101000000000NOTFOUND\"\n}"
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{api_token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Runs before every request: stop early if a variable the request needs is still empty.",
+          "var needed = ['base_url', 'api_token'];",
+          "if (pm.request.method === 'POST') {",
+          "  needed.push('payer_phone', 'callback_url');",
+          "}",
+          "var missing = needed.filter(function (name) { return !pm.variables.get(name); });",
+          "if (missing.length) {",
+          "  throw new Error('Fill in ' + missing.join(', ') + ' in the collection Variables tab first.');",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://palmpesa.co.tz",
+      "type": "string",
+      "description": "PalmPesa API base URL."
+    },
+    {
+      "key": "api_token",
+      "value": "",
+      "type": "string",
+      "description": "Your API token from the PalmPesa dashboard. Keep it private."
+    },
+    {
+      "key": "payer_phone",
+      "value": "",
+      "type": "string",
+      "description": "Phone that receives the prompt: your own mobile-money number, e.g. 255712345678."
+    },
+    {
+      "key": "payer_name",
+      "value": "Juma Hassan",
+      "type": "string",
+      "description": "Customer name sent with the payment."
+    },
+    {
+      "key": "payer_email",
+      "value": "juma@example.com",
+      "type": "string",
+      "description": "Customer email sent with the payment."
+    },
+    {
+      "key": "amount",
+      "value": "1000",
+      "type": "string",
+      "description": "Amount in whole TZS, 100 to 100,000,000."
+    },
+    {
+      "key": "callback_url",
+      "value": "",
+      "type": "string",
+      "description": "Public HTTPS URL on your server that receives callbacks."
+    },
+    {
+      "key": "transaction_id",
+      "value": "",
+      "type": "string",
+      "description": "Set by Request payment on every send."
+    },
+    {
+      "key": "order_id",
+      "value": "",
+      "type": "string",
+      "description": "Saved from the Request payment response."
+    }
+  ]
+}
