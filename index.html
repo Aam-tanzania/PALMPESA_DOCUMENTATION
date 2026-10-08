@@ -1077,6 +1077,9 @@
               ><i class="fas fa-circle-check"></i> Check Payment Status
               <span class="nav-method get">GET</span></a
             >
+            <a href="#callbacks" class="nav-link"
+              ><i class="fas fa-bell"></i> Callbacks</a
+            >
           </div>
           <div class="nav-group">
             <div class="nav-group-label">Help</div>
@@ -1364,6 +1367,48 @@ Authorization: Bearer YOUR_API_TOKEN</pre></div></div>
   }
 }</pre></div></div>
           <p>Status values are returned in <code>data.status</code> (for example, <code>INITIATING</code> or <code>COMPLETED</code>). Keep the order ID in your records for support and reconciliation.</p>
+        </section>
+
+        <!-- CALLBACKS -->
+        <section id="callbacks" class="doc-section">
+          <div class="section-heading">
+            <div class="section-icon"><i class="fas fa-bell"></i></div>
+            <h2>Callbacks</h2>
+          </div>
+          <p>When a payment reaches a final status, PalmPesa sends a <code>POST</code> request with a JSON body to the <code>callback_url</code> supplied when initiating payment. No callbacks are sent for <code>INITIATING</code>, <code>PENDING</code>, or <code>AMBIGUOUS</code> statuses.</p>
+
+          <h3>Request Headers</h3>
+          <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Header</th><th>Always</th><th>Value</th></tr></thead><tbody>
+            <tr><td><code>Content-Type</code></td><td>Yes</td><td><code>application/json</code></td></tr>
+            <tr><td><code>X-PalmPesa-Event-Id</code></td><td>Yes</td><td>Same value as <code>event_id</code> in the body</td></tr>
+            <tr><td><code>X-PalmPesa-Timestamp</code></td><td>Only if signing is enabled</td><td>Unix time in seconds when the callback was signed</td></tr>
+            <tr><td><code>X-PalmPesa-Signature</code></td><td>Only if signing is enabled</td><td><code>sha256=</code> followed by a hex HMAC</td></tr>
+          </tbody></table></div>
+
+          <h3>Example Callback Body — payment.completed</h3>
+          <div class="code-wrap"><div class="code-body"><pre>{
+  "event": "payment.completed",
+  "event_id": "82c12c18a92fc6f3bfb61f89bbf0b8f10f7790a3cfe7b0940734eb43eca87eb1",
+  "transaction_id": "ORDER-2026-000123",
+  "order_id": "PALMPESAV2A20261008120000123EFGH5678",
+  "selcom_reference": "0289999288",
+  "status": "COMPLETED",
+  "amount": 10000,
+  "currency": "TZS",
+  "channel": "TIGOPESATZ",
+  "phone": "255712345678",
+  "processed_at": "2026-10-08T12:01:31+03:00"
+}</pre></div></div>
+
+          <h3>Events</h3>
+          <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Event</th><th>Status</th><th>What to do</th></tr></thead><tbody>
+            <tr><td><code>payment.completed</code></td><td><code>COMPLETED</code></td><td>Payment received. Fulfil the order.</td></tr>
+            <tr><td><code>payment.cancelled</code></td><td><code>CANCELLED</code></td><td>The customer cancelled. Do not fulfil.</td></tr>
+            <tr><td><code>payment.rejected</code></td><td><code>REJECTED</code></td><td>The network rejected the payment. Do not fulfil.</td></tr>
+            <tr><td><code>payment.initiation_failed</code></td><td><code>INITIATION_FAILED</code></td><td>The prompt was never sent and nothing was charged. Retry with a new <code>transaction_id</code> if desired.</td></tr>
+            <tr><td><code>payment.expired</code></td><td><code>EXPIRED</code></td><td>Payment was not received within about an hour. Do not fulfil based on this event alone; a late <code>payment.completed</code> callback may still arrive.</td></tr>
+          </tbody></table></div>
+          <div class="callout info"><i class="fas fa-circle-info callout-icon"></i><div class="callout-body"><strong>Use the order ID for reconciliation</strong><p>Match callbacks to your records using <code>order_id</code> and <code>transaction_id</code>. Process callbacks idempotently using <code>event_id</code>, since delivery retries can occur.</p></div></div>
         </section>
 
         <!-- SUPPORT -->
